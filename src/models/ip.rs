@@ -16,6 +16,8 @@ pub struct IPBaseParams {
     /// If true, the response will include the person fields
     #[serde(rename = "return_person", default)]
     pub return_person: Option<bool>,
+    /// If true, the response will return metadata/location even if no company is found
+    pub return_if_unmatched: Option<bool>,
 }
 
 impl Default for IPBaseParams {
@@ -25,6 +27,7 @@ impl Default for IPBaseParams {
             return_ip_location: None,
             return_ip_metadata: None,
             return_person: None,
+            return_if_unmatched: None,
         }
     }
 }
@@ -96,7 +99,7 @@ struct IPLocation {
 struct IPCompany {
     confidence: String,
     id: String,
-    domain: String,
+    website: String,
     name: String,
     location: IPCompanyLocation,
     size: String,
