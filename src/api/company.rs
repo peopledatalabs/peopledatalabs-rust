@@ -2,7 +2,7 @@ use crate::{
     models::{
         common::SearchParams,
         company::{
-            CleanCompanyParams, CleanCompanyResponse, EnrichCompanyParams, EnrichCompanyResponse,
+            CleanCompanyParams, CleanCompanyResponse, EnrichCompanyParams, CompanyResponse, SearchCompanyResponse,
         },
     },
     PDLClient, PDLError,
@@ -19,10 +19,10 @@ pub struct Company {
 impl Company {
     /// Enrich a company
     /// docs: https://docs.peopledatalabs.com/docs/company-enrichment-api
-    pub fn enrich(&self, params: EnrichCompanyParams) -> Result<EnrichCompanyResponse, PDLError> {
+    pub fn enrich(&self, params: EnrichCompanyParams) -> Result<CompanyResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r: EnrichCompanyResponse = self.client.get(ENRICH_PATH, &qs)?;
+        let r = self.client.get::<CompanyResponse>(ENRICH_PATH, &qs)?;
 
         Ok(r)
     }
@@ -30,10 +30,10 @@ impl Company {
     /// Search gives you access to every record in our full Company dataset,
     /// which you can filter and segment using a search query.
     /// docs: https://docs.peopledatalabs.com/docs/company-search-api
-    pub fn search(&self, params: SearchParams) -> Result<EnrichCompanyResponse, PDLError> {
+    pub fn search(&self, params: SearchParams) -> Result<SearchCompanyResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r: EnrichCompanyResponse = self.client.get(SEARCH_PATH, &qs)?;
+        let r = self.client.get::<SearchCompanyResponse>(SEARCH_PATH, &qs)?;
 
         Ok(r)
     }
@@ -43,7 +43,7 @@ impl Company {
     pub fn clean(&self, params: CleanCompanyParams) -> Result<CleanCompanyResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r: CleanCompanyResponse = self.client.get(CLEAN_PATH, &qs)?;
+        let r = self.client.get::<CleanCompanyResponse>(CLEAN_PATH, &qs)?;
 
         Ok(r)
     }

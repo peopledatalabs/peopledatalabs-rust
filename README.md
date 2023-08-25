@@ -23,10 +23,10 @@
 
 ## 🔧 Installation <a name="installation"></a>
 
-1. To use _peopledatalabs-go_ SDK in your project initialize go modules then run:
+1. To use _peopledatalabs-rs_ SDK in your project initialize your Rust crate then run:
 
 ```bash
-go get github.com/peopledatalabs/peopledatalabs-go
+cargo add peopledatalabs-rs
 ```
 2. Sign up for a [free PDL API key](https://www.peopledatalabs.com/signup).
 3. Set your API key as a environment variable.
@@ -35,22 +35,7 @@ go get github.com/peopledatalabs/peopledatalabs-go
 
 First, create the PeopleDataLabs client:
 
-```go
-package main
-
-import (
-    pdl "github.com/peopledatalabs/peopledatalabs-go"
-    pdlmodel "github.com/peopledatalabs/peopledatalabs-go/model"
-)
-
-
-func main() {
-    apiKey := "YOUR_API_KEY_HERE"
-    // Set API KEY as env variable
-    // apiKey := os.Getenv("API_KEY")
-
-    client := pdl.New(apiKey)
-}
+```rust
 ```
 Then, send requests to any PDL API Endpoint.
 
@@ -58,262 +43,96 @@ Then, send requests to any PDL API Endpoint.
 
 #### Enrichment
 
-```go
-params := pdlmodel.EnrichPersonParams{
-    PersonParams: pdlmodel.PersonParams{
-        Phone: []string{"4155688415"},
-    },
-}
-
-result, err := client.Person.Enrich(ctx, params)
-
-if err == nil {
-    fmt.Printf("Status: %d, FullName: %s\n", result.Status, result.Data.FullName)
-}
+```rust
 ```
 
 #### Bulk Enrichment
 
-```go
-params := pdlmodel.BulkEnrichPersonParams{
-    Required: "emails AND profiles",
-    Requests: []pdlmodel.BulkEnrichSinglePersonParams{
-        {
-            Params: pdlmodel.PersonParams{
-                Profile:  []string{"linkedin.com/in/seanthorne"},
-                Location: []string{"SF Bay Area"},
-                Name:     []string{"Sean F. Thorne"},
-            },
-        },
-        {
-            Params: pdlmodel.PersonParams{
-                Profile:   []string{"https://www.linkedin.com/in/haydenconrad/"},
-                FirstName: []string{"Hayden"},
-                LastName:  []string{"Conrad"},
-            },
-        },
-    },
-}
-
-result, err := client.Person.BulkEnrich(ctx, params)
+```rust
 ```
 
 #### Search (Elasticsearch)
 
-```go
-elasticSearchQuery := map[string]interface{}{
-    "query": map[string]interface{}{
-        "bool": map[string]interface{}{
-            "must": []map[string]interface{}{
-                {"term": map[string]interface{}{"location_country": "mexico"}},
-                {"term": map[string]interface{}{"job_title_role": "health"}},
-            },
-        },
-    },
-}
-
-params := pdlmodel.SearchParams{
-    BaseParams: pdlmodel.BaseParams{
-        Size: 10,
-    },
-    SearchBaseParams: pdlmodel.SearchBaseParams{
-        Query:   elasticSearchQuery,
-        Dataset: "phone,mobile_phone",
-    },
-}
-result, err := client.Person.Search(ctx, params)
+```rust
 ```
 
 #### Search (SQL)
 
-```go
-sqlQuery := "SELECT * FROM person" +
-    " WHERE location_country='mexico'" +
-    " AND job_title_role='health'" +
-    " AND phone_numbers IS NOT NULL;"
-
-params := pdlmodel.SearchParams{
-    BaseParams: pdlmodel.BaseParams{
-        Size: 10,
-    },
-    SearchBaseParams: pdlmodel.SearchBaseParams{
-        SQL:     sqlQuery,
-        Dataset: "phone,mobile_phone",
-    },
-}
-result, err := client.Person.Search(ctx, params)
+```rust
 ```
 
 #### `PDL_ID` (Retrieve API)
 
-```go
-params := pdlmodel.RetrievePersonParams{PersonID: "qEnOZ5Oh0poWnQ1luFBfVw_0000"}
-
-result, err := client.Person.Retrieve(ctx, params)
+```rust
 ```
 
 #### Bulk Retrieve API
 
-```go
-params := pdlmodel.BulkRetrievePersonParams{
-    Requests: []pdlmodel.BulkRetrieveSinglePersonParams{
-        {ID: "qEnOZ5Oh0poWnQ1luFBfVw_0000"},
-        {ID: "PzFD15NINdBWNULBBkwlig_0000"},
-    }
-}
-
-result, err := client.Person.BulkRetrieve(ctx, params)
+```rust
 ```
 
 #### Fuzzy Enrichment (Identify API)
 
-```go
-params := pdlmodel.IdentifyPersonParams{PersonParams: pdlmodel.PersonParams{Name: []string{"sean thorne"}}}
-
-result, err := client.Person.Identify(ctx, params)
+```rust
 ```
 
 ### Company Data
 
 #### Enrichment
 
-```go
-params := pdlmodel.EnrichCompanyParams{
-    CompanyParams: pdlmodel.CompanyParams{Website: "peopledatalabs.com"},
-}
-
-result, err := client.Company.Enrich(ctx, params)
+```rust
 ```
 
 #### Search (Elasticsearch)
 
-```go
-elasticSearchQuery := map[string]interface{}{
-    "query": map[string]interface{}{
-        "bool": map[string]interface{}{
-            "must": []map[string]interface{}{
-                {"term": map[string]interface{}{"tags": "bigdata"}},
-                {"term": map[string]interface{}{"industry": "financial services"}},
-                {"term": map[string]interface{}{"location.country": "united states"}},
-            },
-        },
-    },
-}
-
-params := pdlmodel.SearchParams{
-    BaseParams:       pdlmodel.BaseParams{Size: 10},
-    SearchBaseParams: pdlmodel.SearchBaseParams{Query: elasticSearchQuery},
-}
-
-result, err := client.Company.Search(ctx, params)
+```rust
 ```
 
 #### Search (SQL)
 
-```go
-sqlQuery := "SELECT * FROM company" +
-    " WHERE tags='big data'" +
-    " AND industry='financial services'" +
-    " AND location.country='united states';"
-
-params := pdlmodel.SearchParams{
-    BaseParams:       pdlmodel.BaseParams{Size: 10},
-    SearchBaseParams: pdlmodel.SearchBaseParams{SQL: sqlQuery},
-}
-
-result, err := client.Company.Search(ctx, params)
-
+```rust
 ```
 
 ### Supporting APIs
 
 #### Get Autocomplete Suggestions
 
-```go
-params := pdlmodel.AutocompleteParams{
-    BaseParams:             pdlmodel.BaseParams{Size: 10},
-    AutocompleteBaseParams: pdlmodel.AutocompleteBaseParams{Field: "title", Text: "full"},
-}
-
-result, err := client.Autocomplete(ctx, params)
+```rust
 ```
 
 #### Clean Raw Company Strings
 
-```go
-params := pdlmodel.CleanCompanyParams{Name: "peOple DaTa LabS"}
-
-result, err := client.Company.Clean(ctx, params)
+```rust
 ```
 
 #### Clean Raw Location Strings
 
-```go
-params := pdlmodel.CleanLocationParams{
-    LocationParams: pdlmodel.LocationParams{
-        Location: "455 Market Street, San Francisco, California 94105, US",
-    },
-}
-
-result, err := client.Location.Clean(ctx, params)
+```rust
 ```
 
 #### Clean Raw School Strings
 
-```go
-params := pdlmodel.CleanSchoolParams{
-    SchoolParams: pdlmodel.SchoolParams{Name: "university of oregon"},
-}
-
-result, err := client.School.Clean(ctx, params)
+```rust
 ```
 
 #### Enrich Job Title
 
-```go
-params := model.JobTitleParams{
-    BaseParams:             model.BaseParams{Pretty: true},
-    JobTitleBaseParams:     model.JobTitleBaseParams{JobTitle: "data scientist"},
-}
-
-result, err := client.JobTitle(ctx, params)
+```rust
 ```
 
 #### Enrich Skill
 
-```go
-params := model.SkillParams{
-    BaseParams:             model.BaseParams{Pretty: true},
-    SkillBaseParams:        model.SkillBaseParams{Skill: "c++"},
-}
-
-result, err := client.Skill(ctx, params)
+```rust
 ```
 
 #### Enrich IP
 
-```go
-params := model.IPParams{
-    BaseParams:             model.BaseParams{Pretty: true},
-    IPBaseParams:           model.IPBaseParams{IP: "72.212.42.169"},
-}
-
-result, err := client.IP(ctx, params)
+```rust
 ```
 
 ## 🏝 Sandbox Usage <a name="sandbox"></a>
-```go
-# To enable sandbox usage, use the following
-
-import (
-    pdl "github.com/peopledatalabs/peopledatalabs-go"
-    "github.com/peopledatalabs/peopledatalabs-go/api"
-    pdlmodel "github.com/peopledatalabs/peopledatalabs-go/model"
-)
-
-client := pdl.New(apiKey, api.ClientOptions(func(c *api.Client) {
-    c.Sandbox = true
-}))
+```rust
+// To enable sandbox usage, use the following
 ```
 
 ## 🌐 Endpoints <a name="endpoints"></a>
