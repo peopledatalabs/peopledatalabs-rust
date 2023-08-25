@@ -35,7 +35,7 @@ impl Default for IPBaseParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPParams {
     #[serde(flatten)]
-    pub base_params: BaseParams,
+    pub base_params: Option<BaseParams>,
 
     #[serde(flatten)]
     pub ip_base_params: IPBaseParams,
