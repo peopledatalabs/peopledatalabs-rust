@@ -1,13 +1,12 @@
-use peopledatalabs::{BaseParams, CleanLocationParams, LocationParams, PDL};
+use peopledatalabs::{CleanLocationParams, LocationParams, PDL};
 
 fn main() {
     let client = PDL::new();
-    let base_params = BaseParams::default();
     let location_params = LocationParams {
-        location: "New York, NY",
+        location: Some("New York, NY".to_string()),
     };
     let params = CleanLocationParams {
-        base_params,
+        base_params: None,
         location_params,
         additional_params: None,
     };

@@ -7,18 +7,18 @@ use crate::{models::common::BaseParams, PDLError};
 pub struct AutocompleteBaseParams {
     /// Field that autocomplete will be calculated for
     #[serde(rename = "field", default)]
-    field: String,
+    pub field: String,
     /// Text that is used as the seed for autocompletion
     #[serde(rename = "text", default)]
-    text: Option<String>,
+    pub text: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AutocompleteParams {
     #[serde(flatten)]
-    base_params: BaseParams,
+    pub base_params: Option<BaseParams>,
     #[serde(flatten)]
-    autocomplete_base_params: AutocompleteBaseParams,
+    pub autocomplete_base_params: AutocompleteBaseParams,
 }
 
 impl AutocompleteParams {

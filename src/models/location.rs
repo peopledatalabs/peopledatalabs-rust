@@ -15,7 +15,7 @@ pub struct LocationParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanLocationParams {
     #[serde(flatten)]
-    pub base_params: BaseParams,
+    pub base_params: Option<BaseParams>,
 
     #[serde(flatten)]
     pub location_params: LocationParams,

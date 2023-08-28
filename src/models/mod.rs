@@ -8,7 +8,7 @@ pub mod person;
 pub mod school;
 pub mod skills;
 
-pub use autocomplete::AutocompleteParams;
+pub use autocomplete::{AutocompleteBaseParams, AutocompleteParams};
 pub use common::{BaseParams, SearchBaseParams, SearchParams};
 pub use company::{CleanCompanyParams, CompanyParams, EnrichCompanyParams};
 pub use ip::{IPBaseParams, IPParams};

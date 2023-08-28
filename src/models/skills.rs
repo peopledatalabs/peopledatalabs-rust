@@ -12,7 +12,7 @@ pub struct SkillBaseParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SkillParams {
     #[serde(flatten)]
-    pub base_params: BaseParams,
+    pub base_params: Option<BaseParams>,
 
     #[serde(flatten)]
     pub skill_base_params: SkillBaseParams,

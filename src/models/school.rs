@@ -30,7 +30,7 @@ impl Default for SchoolParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanSchoolParams {
     #[serde(flatten)]
-    pub base_params: BaseParams,
+    pub base_params: Option<BaseParams>,
 
     #[serde(flatten)]
     pub school_params: SchoolParams,

@@ -12,7 +12,7 @@ pub struct JobTitleBaseParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct JobTitleParams {
     #[serde(flatten)]
-    pub base_params: BaseParams,
+    pub base_params: Option<BaseParams>,
 
     #[serde(flatten)]
     pub job_title_base_params: JobTitleBaseParams,

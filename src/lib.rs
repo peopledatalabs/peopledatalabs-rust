@@ -2,11 +2,11 @@ mod api;
 mod client;
 mod models;
 
-use api::{Company, JobTitle, Location, Person, School, Skill, IP};
+use api::{Autocomplete, Company, JobTitle, Location, Person, School, Skill, IP};
 use client::{PDLClient, PDLError};
 
 pub use models::{
-    AutocompleteParams, BaseParams, BulkEnrichPersonParams, BulkEnrichSinglePersonParams,
+    AutocompleteBaseParams, AutocompleteParams, BaseParams, BulkEnrichPersonParams, BulkEnrichSinglePersonParams,
     BulkRetrievePersonParams, BulkRetrieveSinglePersonParams, CleanCompanyParams,
     CleanLocationParams, CleanSchoolParams, CompanyParams, EnrichCompanyParams, EnrichPersonParams,
     IPBaseParams, IPParams, IdentifyPersonParams, JobTitleBaseParams, JobTitleParams,
@@ -15,6 +15,7 @@ pub use models::{
 };
 
 pub struct PDL {
+    pub autocomplete: Autocomplete,
     pub company: Company,
     pub ip: IP,
     pub job_title: JobTitle,
@@ -30,6 +31,9 @@ impl PDL {
         let client = PDLClient::new(&api_key, "v5");
 
         PDL {
+            autocomplete: Autocomplete {
+                client: client.clone(),
+            },
             company: Company {
                 client: client.clone(),
             },
