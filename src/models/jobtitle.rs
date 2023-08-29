@@ -29,13 +29,13 @@ impl JobTitleParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct JobTitleResponse {
-    status: i32,
-    data: JobTitleResult,
+    pub status: i32,
+    pub data: JobTitleResult,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct JobTitleResult {
-    cleaned_job_title: String,
-    similar_job_titles: Vec<String>,
-    relevant_skills: Vec<String>,
+pub struct JobTitleResult {
+    pub cleaned_job_title: String,
+    pub similar_job_titles: Vec<String>,
+    pub relevant_skills: Vec<String>,
 }
