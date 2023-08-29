@@ -52,7 +52,7 @@ Then, send requests to any PDL API Endpoint.
     let mut enrich_params = EnrichPersonParams::default();
     enrich_params.person_params = person_params.clone();
 
-    let enrich_results = client.person.enrich(enrich_params);
+    let results = client.person.enrich(enrich_params);
 ```
 
 #### Bulk Enrichment
@@ -61,7 +61,7 @@ Then, send requests to any PDL API Endpoint.
     let mut person_params = PersonParams::default();
     person_params.name = Some(vec!["josh finnie".to_string()]);
     person_params.location = Some(vec!["washington, dc".to_string()]);
-
+    
     let request = BulkEnrichSinglePersonParams {
         params: person_params.clone(),
         metadata: None,
@@ -70,7 +70,7 @@ Then, send requests to any PDL API Endpoint.
         requests: vec![request],
     };
 
-    let bulk_enrich_results = client.person.bulk_enrich(bulk_enrich_params);
+    let results = client.person.bulk_enrich(bulk_enrich_params);
 ```
 
 #### Search (Elasticsearch)
@@ -90,6 +90,19 @@ Then, send requests to any PDL API Endpoint.
 #### Search (SQL)
 
 ```rust
+    let query = r#"
+        SELECT * FROM person
+            WHERE location_country='mexico'
+            AND job_title_role='health'
+            AND phone_numbers IS NOT NULL;
+    "#.to_string();
+    let mut search_base_params = SeachBaseParams::default();
+    search_base_params.sql = query;
+    
+    let mut seach_params = SearchParams::default();
+    search_params.search_base_params = search_base_params;
+    
+    let search_results = client.person.searach(seach_params);
 ```
 
 #### `PDL_ID` (Retrieve API)
@@ -150,6 +163,20 @@ Then, send requests to any PDL API Endpoint.
 #### Search (Elasticsearch)
 
 ```rust
+    let mut search_base_params = SearchBaseParams::default();
+    search_base_params.query = Some(serde_json::value::Value::String(
+        r#"{'query': {'bool': {'must': {
+                {"term": {"tags": "bigdata"}},
+                {"term": {"industry": "financial services"}},
+                {"term": {"location.country": "united states"}},
+            },},},
+        }"#.to_string(),
+    ));
+
+    let mut search_params = SearchParams::default();
+    search_params.search_base_params = search_base_params;
+
+    let search_results = client.company.search(search_params);
 ```
 
 #### Search (SQL)
