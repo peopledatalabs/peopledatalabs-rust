@@ -8,8 +8,8 @@
   <a href="https://github.com/peopledatalabs/peopledatalabs-rs">
     <img src="https://img.shields.io/badge/repo%20status-Active-limegreen" alt="Repo Status">
   </a>&nbsp;
-  <a href="https://github.com/peopledatalabs/peopledatalabs-rs/actions/workflows/test.yaml">
-    <img src="https://github.com/peopledatalabs/peopledatalabs-rs/actions/workflows/test.yaml/badge.svg" alt="Tests Status" />
+  <a href="https://github.com/peopledatalabs/peopledatalabs-rust/actions/workflows/test.yml">
+    <img src="https://github.com/peopledatalabs/peopledatalabs-rust/actions/workflows/test.yml/badge.svg" alt="Tests Status" />
   </a>
 </p>
 
