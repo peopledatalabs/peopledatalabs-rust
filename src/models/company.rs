@@ -117,104 +117,104 @@ impl CleanCompanyParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SearchCompanyResponse {
-    status: i32,
-    data: Vec<CompanyResponse>,
+    pub status: i32,
+    pub data: Vec<CompanyResponse>,
     /// Scroll value used for pagination
-    scroll_token: Option<String>,
+    pub scroll_token: Option<String>,
     /// Number of records matching a given query or sql input.
-    total: Option<i32>,
+    pub total: Option<i32>,
     /// Error details
-    error: Option<CompanyError>,
+    pub error: Option<CompanyError>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct CompanyError {
+pub struct CompanyError {
     #[serde(rename = "type")]
-    error_type: Vec<String>,
-    message: String,
+    pub error_type: Vec<String>,
+    pub message: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Naics {
-    naics_code: Option<String>,
-    sector: Option<String>,
-    sub_sector: Option<String>,
-    industry_group: Option<String>,
-    naics_industry: Option<String>,
-    national_industry: Option<String>,
+pub struct Naics {
+    pub naics_code: Option<String>,
+    pub sector: Option<String>,
+    pub sub_sector: Option<String>,
+    pub industry_group: Option<String>,
+    pub naics_industry: Option<String>,
+    pub national_industry: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Sic {
-    sic_code: Option<String>,
-    major_group: Option<String>,
-    industry_group: Option<String>,
-    industry_sector: Option<String>,
+pub struct Sic {
+    pub sic_code: Option<String>,
+    pub major_group: Option<String>,
+    pub industry_group: Option<String>,
+    pub industry_sector: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Location {
-    name: Option<String>,
-    locality: Option<String>,
-    region: Option<String>,
-    metro: Option<String>,
-    country: Option<String>,
-    continent: Option<String>,
-    street_address: Option<String>,
-    address_line_2: Option<String>,
-    postal_code: Option<String>,
-    geo: Option<String>,
+pub struct Location {
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub street_address: Option<String>,
+    pub address_line_2: Option<String>,
+    pub postal_code: Option<String>,
+    pub geo: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CompanyResponse {
-    status: Option<i32>,
-    name: Option<String>,
-    size: Option<String>,
-    employee_count: Option<i32>,
-    id: Option<String>,
-    founded: Option<i32>,
-    industry: Option<String>,
-    naics: Option<Vec<Naics>>,
-    sic: Option<Vec<Sic>>,
-    location: Option<Location>,
-    linkedin_id: Option<String>,
-    linkedin_url: Option<String>,
-    facebook_url: Option<String>,
-    twitter_url: Option<String>,
-    profiles: Option<Vec<String>>,
-    website: Option<String>,
-    ticker: Option<String>,
-    gics_sector: Option<String>,
-    mic_exchange: Option<String>,
-    type_: Option<String>,
-    summary: Option<String>,
-    tags: Option<Vec<String>>,
-    headline: Option<String>,
-    alternative_names: Option<Vec<String>>,
-    alternative_domains: Option<Vec<String>>,
-    affiliated_profiles: Option<Vec<String>>,
-    employee_count_by_country: Option<HashMap<String, i32>>,
-    likelihood: Option<i32>,
+    pub status: Option<i32>,
+    pub name: Option<String>,
+    pub size: Option<String>,
+    pub employee_count: Option<i32>,
+    pub id: Option<String>,
+    pub founded: Option<i32>,
+    pub industry: Option<String>,
+    pub naics: Option<Vec<Naics>>,
+    pub sic: Option<Vec<Sic>>,
+    pub location: Option<Location>,
+    pub linkedin_id: Option<String>,
+    pub linkedin_url: Option<String>,
+    pub facebook_url: Option<String>,
+    pub twitter_url: Option<String>,
+    pub profiles: Option<Vec<String>>,
+    pub website: Option<String>,
+    pub ticker: Option<String>,
+    pub gics_sector: Option<String>,
+    pub mic_exchange: Option<String>,
+    pub type_: Option<String>,
+    pub summary: Option<String>,
+    pub tags: Option<Vec<String>>,
+    pub headline: Option<String>,
+    pub alternative_names: Option<Vec<String>>,
+    pub alternative_domains: Option<Vec<String>>,
+    pub affiliated_profiles: Option<Vec<String>>,
+    pub employee_count_by_country: Option<HashMap<String, i32>>,
+    pub likelihood: Option<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanCompanyResponse {
-    status: i32,
-    name: Option<String>,
-    size: Option<String>,
-    id: Option<String>,
-    founded: Option<i32>,
-    industry: Option<String>,
-    location: Option<Location>,
-    linkedin_url: Option<String>,
-    linkedin_id: Option<String>,
-    facebook_url: Option<String>,
-    twitter_url: Option<String>,
-    website: Option<String>,
-    ticker: Option<String>,
-    type_: Option<String>,
-    raw: Option<Vec<String>>,
-    score: f32,
-    fuzzy_match: bool,
+    pub status: i32,
+    pub name: Option<String>,
+    pub size: Option<String>,
+    pub id: Option<String>,
+    pub founded: Option<i32>,
+    pub industry: Option<String>,
+    pub location: Option<Location>,
+    pub linkedin_url: Option<String>,
+    pub linkedin_id: Option<String>,
+    pub facebook_url: Option<String>,
+    pub twitter_url: Option<String>,
+    pub website: Option<String>,
+    pub ticker: Option<String>,
+    pub type_: Option<String>,
+    pub raw: Option<Vec<String>>,
+    pub score: f32,
+    pub fuzzy_match: bool,
 }

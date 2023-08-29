@@ -32,20 +32,20 @@ impl AutocompleteParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AutocompleteResponse {
-    status: i32,
-    data: Vec<AutocompleteResult>,
-    fields: Vec<String>,
+    pub status: i32,
+    pub data: Vec<AutocompleteResult>,
+    pub fields: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct AutocompleteResult {
+pub struct AutocompleteResult {
     /// The plain text name of this Autocomplete API suggestion.
     /// The prefix of this field will match the value of the text input parameter.
-    name: String,
+    pub name: String,
     /// The number of records in our Person Dataset for this Autocomplete API suggestion.
     /// This field is used for sorting elements in the data array.
-    count: i32,
+    pub count: i32,
     /// A set of additional fields returned for each result in the data array.
     /// The metadata fields depend on the field input parameter
-    meta: HashMap<String, String>,
+    pub meta: HashMap<String, String>,
 }

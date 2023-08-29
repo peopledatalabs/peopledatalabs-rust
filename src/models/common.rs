@@ -113,7 +113,7 @@ where
     S: Serializer,
 {
     match vec {
-        Some(data) => { return serializer.serialize_str(&data.join(", "))},
-        None => { return serializer.serialize_none()},
+        Some(data) => return serializer.serialize_str(&data.join(", ")),
+        None => return serializer.serialize_none(),
     }
 }

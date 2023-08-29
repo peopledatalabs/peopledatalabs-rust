@@ -2,28 +2,28 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
-    models::common::{AdditionalParams, BaseParams, param_serialize},
+    models::common::{param_serialize, AdditionalParams, BaseParams},
     PDLError,
 };
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PersonParams {
-    #[serde(rename = "pdl_id", serialize_with="param_serialize", default)]
+    #[serde(rename = "pdl_id", serialize_with = "param_serialize", default)]
     pub pdl_id: Option<Vec<String>>,
 
-    #[serde(rename = "name", serialize_with="param_serialize", default)]
+    #[serde(rename = "name", serialize_with = "param_serialize", default)]
     pub name: Option<Vec<String>>,
 
-    #[serde(rename = "first_name", serialize_with="param_serialize", default)]
+    #[serde(rename = "first_name", serialize_with = "param_serialize", default)]
     pub first_name: Option<Vec<String>>,
 
-    #[serde(rename = "last_name", serialize_with="param_serialize", default)]
+    #[serde(rename = "last_name", serialize_with = "param_serialize", default)]
     pub last_name: Option<Vec<String>>,
 
-    #[serde(rename = "middle_name", serialize_with="param_serialize", default)]
+    #[serde(rename = "middle_name", serialize_with = "param_serialize", default)]
     pub middle_name: Option<Vec<String>>,
 
-    #[serde(rename = "location", serialize_with="param_serialize", default)]
+    #[serde(rename = "location", serialize_with = "param_serialize", default)]
     pub location: Option<Vec<String>>,
 
     #[serde(rename = "street_address", default)]
@@ -38,31 +38,31 @@ pub struct PersonParams {
     #[serde(rename = "country", default)]
     pub country: Option<String>,
 
-    #[serde(rename = "postal_code", serialize_with="param_serialize", default)]
+    #[serde(rename = "postal_code", serialize_with = "param_serialize", default)]
     pub postal_code: Option<Vec<String>>,
 
-    #[serde(rename = "company", serialize_with="param_serialize", default)]
+    #[serde(rename = "company", serialize_with = "param_serialize", default)]
     pub company: Option<Vec<String>>,
 
-    #[serde(rename = "school", serialize_with="param_serialize", default)]
+    #[serde(rename = "school", serialize_with = "param_serialize", default)]
     pub school: Option<Vec<String>>,
 
-    #[serde(rename = "phone", serialize_with="param_serialize", default)]
+    #[serde(rename = "phone", serialize_with = "param_serialize", default)]
     pub phone: Option<Vec<String>>,
 
-    #[serde(rename = "email", serialize_with="param_serialize", default)]
+    #[serde(rename = "email", serialize_with = "param_serialize", default)]
     pub email: Option<Vec<String>>,
 
-    #[serde(rename = "email_hash", serialize_with="param_serialize", default)]
+    #[serde(rename = "email_hash", serialize_with = "param_serialize", default)]
     pub email_hash: Option<Vec<String>>,
 
-    #[serde(rename = "profile", serialize_with="param_serialize", default)]
+    #[serde(rename = "profile", serialize_with = "param_serialize", default)]
     pub profile: Option<Vec<String>>,
 
-    #[serde(rename = "lid", serialize_with="param_serialize", default)]
+    #[serde(rename = "lid", serialize_with = "param_serialize", default)]
     pub lid: Option<Vec<String>>,
 
-    #[serde(rename = "birth_date", serialize_with="param_serialize", default)]
+    #[serde(rename = "birth_date", serialize_with = "param_serialize", default)]
     pub birth_date: Option<Vec<String>>,
 }
 
