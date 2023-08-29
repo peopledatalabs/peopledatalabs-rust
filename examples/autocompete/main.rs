@@ -1,10 +1,10 @@
-use peopledatalabs::{PDL, AutocompleteBaseParams, AutocompleteParams};
+use peopledatalabs::{AutocompleteBaseParams, AutocompleteParams, PDL};
 
 fn main() {
     let client = PDL::new();
-    let autocomplete_base_params = AutocompleteBaseParams{
+    let autocomplete_base_params = AutocompleteBaseParams {
         field: "text".to_string(),
-        text: Some("full".to_string())
+        text: Some("full".to_string()),
     };
     let autocomplete_params = AutocompleteParams {
         base_params: None,

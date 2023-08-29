@@ -1,6 +1,5 @@
 use peopledatalabs::{
-    CleanCompanyParams, CompanyParams, EnrichCompanyParams, SearchBaseParams,
-    SearchParams, PDL,
+    CleanCompanyParams, CompanyParams, EnrichCompanyParams, SearchBaseParams, SearchParams, PDL,
 };
 
 fn main() {

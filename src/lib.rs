@@ -6,12 +6,12 @@ use api::{Autocomplete, Company, JobTitle, Location, Person, School, Skill, IP};
 use client::{PDLClient, PDLError};
 
 pub use models::{
-    AutocompleteBaseParams, AutocompleteParams, BaseParams, BulkEnrichPersonParams, BulkEnrichSinglePersonParams,
-    BulkRetrievePersonParams, BulkRetrieveSinglePersonParams, CleanCompanyParams,
-    CleanLocationParams, CleanSchoolParams, CompanyParams, EnrichCompanyParams, EnrichPersonParams,
-    IPBaseParams, IPParams, IdentifyPersonParams, JobTitleBaseParams, JobTitleParams,
-    LocationParams, PersonMetadata, PersonParams, RetrievePersonParams, SchoolParams,
-    SearchBaseParams, SearchParams, SkillBaseParams, SkillParams,
+    AutocompleteBaseParams, AutocompleteParams, BaseParams, BulkEnrichPersonParams,
+    BulkEnrichSinglePersonParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
+    CleanCompanyParams, CleanLocationParams, CleanSchoolParams, CompanyParams, EnrichCompanyParams,
+    EnrichPersonParams, IPBaseParams, IPParams, IdentifyPersonParams, JobTitleBaseParams,
+    JobTitleParams, LocationParams, PersonMetadata, PersonParams, RetrievePersonParams,
+    SchoolParams, SearchBaseParams, SearchParams, SkillBaseParams, SkillParams,
 };
 
 pub struct PDL {

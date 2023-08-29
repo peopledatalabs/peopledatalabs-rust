@@ -21,7 +21,7 @@ impl IP {
 
 #[cfg(test)]
 mod tests {
-    use crate::{IPParams, IPBaseParams, BaseParams, client::PDLClient};
+    use crate::{client::PDLClient, BaseParams, IPBaseParams, IPParams};
 
     use super::IP;
 
@@ -30,9 +30,7 @@ mod tests {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key, "v5");
 
-        let ip = IP {
-            client,
-        };
+        let ip = IP { client };
 
         let mut base_params = BaseParams::default();
         base_params.pretty = Some(true);
