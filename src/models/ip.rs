@@ -52,81 +52,81 @@ impl IPParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPResponse {
-    status: i32,
-    data: IPResult,
+    pub status: i32,
+    pub data: IPResult,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPResult {
-    ip: IPInfo,
-    company: Option<IPCompany>,
-    person: Option<IPPerson>,
+pub struct IPResult {
+    pub ip: IPInfo,
+    pub company: Option<IPCompany>,
+    pub person: Option<IPPerson>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPInfo {
-    address: String,
-    metadata: Option<IPMetadata>,
-    location: Option<IPLocation>,
+pub struct IPInfo {
+    pub address: String,
+    pub metadata: Option<IPMetadata>,
+    pub location: Option<IPLocation>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPMetadata {
-    version: i32,
-    mobile: bool,
-    hosting: bool,
-    proxy: bool,
-    tor: bool,
-    vpn: bool,
-    relay: bool,
-    service: bool,
+pub struct IPMetadata {
+    pub version: i32,
+    pub mobile: bool,
+    pub hosting: bool,
+    pub proxy: bool,
+    pub tor: bool,
+    pub vpn: bool,
+    pub relay: bool,
+    pub service: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPLocation {
-    name: String,
-    locality: String,
-    region: String,
-    metro: String,
-    country: String,
-    continent: String,
-    postal_code: String,
-    geo: String,
-    timezone: String,
+pub struct IPLocation {
+    pub name: String,
+    pub locality: String,
+    pub region: String,
+    pub metro: String,
+    pub country: String,
+    pub continent: String,
+    pub postal_code: String,
+    pub geo: String,
+    pub timezone: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPCompany {
-    confidence: String,
-    id: String,
-    website: String,
-    name: String,
-    location: IPCompanyLocation,
-    size: String,
-    industry: String,
-    inferred_revenue: String,
-    employee_count: i32,
-    tags: Vec<String>,
+pub struct IPCompany {
+    pub confidence: String,
+    pub id: String,
+    pub website: String,
+    pub name: String,
+    pub location: IPCompanyLocation,
+    pub size: String,
+    pub industry: String,
+    pub inferred_revenue: String,
+    pub employee_count: i32,
+    pub tags: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPCompanyLocation {
-    name: String,
-    locality: String,
-    region: String,
-    metro: String,
-    country: String,
-    continent: String,
-    street_address: String,
-    address_line_2: String,
-    postal_code: String,
-    geo: String,
+pub struct IPCompanyLocation {
+    pub name: String,
+    pub locality: String,
+    pub region: String,
+    pub metro: String,
+    pub country: String,
+    pub continent: String,
+    pub street_address: String,
+    pub address_line_2: String,
+    pub postal_code: String,
+    pub geo: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct IPPerson {
-    confidence: String,
-    job_title_subrole: String,
-    job_title_role: String,
-    job_title_levels: Vec<String>,
+pub struct IPPerson {
+    pub confidence: String,
+    pub job_title_subrole: String,
+    pub job_title_role: String,
+    pub job_title_levels: Vec<String>,
 }
