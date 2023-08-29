@@ -2,6 +2,15 @@
 name = "peopledatalabs"
 version = "0.1.0"
 edition = "2021"
+description = "A Rust client for the People Data Labs API"
+documentation = "https://docs.peopledatalabs.com/docs/rust-sdk"
+readme = "README.md"
+homepage = "https://www.peopledatalabs.com"
+repository = "https://github.com/peopledatalabs/peopledatalabs-rust"
+license = "MIT"
+license-file = "LICENSE"
+keywords = ["peopledatalabs", "person-data", "company-data", "sdk", "api"]
+categories = ["api-bindings"]
 
 [dependencies]
 hyper = { version = "0.14.27", features = ["client", "http1"] }
