@@ -30,9 +30,7 @@ mod tests {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key, "v5");
 
-        let job_title = JobTitle {
-            client,
-        };
+        let job_title = JobTitle { client };
 
         let mut base_params = BaseParams::default();
         base_params.pretty = Some(true);

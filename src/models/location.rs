@@ -45,5 +45,4 @@ pub struct CleanLocationResponse {
     pub continent: Option<String>,
     pub type_: Option<String>,
     pub geo: Option<String>,
-
 }

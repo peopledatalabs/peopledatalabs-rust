@@ -68,7 +68,7 @@ fn main() {
         metadata: None,
     };
 
-    let bulk_retrieve_params = BulkRetrievePersonParams{
+    let bulk_retrieve_params = BulkRetrievePersonParams {
         base_params: None,
         requests: vec![retrieve_request],
         additional_params: None,

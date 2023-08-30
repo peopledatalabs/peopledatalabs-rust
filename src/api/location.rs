@@ -21,7 +21,7 @@ impl Location {
 
 #[cfg(test)]
 mod tests {
-    use crate::{client::PDLClient, BaseParams, LocationParams, CleanLocationParams};
+    use crate::{client::PDLClient, BaseParams, CleanLocationParams, LocationParams};
 
     use super::Location;
 
@@ -30,7 +30,7 @@ mod tests {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key, "v5");
 
-        let location = Location {client};
+        let location = Location { client };
 
         let mut base_params = BaseParams::default();
         base_params.pretty = Some(true);
@@ -48,6 +48,9 @@ mod tests {
         let resp = location.clean(clean_location_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.name, Some("portland, oregon, united states".to_string()));
+        assert_eq!(
+            resp.name,
+            Some("portland, oregon, united states".to_string())
+        );
     }
 }

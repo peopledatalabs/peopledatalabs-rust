@@ -21,7 +21,7 @@ impl School {
 
 #[cfg(test)]
 mod tests {
-    use crate::{client::PDLClient, BaseParams, SchoolParams, CleanSchoolParams};
+    use crate::{client::PDLClient, BaseParams, CleanSchoolParams, SchoolParams};
 
     use super::School;
 
@@ -47,6 +47,9 @@ mod tests {
         let resp = school.clean(clean_school_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.name, Some("university of california, los angeles".to_string()));
+        assert_eq!(
+            resp.name,
+            Some("university of california, los angeles".to_string())
+        );
     }
 }

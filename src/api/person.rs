@@ -27,7 +27,9 @@ impl Person {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
         dbg!(&qs);
-        let r = self.client.get::<EnrichPersonResponse>(PERSON_ENRICH_PATH, &qs)?;
+        let r = self
+            .client
+            .get::<EnrichPersonResponse>(PERSON_ENRICH_PATH, &qs)?;
 
         Ok(r)
     }
@@ -38,7 +40,9 @@ impl Person {
     ) -> Result<BulkEnrichPersonResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<BulkEnrichPersonResponse>(PERSON_BULK_ENRICH_PATH, &qs)?;
+        let r = self
+            .client
+            .get::<BulkEnrichPersonResponse>(PERSON_BULK_ENRICH_PATH, &qs)?;
 
         Ok(r)
     }
@@ -49,7 +53,9 @@ impl Person {
     ) -> Result<IdentifyPersonResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<IdentifyPersonResponse>(PERSON_IDENTIFY_PATH, &qs)?;
+        let r = self
+            .client
+            .get::<IdentifyPersonResponse>(PERSON_IDENTIFY_PATH, &qs)?;
 
         Ok(r)
     }
@@ -57,7 +63,9 @@ impl Person {
     pub fn search(&self, params: SearchParams) -> Result<SearchPersonResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<SearchPersonResponse>(PERSON_SEARCH_PATH, &qs)?;
+        let r = self
+            .client
+            .get::<SearchPersonResponse>(PERSON_SEARCH_PATH, &qs)?;
 
         Ok(r)
     }
@@ -69,7 +77,7 @@ impl Person {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
         let url = PERSON_RETRIEVE_PATH.to_string() + &params.person_id;
-        let r self.client.get::<BulkRetrievePersonResponse>(&url, &qs)?;
+        let r = self.client.get::<BulkRetrievePersonResponse>(&url, &qs)?;
 
         Ok(r)
     }
@@ -80,7 +88,9 @@ impl Person {
     ) -> Result<BulkRetrievePersonResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<BulkRetrievePersonResponse>(PERSON_BULK_RETRIEVE_PATH, &qs)?;
+        let r = self
+            .client
+            .get::<BulkRetrievePersonResponse>(PERSON_BULK_RETRIEVE_PATH, &qs)?;
 
         Ok(r)
     }
@@ -88,7 +98,11 @@ impl Person {
 
 #[cfg(test)]
 mod tests {
-    use crate::{client::PDLClient, BaseParams, PersonParams, EnrichPersonParams, IdentifyPersonParams, SearchBaseParams, SearchParams, RetrievePersonParams, BulkRetrieveSinglePersonParams, BulkRetrievePersonParams};
+    use crate::{
+        client::PDLClient, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
+        EnrichPersonParams, IdentifyPersonParams, PersonParams, RetrievePersonParams,
+        SearchBaseParams, SearchParams,
+    };
 
     use super::Person;
 
@@ -114,7 +128,10 @@ mod tests {
         let resp = person.enrich(enrich_person_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.data.twitter_url, Some("twitter.com/seanthorne5".to_string()));
+        assert_eq!(
+            resp.data.twitter_url,
+            Some("twitter.com/seanthorne5".to_string())
+        );
     }
 
     #[test]
@@ -224,13 +241,18 @@ mod tests {
             metadata: None,
         };
 
-        let bulk_retrieve_person_params = BulkRetrievePersonParams{
+        let bulk_retrieve_person_params = BulkRetrievePersonParams {
             base_params: Some(base_params),
-            requests: vec![bulk_rerieve_singe_person_param_1, bulk_rerieve_singe_person_param_2],
+            requests: vec![
+                bulk_rerieve_singe_person_param_1,
+                bulk_rerieve_singe_person_param_2,
+            ],
             additional_params: None,
         };
 
-        let resp = person.bulk_retrieve(bulk_retrieve_person_params).expect("ERROR");
+        let resp = person
+            .bulk_retrieve(bulk_retrieve_person_params)
+            .expect("ERROR");
         assert_eq!(resp.status, 200);
     }
 }
