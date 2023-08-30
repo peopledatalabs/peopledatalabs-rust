@@ -13,7 +13,7 @@ impl JobTitle {
     pub fn get(&self, params: JobTitleParams) -> Result<JobTitleResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r: JobTitleResponse = self.client.get(PATH, &qs)?;
+        let r = self.client.get::<JobTitleResponse>(PATH, &qs)?;
 
         Ok(r)
     }

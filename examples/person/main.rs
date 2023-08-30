@@ -68,8 +68,11 @@ fn main() {
         metadata: None,
     };
 
-    let mut bulk_retrieve_params = BulkRetrievePersonParams::default();
-    bulk_retrieve_params.requests = vec![retrieve_request];
+    let bulk_retrieve_params = BulkRetrievePersonParams{
+        base_params: None,
+        requests: vec![retrieve_request],
+        additional_params: None,
+    };
 
     let bulk_retrieve_results = client.person.bulk_retrieve(bulk_retrieve_params);
 

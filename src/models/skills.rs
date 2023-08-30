@@ -29,13 +29,13 @@ impl SkillParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SkillResponse {
-    status: i32,
-    data: SkillResult,
+    pub status: i32,
+    pub data: SkillResult,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct SkillResult {
-    cleaned_skill: String,
-    similar_skills: Vec<String>,
-    relevant_job_titles: Vec<String>,
+pub struct SkillResult {
+    pub cleaned_skill: String,
+    pub similar_skills: Vec<String>,
+    pub relevant_job_titles: Vec<String>,
 }

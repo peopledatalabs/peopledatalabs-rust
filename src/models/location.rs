@@ -35,6 +35,15 @@ impl CleanLocationParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanLocationResponse {
-    status: i32,
-    location: String,
+    pub status: i32,
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub subregion: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub type_: Option<String>,
+    pub geo: Option<String>,
+
 }

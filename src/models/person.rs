@@ -156,9 +156,9 @@ impl EnrichPersonParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct EnrichPersonResponse {
-    status: i32,
-    likelihood: i32,
-    data: Person,
+    pub status: i32,
+    pub likelihood: i32,
+    pub data: Person,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -228,15 +228,15 @@ impl IdentifyPersonParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IdentifyPersonResponse {
-    status: i32,
-    matches: Vec<PersonMatch>,
+    pub status: i32,
+    pub matches: Vec<PersonMatch>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct PersonMatch {
-    data: Person,
-    match_score: i32,
-    matched_on: Vec<String>,
+pub struct PersonMatch {
+    pub data: Person,
+    pub match_score: i32,
+    pub matched_on: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -259,9 +259,9 @@ impl RetrievePersonParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RetrievePersonResponse {
-    status: i32,
-    data: Person,
-    billed: bool,
+    pub status: i32,
+    pub data: Person,
+    pub billed: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -273,16 +273,6 @@ pub struct BulkRetrievePersonParams {
 
     #[serde(flatten)]
     pub additional_params: Option<AdditionalParams>,
-}
-
-impl Default for BulkRetrievePersonParams {
-    fn default() -> Self {
-        Self {
-            base_params: None,
-            requests: vec![],
-            additional_params: None,
-        }
-    }
 }
 
 impl BulkRetrievePersonParams {
@@ -319,214 +309,214 @@ impl BulkRetrieveSinglePersonParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkRetrievePersonResponse {
-    status: i32,
-    data: Person,
-    billed: bool,
-    metadata: PersonMetadata,
+    pub status: i32,
+    pub data: Person,
+    pub billed: bool,
+    pub metadata: PersonMetadata,
 }
 
 pub type PersonMetadata = HashMap<String, String>;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SearchPersonResponse {
-    status: i32,
+    pub status: i32,
 
     #[serde(rename = "error")]
-    error_info: PersonErrorInfo,
+    pub error_info: Option<PersonErrorInfo>,
 
-    data: Vec<Person>,
-    total: i32,
-    scroll_token: String,
+    pub data: Option<Vec<Person>>,
+    pub total: i32,
+    pub scroll_token: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct PersonErrorInfo {
+pub struct PersonErrorInfo {
     #[serde(rename = "type")]
-    error_type: Vec<String>,
-    message: String,
+    pub error_type: Vec<String>,
+    pub message: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Person {
-    id: Option<String>,
-    full_name: Option<String>,
-    first_name: Option<String>,
-    middle_initial: Option<String>,
-    middle_name: Option<String>,
-    last_initial: Option<String>,
-    last_name: Option<String>,
-    gender: Option<String>,
-    birth_year: Option<i32>,
-    birth_date: Option<String>,
-    linkedin_url: Option<String>,
-    linkedin_username: Option<String>,
-    linkedin_id: Option<String>,
-    facebook_url: Option<String>,
-    facebook_username: Option<String>,
-    facebook_id: Option<String>,
-    twitter_url: Option<String>,
-    twitter_username: Option<String>,
-    github_url: Option<String>,
-    github_username: Option<String>,
-    work_email: Option<String>,
-    personal_emails: Option<Vec<String>>,
-    recommended_personal_email: Option<String>,
-    mobile_phone: Option<String>,
-    industry: Option<String>,
-    job_title: Option<String>,
-    job_title_role: Option<String>,
-    job_title_sub_role: Option<String>,
-    job_title_levels: Option<Vec<String>>,
-    job_company_id: Option<String>,
-    job_company_name: Option<String>,
-    job_company_website: Option<String>,
-    job_company_size: Option<String>,
-    job_company_founded: Option<i32>,
-    job_company_industry: Option<String>,
-    job_company_linkedin_url: Option<String>,
-    job_company_linkedin_id: Option<String>,
-    job_company_facebook_url: Option<String>,
-    job_company_twitter_url: Option<String>,
-    job_company_location_name: Option<String>,
-    job_company_location_locality: Option<String>,
-    job_company_location_metro: Option<String>,
-    job_company_location_region: Option<String>,
-    job_company_location_geo: Option<String>,
-    job_company_location_street_address: Option<String>,
-    job_company_location_address_line_2: Option<String>,
-    job_company_location_postal_code: Option<String>,
-    job_company_location_country: Option<String>,
-    job_company_location_continent: Option<String>,
-    job_last_updated: Option<String>,
-    job_start_date: Option<String>,
-    location_name: Option<String>,
-    location_locality: Option<String>,
-    location_metro: Option<String>,
-    location_region: Option<String>,
-    location_country: Option<String>,
-    location_continent: Option<String>,
-    location_street_address: Option<String>,
-    location_address_line_2: Option<String>,
-    location_postal_code: Option<String>,
-    location_geo: Option<String>,
-    location_last_updated: Option<String>,
-    phone_numbers: Option<Vec<String>>,
-    emails: Option<Vec<Email>>,
-    interests: Option<Vec<String>>,
-    skills: Option<Vec<String>>,
-    location_names: Option<Vec<String>>,
-    regions: Option<Vec<String>>,
-    countries: Option<Vec<String>>,
-    street_addresses: Option<Vec<StreetAddress>>,
-    experience: Option<Vec<Experience>>,
-    education: Option<Vec<Education>>,
-    profiles: Option<Vec<Profile>>,
-    version_status: Option<VersionStatus>,
+pub struct Person {
+    pub id: Option<String>,
+    pub full_name: Option<String>,
+    pub first_name: Option<String>,
+    pub middle_initial: Option<String>,
+    pub middle_name: Option<String>,
+    pub last_initial: Option<String>,
+    pub last_name: Option<String>,
+    pub gender: Option<String>,
+    pub birth_year: Option<i32>,
+    pub birth_date: Option<String>,
+    pub linkedin_url: Option<String>,
+    pub linkedin_username: Option<String>,
+    pub linkedin_id: Option<String>,
+    pub facebook_url: Option<String>,
+    pub facebook_username: Option<String>,
+    pub facebook_id: Option<String>,
+    pub twitter_url: Option<String>,
+    pub twitter_username: Option<String>,
+    pub github_url: Option<String>,
+    pub github_username: Option<String>,
+    pub work_email: Option<String>,
+    pub personal_emails: Option<Vec<String>>,
+    pub recommended_personal_email: Option<String>,
+    pub mobile_phone: Option<String>,
+    pub industry: Option<String>,
+    pub job_title: Option<String>,
+    pub job_title_role: Option<String>,
+    pub job_title_sub_role: Option<String>,
+    pub job_title_levels: Option<Vec<String>>,
+    pub job_company_id: Option<String>,
+    pub job_company_name: Option<String>,
+    pub job_company_website: Option<String>,
+    pub job_company_size: Option<String>,
+    pub job_company_founded: Option<i32>,
+    pub job_company_industry: Option<String>,
+    pub job_company_linkedin_url: Option<String>,
+    pub job_company_linkedin_id: Option<String>,
+    pub job_company_facebook_url: Option<String>,
+    pub job_company_twitter_url: Option<String>,
+    pub job_company_location_name: Option<String>,
+    pub job_company_location_locality: Option<String>,
+    pub job_company_location_metro: Option<String>,
+    pub job_company_location_region: Option<String>,
+    pub job_company_location_geo: Option<String>,
+    pub job_company_location_street_address: Option<String>,
+    pub job_company_location_address_line_2: Option<String>,
+    pub job_company_location_postal_code: Option<String>,
+    pub job_company_location_country: Option<String>,
+    pub job_company_location_continent: Option<String>,
+    pub job_last_updated: Option<String>,
+    pub job_start_date: Option<String>,
+    pub location_name: Option<String>,
+    pub location_locality: Option<String>,
+    pub location_metro: Option<String>,
+    pub location_region: Option<String>,
+    pub location_country: Option<String>,
+    pub location_continent: Option<String>,
+    pub location_street_address: Option<String>,
+    pub location_address_line_2: Option<String>,
+    pub location_postal_code: Option<String>,
+    pub location_geo: Option<String>,
+    pub location_last_updated: Option<String>,
+    pub phone_numbers: Option<Vec<String>>,
+    pub emails: Option<Vec<Email>>,
+    pub interests: Option<Vec<String>>,
+    pub skills: Option<Vec<String>>,
+    pub location_names: Option<Vec<String>>,
+    pub regions: Option<Vec<String>>,
+    pub countries: Option<Vec<String>>,
+    pub street_addresses: Option<Vec<StreetAddress>>,
+    pub experience: Option<Vec<Experience>>,
+    pub education: Option<Vec<Education>>,
+    pub profiles: Option<Vec<Profile>>,
+    pub version_status: Option<VersionStatus>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Email {
-    address: Option<String>,
-    type_: Option<String>,
+pub struct Email {
+    pub address: Option<String>,
+    pub type_: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct StreetAddress {
-    name: Option<String>,
-    locality: Option<String>,
-    region: Option<String>,
-    metro: Option<String>,
-    country: Option<String>,
-    continent: Option<String>,
-    street_address: Option<String>,
-    address_line_2: Option<String>,
-    postal_code: Option<String>,
-    geo: Option<String>,
+pub struct StreetAddress {
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub street_address: Option<String>,
+    pub address_line_2: Option<String>,
+    pub postal_code: Option<String>,
+    pub geo: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Experience {
-    company: Option<Company>,
-    location_names: Option<Vec<String>>,
-    end_date: Option<String>,
-    start_date: Option<String>,
-    title: Option<Title>,
-    is_primary: Option<bool>,
+pub struct Experience {
+    pub company: Option<Company>,
+    pub location_names: Option<Vec<String>>,
+    pub end_date: Option<String>,
+    pub start_date: Option<String>,
+    pub title: Option<Title>,
+    pub is_primary: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Company {
-    name: Option<String>,
-    size: Option<String>,
-    id: Option<String>,
-    founded: Option<i32>,
-    industry: Option<String>,
-    location: Option<Location>,
-    linkedin_url: Option<String>,
-    linkedin_id: Option<String>,
-    facebook_url: Option<String>,
-    twitter_url: Option<String>,
-    website: Option<String>,
+pub struct Company {
+    pub name: Option<String>,
+    pub size: Option<String>,
+    pub id: Option<String>,
+    pub founded: Option<i32>,
+    pub industry: Option<String>,
+    pub location: Option<Location>,
+    pub linkedin_url: Option<String>,
+    pub linkedin_id: Option<String>,
+    pub facebook_url: Option<String>,
+    pub twitter_url: Option<String>,
+    pub website: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Location {
-    name: Option<String>,
-    locality: Option<String>,
-    region: Option<String>,
-    metro: Option<String>,
-    country: Option<String>,
-    continent: Option<String>,
-    street_address: Option<String>,
-    address_line_2: Option<String>,
-    postal_code: Option<String>,
-    geo: Option<String>,
+pub struct Location {
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub street_address: Option<String>,
+    pub address_line_2: Option<String>,
+    pub postal_code: Option<String>,
+    pub geo: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Title {
-    name: Option<String>,
-    role: Option<String>,
-    sub_role: Option<String>,
-    levels: Option<Vec<String>>,
+pub struct Title {
+    pub name: Option<String>,
+    pub role: Option<String>,
+    pub sub_role: Option<String>,
+    pub levels: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Education {
-    school: Option<School>,
-    end_date: Option<String>,
-    start_date: Option<String>,
-    gpa: Option<f32>,
-    degrees: Option<Vec<String>>,
-    majors: Option<Vec<String>>,
-    minors: Option<Vec<String>>,
+pub struct Education {
+    pub school: Option<School>,
+    pub end_date: Option<String>,
+    pub start_date: Option<String>,
+    pub gpa: Option<f32>,
+    pub degrees: Option<Vec<String>>,
+    pub majors: Option<Vec<String>>,
+    pub minors: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct School {
-    name: Option<String>,
-    type_: Option<String>,
-    id: Option<String>,
-    location: Option<Location>,
-    linkedin_url: Option<String>,
-    facebook_url: Option<String>,
-    twitter_url: Option<String>,
-    website: Option<String>,
-    domain: Option<String>,
+pub struct School {
+    pub name: Option<String>,
+    pub type_: Option<String>,
+    pub id: Option<String>,
+    pub location: Option<Location>,
+    pub linkedin_url: Option<String>,
+    pub facebook_url: Option<String>,
+    pub twitter_url: Option<String>,
+    pub website: Option<String>,
+    pub domain: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Profile {
-    network: Option<String>,
-    id: Option<String>,
-    url: Option<String>,
-    username: Option<String>,
+pub struct Profile {
+    pub network: Option<String>,
+    pub id: Option<String>,
+    pub url: Option<String>,
+    pub username: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct VersionStatus {
-    status: Option<String>,
-    contains: Option<Vec<String>>,
-    previous_version: Option<String>,
-    current_version: Option<String>,
+pub struct VersionStatus {
+    pub status: Option<String>,
+    pub contains: Option<Vec<String>>,
+    pub previous_version: Option<String>,
+    pub current_version: Option<String>,
 }
