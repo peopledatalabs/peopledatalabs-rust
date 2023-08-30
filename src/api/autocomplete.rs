@@ -35,7 +35,6 @@ mod tests {
     use super::Autocomplete;
 
     #[test]
-    #[ignore]
     fn test_autocomplete() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key, "v5");

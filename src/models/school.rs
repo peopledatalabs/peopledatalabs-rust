@@ -52,19 +52,25 @@ impl CleanSchoolParams {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct CleanSchoolResponse {
-    status: i32,
-    school: School,
+pub struct Location {
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct School {
-    #[serde(rename = "name", default)]
-    name: Option<String>,
-
-    #[serde(rename = "website", default)]
-    website: Option<String>,
-
-    #[serde(rename = "profile", default)]
-    profile: Option<String>,
+pub struct CleanSchoolResponse {
+    pub status: i32,
+    pub name: Option<String>,
+    pub type_: Option<String>,
+    pub id: Option<String>,
+    pub location: Option<Location>,
+    pub linkedin_url: Option<String>,
+    pub facebook_url: Option<String>,
+    pub twitter_url: Option<String>,
+    pub linkedin_id: Option<String>,
+    pub website: Option<String>,
+    pub domain: Option<String>,
 }

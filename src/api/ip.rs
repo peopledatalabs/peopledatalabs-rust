@@ -13,7 +13,7 @@ impl IP {
     pub fn get(&self, params: IPParams) -> Result<IPResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r: IPResponse = self.client.get(PATH, &qs)?;
+        let r = self.client.get::<IPResponse>(PATH, &qs)?;
 
         Ok(r)
     }

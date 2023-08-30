@@ -13,7 +13,7 @@ impl JobTitle {
     pub fn get(&self, params: JobTitleParams) -> Result<JobTitleResponse, PDLError> {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r: JobTitleResponse = self.client.get(PATH, &qs)?;
+        let r = self.client.get::<JobTitleResponse>(PATH, &qs)?;
 
         Ok(r)
     }
@@ -30,9 +30,7 @@ mod tests {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key, "v5");
 
-        let job_title = JobTitle {
-            client,
-        };
+        let job_title = JobTitle { client };
 
         let mut base_params = BaseParams::default();
         base_params.pretty = Some(true);
