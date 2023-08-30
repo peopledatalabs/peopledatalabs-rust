@@ -77,7 +77,7 @@ impl Person {
         params.validate()?;
         let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
         let url = PERSON_RETRIEVE_PATH.to_string() + &params.person_id;
-        let r = self.client.get::<BulkRetrievePersonResponse>(&url, &qs)?;
+        let r = self.client.get::<RetrievePersonResponse>(&url, &qs)?;
 
         Ok(r)
     }
