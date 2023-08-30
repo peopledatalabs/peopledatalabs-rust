@@ -9,6 +9,9 @@ use crate::{
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CompanyParams {
+    /// The PDL ID of the company
+    #[serde(rename = "pdl_id", default)]
+    pub pdl_id: Option<String>,
     /// The name of the company
     #[serde(rename = "name", default)]
     pub name: Option<String>,
@@ -44,6 +47,7 @@ pub struct CompanyParams {
 impl Default for CompanyParams {
     fn default() -> Self {
         Self {
+            pdl_id: None,
             name: None,
             website: None,
             profile: None,
@@ -72,7 +76,8 @@ pub struct EnrichCompanyParams {
 
 impl EnrichCompanyParams {
     pub fn validate(&self) -> Result<(), PDLError> {
-        if self.company_params.name.is_none()
+        if self.company_params.pdl_id.is_none()
+            && self.company_params.name.is_none()
             && self.company_params.ticker.is_none()
             && self.company_params.website.is_none()
             && self.company_params.profile.is_none()

@@ -94,6 +94,9 @@ impl Default for PersonParams {
 
 impl PersonParams {
     fn validate(&self) -> Result<(), PDLError> {
+        if !self.pdl_id.is_none() {
+            return Ok(());
+        }
         if !self.profile.is_none() {
             return Ok(());
         }

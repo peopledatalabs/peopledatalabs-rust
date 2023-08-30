@@ -17,6 +17,7 @@ pub struct IPBaseParams {
     #[serde(rename = "return_person", default)]
     pub return_person: Option<bool>,
     /// If true, the response will return metadata/location even if no company is found
+    #[serde(rename = "return_if_unmatched", default)]
     pub return_if_unmatched: Option<bool>,
 }
 
@@ -79,7 +80,8 @@ pub struct IPMetadata {
     pub tor: bool,
     pub vpn: bool,
     pub relay: bool,
-    pub service: bool,
+    pub service: String,
+    pub asn_domain: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
