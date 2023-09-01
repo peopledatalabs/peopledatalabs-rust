@@ -62,7 +62,7 @@ mod tests {
     #[test]
     fn test_company_enrich() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key);
+        let client = PDLClient::new(&api_key).build();
 
         let company = Company { client };
 
@@ -87,7 +87,7 @@ mod tests {
     #[test]
     fn test_company_clean() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key);
+        let client = PDLClient::new(&api_key).build();
 
         let company = Company { client };
 
@@ -103,7 +103,7 @@ mod tests {
     #[test]
     fn test_company_search() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key);
+        let client = PDLClient::new(&api_key).build();
 
         let company = Company { client };
 
