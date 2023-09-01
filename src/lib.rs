@@ -28,7 +28,7 @@ pub struct PDL {
 impl PDL {
     pub fn new() -> PDL {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key).build();
 
         PDL {
             autocomplete: Autocomplete {

@@ -109,7 +109,7 @@ mod tests {
     #[test]
     fn test_person_enrich() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key);
 
         let person = Person { client };
 
@@ -143,7 +143,7 @@ mod tests {
     #[test]
     fn test_person_identify() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key);
 
         let person = Person { client };
 
@@ -170,7 +170,7 @@ mod tests {
     #[test]
     fn test_person_search() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key);
 
         let person = Person { client };
 
@@ -196,7 +196,7 @@ mod tests {
     #[ignore]
     fn test_person_retrieve() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key);
 
         let person = Person { client };
 
@@ -221,7 +221,7 @@ mod tests {
     #[ignore = "Needs to POST"]
     fn test_person_bulk_retriev() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key);
 
         let person = Person { client };
 
