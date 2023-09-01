@@ -31,7 +31,7 @@ impl Error for PDLError {}
 /// This is the struct that allows users to pass optional parameters to the PDLClient.
 pub struct PDLCLientOptions {
     pub sandbox: bool,
-    pub timeout: Duration
+    pub timeout: Duration,
 }
 
 impl PDLCLientOptions {
@@ -96,7 +96,12 @@ impl PDLClient {
 
     /// Builds the final PDLClient
     pub fn build(self) -> PDLClient {
-        PDLClient { api_key: self.api_key, base_url: self.base_url, api_version: self.api_version, client: self.client }
+        PDLClient {
+            api_key: self.api_key,
+            base_url: self.base_url,
+            api_version: self.api_version,
+            client: self.client,
+        }
     }
 
     /// Sends a GET method through the PeopleDataLabs API. It takes an endpoint &str and params &str.
