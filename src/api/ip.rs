@@ -28,7 +28,7 @@ mod tests {
     #[test]
     fn test_ip_get() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
-        let client = PDLClient::new(&api_key, "v5");
+        let client = PDLClient::new(&api_key).build();
 
         let ip = IP { client };
 
