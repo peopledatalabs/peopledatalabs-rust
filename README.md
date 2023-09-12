@@ -37,7 +37,8 @@ cargo add peopledatalabs-rs
 First, create the PeopleDataLabs client:
 
 ```rust
-let client = PDL::new();
+let api_key = std::env::var("PDL_API_KEY").unwrap();
+let client = PDL::new(&api_key);
 ```
 
 Then, send requests to any PDL API Endpoint.
