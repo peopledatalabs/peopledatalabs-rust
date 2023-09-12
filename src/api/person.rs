@@ -261,10 +261,10 @@ mod tests {
 
         let person = Person { client };
 
-        let num_results = 3;
+        let num_results: usize = 3;
 
         let mut base_params = BaseParams::default();
-        base_params.size = Some(num_results);
+        base_params.size = Some(num_results as i32);
 
         let mut search_base_params = SearchBaseParams::default();
         search_base_params.sql = Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
