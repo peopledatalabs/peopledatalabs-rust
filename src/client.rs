@@ -6,7 +6,7 @@ use std::time::Duration;
 
 static DEFAULT_API_URL: &str = "https://api.peopledatalabs.com/";
 static DEFAULT_API_VERSION: &str = "v5";
-static DEFAULT_SANDBOX_URL: &str = "https://sandbox.api.peopledatelabs.com/";
+static DEFAULT_SANDBOX_URL: &str = "https://sandbox.api.peopledatalabs.com/";
 static DEFAULT_TIMEOUT: Duration = Duration::from_secs(10);
 
 #[derive(Debug)]
