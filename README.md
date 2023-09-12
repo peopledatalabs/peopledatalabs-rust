@@ -295,7 +295,11 @@ let results = client.ip.get(params);
 
 ## 🏝 Sandbox Usage <a name="sandbox"></a>
 ```rust
-// To enable sandbox usage, use the following
+// To enable sandbox usage, pass in the following options to the PDLClient before building
+let api_key = std::env::var("PDL_API_KEY").unwrap();
+let mut client_options = PDLCLientOptions::default();
+client_options.sandbox = true;
+let client = PDLClient::new(&api_key).options(client_options).build();
 ```
 
 ## 🌐 Endpoints <a name="endpoints"></a>
