@@ -26,20 +26,32 @@ impl Default for BaseParams {
 pub struct AdditionalParams {
     /// The minimum likelihood score a response must possess in order to return a 200.
     #[serde(rename = "min_likelihood", default)]
-    min_likelihood: Option<i32>,
+    pub min_likelihood: Option<i32>,
     /// Parameter specifying the fields and data points a response must have to return a 200.
     #[serde(rename = "required", default)]
-    required: Option<String>,
+    pub required: Option<String>,
     /// Setting titlecase to true will titlecase the person data in 200 responses.
     #[serde(rename = "titlecase", default)]
-    titlecase: Option<bool>,
+    pub titlecase: Option<bool>,
     /// A comma-separated string of fields that you would like the response to include.
     #[serde(rename = "data_include", default)]
-    data_include: Option<String>,
+    pub data_include: Option<String>,
     /// If set to true, includes a top-level (alongside "data", "status", etc) field "matched" which
     /// includes a value for each queried field parameter that was "matched-on" during our internal query.
     #[serde(rename = "include_if_matched", default)]
-    include_if_matched: Option<bool>,
+    pub include_if_matched: Option<bool>,
+}
+
+impl Default for AdditionalParams {
+    fn default() -> Self {
+        Self {
+            min_likelihood: None,
+            required: None,
+            titlecase: None,
+            data_include: None,
+            include_if_matched: None,
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

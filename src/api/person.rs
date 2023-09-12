@@ -101,7 +101,7 @@ mod tests {
     use crate::{
         client::{PDLClient, PDLCLientOptions}, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
         EnrichPersonParams, IdentifyPersonParams, PersonParams, RetrievePersonParams,
-        SearchBaseParams, SearchParams,
+        SearchBaseParams, SearchParams, models::common::AdditionalParams,
     };
 
     use super::Person;
@@ -147,12 +147,15 @@ mod tests {
         base_params.pretty = Some(true);
 
         let mut person_params = PersonParams::default();
-        person_params.profile = Some(vec!["http://linkedin.com/in/seanthorne".to_string()]);
+        person_params.email = Some(vec!["fletcherveronica@example.com".to_string()]);
+
+        let mut additional_params = AdditionalParams::default();
+        additional_params.min_likelihood = Some(6);
 
         let enrich_person_params = EnrichPersonParams {
             base_params: Some(base_params),
             person_params,
-            additional_params: None,
+            additional_params: Some(additional_params),
         };
 
         let resp = person.enrich(enrich_person_params).expect("ERROR");
@@ -160,7 +163,7 @@ mod tests {
         assert_eq!(resp.status, 200);
         assert_eq!(
             resp.data.twitter_url,
-            Some("twitter.com/seanthorne5".to_string())
+            Some("twitter.com/omarmendez".to_string())
         );
     }
 
@@ -210,9 +213,7 @@ mod tests {
         base_params.pretty = Some(true);
 
         let mut person_params = PersonParams::default();
-        person_params.first_name = Some(vec!["sean".to_string()]);
-        person_params.last_name = Some(vec!["thorne".to_string()]);
-        person_params.company = Some(vec!["people data labs".to_string()]);
+        person_params.company = Some(vec!["walmart".to_string()]);
 
         let indentify_person_params = IdentifyPersonParams {
             base_params: Some(base_params),
@@ -260,11 +261,13 @@ mod tests {
 
         let person = Person { client };
 
+        let num_results = 3;
+
         let mut base_params = BaseParams::default();
-        base_params.pretty = Some(true);
+        base_params.size = Some(num_results);
 
         let mut search_base_params = SearchBaseParams::default();
-        search_base_params.sql = Some("SELECT * FROM person WHERE location_country='mexico' AND job_title_role='health' AND phone_numbers IS NOT NULL;".to_string());
+        search_base_params.sql = Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
 
         let search_params = SearchParams {
             base_params: Some(base_params),
@@ -275,7 +278,8 @@ mod tests {
         let resp = person.search(search_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.data.unwrap().len(), 1);
+        assert_eq!(resp.data.unwrap().len(), num_results);
+        assert_eq!(resp.scroll_token.is_empty(), false);
     }
 
     #[test]
