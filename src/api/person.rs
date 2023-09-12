@@ -99,7 +99,7 @@ impl Person {
 #[cfg(test)]
 mod tests {
     use crate::{
-        client::PDLClient, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
+        client::{PDLClient, PDLCLientOptions}, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
         EnrichPersonParams, IdentifyPersonParams, PersonParams, RetrievePersonParams,
         SearchBaseParams, SearchParams,
     };
@@ -110,6 +110,36 @@ mod tests {
     fn test_person_enrich() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key).build();
+
+        let person = Person { client };
+
+        let mut base_params = BaseParams::default();
+        base_params.pretty = Some(true);
+
+        let mut person_params = PersonParams::default();
+        person_params.profile = Some(vec!["http://linkedin.com/in/seanthorne".to_string()]);
+
+        let enrich_person_params = EnrichPersonParams {
+            base_params: Some(base_params),
+            person_params,
+            additional_params: None,
+        };
+
+        let resp = person.enrich(enrich_person_params).expect("ERROR");
+
+        assert_eq!(resp.status, 200);
+        assert_eq!(
+            resp.data.twitter_url,
+            Some("twitter.com/seanthorne5".to_string())
+        );
+    }
+
+    #[test]
+    fn test_person_enrich_sandbox() {
+        let api_key = std::env::var("PDL_API_KEY").unwrap();
+        let mut client_options = PDLCLientOptions::default();
+        client_options.sandbox = true;
+        let client = PDLClient::new(&api_key).options(client_options).build();
 
         let person = Person { client };
 
@@ -168,9 +198,65 @@ mod tests {
     }
 
     #[test]
+    fn test_person_identify_sandbox() {
+        let api_key = std::env::var("PDL_API_KEY").unwrap();
+        let mut client_options = PDLCLientOptions::default();
+        client_options.sandbox = true;
+        let client = PDLClient::new(&api_key).options(client_options).build();
+
+        let person = Person { client };
+
+        let mut base_params = BaseParams::default();
+        base_params.pretty = Some(true);
+
+        let mut person_params = PersonParams::default();
+        person_params.first_name = Some(vec!["sean".to_string()]);
+        person_params.last_name = Some(vec!["thorne".to_string()]);
+        person_params.company = Some(vec!["people data labs".to_string()]);
+
+        let indentify_person_params = IdentifyPersonParams {
+            base_params: Some(base_params),
+            person_params,
+            additional_params: None,
+        };
+
+        let resp = person.identify(indentify_person_params).expect("ERROR");
+
+        assert_eq!(resp.status, 200);
+        assert!(resp.matches.len() >= 1);
+    }
+
+    #[test]
     fn test_person_search() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key).build();
+
+        let person = Person { client };
+
+        let mut base_params = BaseParams::default();
+        base_params.pretty = Some(true);
+
+        let mut search_base_params = SearchBaseParams::default();
+        search_base_params.sql = Some("SELECT * FROM person WHERE location_country='mexico' AND job_title_role='health' AND phone_numbers IS NOT NULL;".to_string());
+
+        let search_params = SearchParams {
+            base_params: Some(base_params),
+            search_base_params,
+            additional_params: None,
+        };
+
+        let resp = person.search(search_params).expect("ERROR");
+
+        assert_eq!(resp.status, 200);
+        assert_eq!(resp.data.unwrap().len(), 1);
+    }
+
+    #[test]
+    fn test_person_search_sandbox() {
+        let api_key = std::env::var("PDL_API_KEY").unwrap();
+        let mut client_options = PDLCLientOptions::default();
+        client_options.sandbox = true;
+        let client = PDLClient::new(&api_key).options(client_options).build();
 
         let person = Person { client };
 
