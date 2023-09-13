@@ -8,7 +8,6 @@ readme = "README.md"
 homepage = "https://www.peopledatalabs.com"
 repository = "https://github.com/peopledatalabs/peopledatalabs-rust"
 license = "MIT"
-license-file = "LICENSE"
 keywords = ["peopledatalabs", "person-data", "company-data", "sdk", "api"]
 categories = ["api-bindings"]
 
