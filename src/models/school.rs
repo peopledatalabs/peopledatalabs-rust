@@ -5,7 +5,7 @@ use crate::{
     PDLError,
 };
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct SchoolParams {
     #[serde(rename = "name", default)]
     pub name: Option<String>,
@@ -15,16 +15,6 @@ pub struct SchoolParams {
 
     #[serde(rename = "profile", default)]
     pub profile: Option<String>,
-}
-
-impl Default for SchoolParams {
-    fn default() -> Self {
-        Self {
-            name: None,
-            website: None,
-            profile: None,
-        }
-    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

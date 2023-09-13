@@ -6,7 +6,7 @@ use crate::{
     PDLError,
 };
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
 pub struct PersonParams {
     #[serde(
         rename = "pdl_id",
@@ -145,70 +145,43 @@ pub struct PersonParams {
     pub birth_date: Option<Vec<String>>,
 }
 
-impl Default for PersonParams {
-    fn default() -> Self {
-        Self {
-            pdl_id: None,
-            name: None,
-            first_name: None,
-            last_name: None,
-            middle_name: None,
-            location: None,
-            street_address: None,
-            locality: None,
-            region: None,
-            country: None,
-            postal_code: None,
-            company: None,
-            school: None,
-            phone: None,
-            email: None,
-            email_hash: None,
-            profile: None,
-            lid: None,
-            birth_date: None,
-        }
-    }
-}
-
 impl PersonParams {
     fn validate(&self) -> Result<(), PDLError> {
-        if !self.pdl_id.is_none() {
+        if self.pdl_id.is_some() {
             return Ok(());
         }
-        if !self.profile.is_none() {
+        if self.profile.is_some() {
             return Ok(());
         }
-        if !self.email.is_none() {
+        if self.email.is_some() {
             return Ok(());
         }
-        if !self.phone.is_none() {
+        if self.phone.is_some() {
             return Ok(());
         }
-        if !self.email_hash.is_none() {
+        if self.email_hash.is_some() {
             return Ok(());
         }
         if self.lid.is_none() {
             return Ok(());
         }
 
-        if (!self.first_name.is_none() && !self.last_name.is_none()) || !self.name.is_none() {
-            if !self.locality.is_none()
-                || !self.region.is_none()
-                || !self.company.is_none()
+        if ((self.first_name.is_some() && self.last_name.is_some()) || self.name.is_some())
+            && (self.locality.is_some()
+                || self.region.is_some()
+                || self.company.is_some()
                 || self.school.is_none()
                 || self.location.is_none()
-                || self.postal_code.is_none()
-            {
-                return Ok(());
-            }
+                || self.postal_code.is_none())
+        {
+            return Ok(());
         }
 
         Err(PDLError::ValidationError)
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct EnrichPersonParams {
     #[serde(flatten)]
     pub base_params: Option<BaseParams>,
@@ -218,16 +191,6 @@ pub struct EnrichPersonParams {
 
     #[serde(flatten)]
     pub additional_params: Option<AdditionalParams>,
-}
-
-impl Default for EnrichPersonParams {
-    fn default() -> Self {
-        Self {
-            base_params: None,
-            person_params: PersonParams::default(),
-            additional_params: None,
-        }
-    }
 }
 
 impl EnrichPersonParams {
@@ -253,9 +216,7 @@ pub struct BulkEnrichPersonParams {
 impl BulkEnrichPersonParams {
     pub fn validate(&self) -> Result<(), PDLError> {
         for request in &self.requests {
-            if let Err(err) = request.validate() {
-                return Err(err);
-            }
+            request.validate()?
         }
         Ok(())
     }
@@ -284,7 +245,7 @@ pub struct BulkEnrichPersonResponse {
     pub metadata: Option<PersonMetadata>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct IdentifyPersonParams {
     #[serde(flatten)]
     pub base_params: Option<BaseParams>,
@@ -294,16 +255,6 @@ pub struct IdentifyPersonParams {
 
     #[serde(flatten)]
     pub additional_params: Option<AdditionalParams>,
-}
-
-impl Default for IdentifyPersonParams {
-    fn default() -> Self {
-        Self {
-            base_params: None,
-            person_params: PersonParams::default(),
-            additional_params: None,
-        }
-    }
 }
 
 impl IdentifyPersonParams {
@@ -371,9 +322,7 @@ impl BulkRetrievePersonParams {
             return Err(PDLError::ValidationError);
         }
         for request in &self.requests {
-            if let Err(err) = request.validate() {
-                return Err(err);
-            }
+            request.validate()?
         }
         Ok(())
     }

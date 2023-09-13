@@ -3,6 +3,8 @@ use std::error::Error;
 use std::fmt::{self, Display, Formatter};
 use std::time::Duration;
 
+static APP_USER_AGENT: &str = "PDL-RUST-SDK";
+
 static DEFAULT_API_URL: &str = "https://api.peopledatalabs.com/";
 static DEFAULT_API_VERSION: &str = "v5";
 static DEFAULT_SANDBOX_URL: &str = "https://sandbox.api.peopledatalabs.com/";
@@ -59,7 +61,11 @@ impl PDLClient {
         use reqwest::blocking as rq;
 
         let builder = rq::ClientBuilder::new();
-        let client = builder.timeout(DEFAULT_TIMEOUT).build().unwrap();
+        let client = builder
+            .user_agent(APP_USER_AGENT)
+            .timeout(DEFAULT_TIMEOUT)
+            .build()
+            .unwrap();
 
         PDLClient {
             api_key: key.to_string(),
@@ -82,7 +88,11 @@ impl PDLClient {
             use reqwest::blocking as rq;
 
             let builder = rq::ClientBuilder::new();
-            let client = builder.timeout(options.timeout).build().unwrap();
+            let client = builder
+                .user_agent(APP_USER_AGENT)
+                .timeout(options.timeout)
+                .build()
+                .unwrap();
             self.client = client
         }
 
@@ -112,8 +122,7 @@ impl PDLClient {
         let uri = format!(
             "{}{}{}?api_key={}&{}",
             self.base_url, self.api_version, endpoint, self.api_key, params
-        )
-        .to_string();
+        );
 
         dbg!(&uri);
 
@@ -144,8 +153,7 @@ impl PDLClient {
         let uri = format!(
             "{}{}{}?api_key={}",
             self.base_url, self.api_version, endpoint, self.api_key
-        )
-        .to_string();
+        );
 
         dbg!(&uri);
         dbg!(&json);
