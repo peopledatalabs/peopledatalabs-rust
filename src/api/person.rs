@@ -101,7 +101,7 @@ mod tests {
     use crate::{
         client::{PDLClient, PDLCLientOptions}, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
         EnrichPersonParams, IdentifyPersonParams, PersonParams, RetrievePersonParams,
-        SearchBaseParams, SearchParams, models::common::AdditionalParams,
+        SearchBaseParams, SearchParams, models::common::AdditionalParams, BulkEnrichSinglePersonParams, BulkEnrichPersonParams,
     };
 
     use super::Person;
@@ -168,9 +168,42 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "bulk? 🤷"]
     fn test_person_bulk_enrich() {
-        todo!()
+        let api_key = std::env::var("PDL_API_KEY").unwrap();
+        let client = PDLClient::new(&api_key).build();
+
+        let person = Person { client };
+
+        let mut base_params = BaseParams::default();
+        base_params.pretty = Some(true);
+
+        let mut person_params_1 = PersonParams::default();
+        person_params_1.profile = Some(vec!["linkedin.com/in/seanthorne".to_string()]);
+        let mut person_params_2 = PersonParams::default();
+        person_params_2.profile = Some(vec!["https://www.linkedin.com/in/haydenconrad/".to_string()]);
+
+        let mut additional_params = AdditionalParams::default();
+        additional_params.min_likelihood = Some(6);
+
+        let bulk_enrich_single_person_params_1 = BulkEnrichSinglePersonParams {
+            params: person_params_1,
+            metadata: None,
+        };
+
+        let bulk_enrich_single_person_params_2 = BulkEnrichSinglePersonParams {
+            params: person_params_2,
+            metadata: None,
+        };
+
+        let bulk_enrich_params = BulkEnrichPersonParams {
+            requests: vec![bulk_enrich_single_person_params_1, bulk_enrich_single_person_params_2]
+        };
+
+        let resp = person.bulk_enrich(bulk_enrich_params).expect("ERROR");
+
+        let data = resp.data.unwrap();
+        assert_eq!(data[0].status, 200);
+        assert_eq!(data[1].status, 200);
     }
 
     #[test]
@@ -283,7 +316,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn test_person_retrieve() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key).build();

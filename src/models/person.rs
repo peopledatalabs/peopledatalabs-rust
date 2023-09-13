@@ -196,8 +196,10 @@ impl BulkEnrichSinglePersonParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkEnrichPersonResponse {
     #[serde(flatten)]
-    enrich_person_response: EnrichPersonResponse,
-    metadata: Option<PersonMetadata>,
+    pub data: Option<Vec<EnrichPersonResponse>>,
+    pub status: Option<i32>,
+    pub likelihood: Option<i32>,
+    pub metadata: Option<PersonMetadata>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
