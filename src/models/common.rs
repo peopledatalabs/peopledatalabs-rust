@@ -5,11 +5,11 @@ use crate::PDLError;
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct BaseParams {
     /// Whether the output should have human-readable indentation.
-    #[serde(rename = "pretty")]
+    #[serde(rename = "pretty", skip_serializing_if = "Option::is_none")]
     pub pretty: Option<bool>,
     /// The number of matched records to return for this query if they exist.
     /// Must be between 1 and 1000 (inclusive).
-    #[serde(rename = "size")]
+    #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
     pub size: Option<i32>,
 }
 

@@ -37,12 +37,11 @@ impl Person {
     pub fn bulk_enrich(
         &self,
         params: BulkEnrichPersonParams,
-    ) -> Result<BulkEnrichPersonResponse, PDLError> {
-        params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
+    ) -> Result<Vec<BulkEnrichPersonResponse>, PDLError> {
+        let json = serde_json::to_value(&params).map_err(|_| PDLError::ValidationError)?;
         let r = self
             .client
-            .get::<BulkEnrichPersonResponse>(PERSON_BULK_ENRICH_PATH, &qs)?;
+            .post::<Vec<BulkEnrichPersonResponse>>(PERSON_BULK_ENRICH_PATH, json)?;
 
         Ok(r)
     }
@@ -85,12 +84,11 @@ impl Person {
     pub fn bulk_retrieve(
         &self,
         params: BulkRetrievePersonParams,
-    ) -> Result<BulkRetrievePersonResponse, PDLError> {
-        params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
+    ) -> Result<Vec<BulkRetrievePersonResponse>, PDLError> {
+        let json = serde_json::to_value(&params).map_err(|_| PDLError::ValidationError)?;
         let r = self
             .client
-            .get::<BulkRetrievePersonResponse>(PERSON_BULK_RETRIEVE_PATH, &qs)?;
+            .post::<Vec<BulkRetrievePersonResponse>>(PERSON_BULK_RETRIEVE_PATH, json)?;
 
         Ok(r)
     }
@@ -99,9 +97,11 @@ impl Person {
 #[cfg(test)]
 mod tests {
     use crate::{
-        client::{PDLClient, PDLCLientOptions}, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
-        EnrichPersonParams, IdentifyPersonParams, PersonParams, RetrievePersonParams,
-        SearchBaseParams, SearchParams, models::common::AdditionalParams,
+        client::{PDLCLientOptions, PDLClient},
+        models::common::AdditionalParams,
+        BaseParams, BulkEnrichPersonParams, BulkEnrichSinglePersonParams, BulkRetrievePersonParams,
+        BulkRetrieveSinglePersonParams, EnrichPersonParams, IdentifyPersonParams, PersonParams,
+        RetrievePersonParams, SearchBaseParams, SearchParams,
     };
 
     use super::Person;
@@ -168,9 +168,46 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "bulk? 🤷"]
     fn test_person_bulk_enrich() {
-        todo!()
+        let api_key = std::env::var("PDL_API_KEY").unwrap();
+        let client = PDLClient::new(&api_key).build();
+
+        let person = Person { client };
+
+        let mut base_params = BaseParams::default();
+        base_params.pretty = Some(true);
+
+        let mut person_params_1 = PersonParams::default();
+        person_params_1.profile = Some(vec!["linkedin.com/in/seanthorne".to_string()]);
+        let mut person_params_2 = PersonParams::default();
+        person_params_2.profile =
+            Some(vec!["https://www.linkedin.com/in/haydenconrad/".to_string()]);
+
+        let mut additional_params = AdditionalParams::default();
+        additional_params.min_likelihood = Some(6);
+
+        let bulk_enrich_single_person_params_1 = BulkEnrichSinglePersonParams {
+            params: person_params_1,
+            metadata: None,
+        };
+
+        let bulk_enrich_single_person_params_2 = BulkEnrichSinglePersonParams {
+            params: person_params_2,
+            metadata: None,
+        };
+
+        let bulk_enrich_params = BulkEnrichPersonParams {
+            requires: None,
+            requests: vec![
+                bulk_enrich_single_person_params_1,
+                bulk_enrich_single_person_params_2,
+            ],
+        };
+
+        let resp = person.bulk_enrich(bulk_enrich_params).expect("ERROR");
+
+        assert_eq!(resp[0].status, 200);
+        assert_eq!(resp[1].status, 200);
     }
 
     #[test]
@@ -267,7 +304,8 @@ mod tests {
         base_params.size = Some(num_results as i32);
 
         let mut search_base_params = SearchBaseParams::default();
-        search_base_params.sql = Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
+        search_base_params.sql =
+            Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
 
         let search_params = SearchParams {
             base_params: Some(base_params),
@@ -283,7 +321,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn test_person_retrieve() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key).build();
@@ -308,8 +345,7 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "Needs to POST"]
-    fn test_person_bulk_retriev() {
+    fn test_person_bulk_retrive() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key).build();
 
@@ -343,6 +379,7 @@ mod tests {
         let resp = person
             .bulk_retrieve(bulk_retrieve_person_params)
             .expect("ERROR");
-        assert_eq!(resp.status, 200);
+        assert_eq!(resp[0].status, 200);
+        assert_eq!(resp[1].status, 200);
     }
 }
