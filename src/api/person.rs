@@ -38,7 +38,7 @@ impl Person {
         &self,
         params: BulkEnrichPersonParams,
     ) -> Result<Vec<BulkEnrichPersonResponse>, PDLError> {
-        let json = serde_json::to_value(&params).map_err(|_| PDLError::ValidationError)?;
+        let json = serde_json::to_value(params).map_err(|_| PDLError::ValidationError)?;
         let r = self
             .client
             .post::<Vec<BulkEnrichPersonResponse>>(PERSON_BULK_ENRICH_PATH, json)?;
@@ -85,7 +85,7 @@ impl Person {
         &self,
         params: BulkRetrievePersonParams,
     ) -> Result<Vec<BulkRetrievePersonResponse>, PDLError> {
-        let json = serde_json::to_value(&params).map_err(|_| PDLError::ValidationError)?;
+        let json = serde_json::to_value(params).map_err(|_| PDLError::ValidationError)?;
         let r = self
             .client
             .post::<Vec<BulkRetrievePersonResponse>>(PERSON_BULK_RETRIEVE_PATH, json)?;

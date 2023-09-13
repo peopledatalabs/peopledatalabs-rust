@@ -25,6 +25,12 @@ pub struct PDL {
     pub skill: Skill,
 }
 
+impl Default for PDL {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl PDL {
     pub fn new() -> PDL {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
@@ -52,9 +58,7 @@ impl PDL {
             school: School {
                 client: client.clone(),
             },
-            skill: Skill {
-                client: client.clone(),
-            },
+            skill: Skill { client },
         }
     }
 }

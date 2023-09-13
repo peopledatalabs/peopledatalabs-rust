@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize, Serializer};
 
 use crate::PDLError;
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
 pub struct BaseParams {
     /// Whether the output should have human-readable indentation.
     #[serde(rename = "pretty", skip_serializing_if = "Option::is_none")]
@@ -13,16 +13,7 @@ pub struct BaseParams {
     pub size: Option<i32>,
 }
 
-impl Default for BaseParams {
-    fn default() -> Self {
-        Self {
-            pretty: None,
-            size: None,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct AdditionalParams {
     /// The minimum likelihood score a response must possess in order to return a 200.
     #[serde(rename = "min_likelihood", default)]
@@ -42,19 +33,7 @@ pub struct AdditionalParams {
     pub include_if_matched: Option<bool>,
 }
 
-impl Default for AdditionalParams {
-    fn default() -> Self {
-        Self {
-            min_likelihood: None,
-            required: None,
-            titlecase: None,
-            data_include: None,
-            include_if_matched: None,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct SearchBaseParams {
     /// An Elasticsearch (v7.7) query.
     #[serde(rename = "query", default)]
@@ -76,20 +55,7 @@ pub struct SearchBaseParams {
     pub titlecase: Option<bool>,
 }
 
-impl Default for SearchBaseParams {
-    fn default() -> Self {
-        Self {
-            query: None,
-            sql: None,
-            from: None,
-            scroll_token: None,
-            dataset: None,
-            titlecase: None,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct SearchParams {
     #[serde(flatten)]
     pub base_params: Option<BaseParams>,
@@ -99,20 +65,10 @@ pub struct SearchParams {
     pub additional_params: Option<AdditionalParams>,
 }
 
-impl Default for SearchParams {
-    fn default() -> Self {
-        Self {
-            base_params: None,
-            search_base_params: SearchBaseParams::default(),
-            additional_params: None,
-        }
-    }
-}
-
 impl SearchParams {
     pub fn validate(&self) -> Result<(), PDLError> {
         if (self.search_base_params.query.is_none() && self.search_base_params.sql.is_none())
-            || (self.search_base_params.query.is_some() && !self.search_base_params.sql.is_none())
+            || (self.search_base_params.query.is_some() && self.search_base_params.sql.is_some())
         {
             return Err(PDLError::ValidationError);
         }
@@ -125,7 +81,7 @@ where
     S: Serializer,
 {
     match vec {
-        Some(data) => return serializer.serialize_str(&data.join(", ")),
-        None => return serializer.serialize_none(),
+        Some(data) => serializer.serialize_str(&data.join(", ")),
+        None => serializer.serialize_none(),
     }
 }

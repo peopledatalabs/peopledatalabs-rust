@@ -7,7 +7,7 @@ use crate::{
     PDLError,
 };
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct CompanyParams {
     /// The PDL ID of the company
     #[serde(rename = "pdl_id", default)]
@@ -44,24 +44,6 @@ pub struct CompanyParams {
     pub postal_code: Option<String>,
 }
 
-impl Default for CompanyParams {
-    fn default() -> Self {
-        Self {
-            pdl_id: None,
-            name: None,
-            website: None,
-            profile: None,
-            ticker: None,
-            location: None,
-            locality: None,
-            region: None,
-            country: None,
-            street_address: None,
-            postal_code: None,
-        }
-    }
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct EnrichCompanyParams {
     #[serde(flatten)]
@@ -88,7 +70,7 @@ impl EnrichCompanyParams {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct CleanCompanyParams {
     /// The name of the company
     #[serde(rename = "name", default)]
@@ -99,16 +81,6 @@ pub struct CleanCompanyParams {
     /// A social profile of the company (linkedin/facebook/twitter/crunchbase)
     #[serde(rename = "profile", default)]
     pub profile: Option<String>,
-}
-
-impl Default for CleanCompanyParams {
-    fn default() -> Self {
-        Self {
-            name: None,
-            website: None,
-            profile: None,
-        }
-    }
 }
 
 impl CleanCompanyParams {
