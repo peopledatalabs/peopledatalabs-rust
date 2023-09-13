@@ -37,12 +37,11 @@ impl Person {
     pub fn bulk_enrich(
         &self,
         params: BulkEnrichPersonParams,
-    ) -> Result<BulkEnrichPersonResponse, PDLError> {
-        params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
+    ) -> Result<Vec<BulkEnrichPersonResponse>, PDLError> {
+        let json = serde_json::to_value(&params).map_err(|_| PDLError::ValidationError)?;
         let r = self
             .client
-            .get::<BulkEnrichPersonResponse>(PERSON_BULK_ENRICH_PATH, &qs)?;
+            .post::<Vec<BulkEnrichPersonResponse>>(PERSON_BULK_ENRICH_PATH, json)?;
 
         Ok(r)
     }
@@ -85,12 +84,11 @@ impl Person {
     pub fn bulk_retrieve(
         &self,
         params: BulkRetrievePersonParams,
-    ) -> Result<BulkRetrievePersonResponse, PDLError> {
-        params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
+    ) -> Result<Vec<BulkRetrievePersonResponse>, PDLError> {
+        let json = serde_json::to_value(&params).map_err(|_| PDLError::ValidationError)?;
         let r = self
             .client
-            .get::<BulkRetrievePersonResponse>(PERSON_BULK_RETRIEVE_PATH, &qs)?;
+            .post::<Vec<BulkRetrievePersonResponse>>(PERSON_BULK_RETRIEVE_PATH, json)?;
 
         Ok(r)
     }
@@ -196,14 +194,14 @@ mod tests {
         };
 
         let bulk_enrich_params = BulkEnrichPersonParams {
+            requires: None,
             requests: vec![bulk_enrich_single_person_params_1, bulk_enrich_single_person_params_2]
         };
 
         let resp = person.bulk_enrich(bulk_enrich_params).expect("ERROR");
 
-        let data = resp.data.unwrap();
-        assert_eq!(data[0].status, 200);
-        assert_eq!(data[1].status, 200);
+        assert_eq!(resp[0].status, 200);
+        assert_eq!(resp[1].status, 200);
     }
 
     #[test]
@@ -340,8 +338,7 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "Needs to POST"]
-    fn test_person_bulk_retriev() {
+    fn test_person_bulk_retrive() {
         let api_key = std::env::var("PDL_API_KEY").unwrap();
         let client = PDLClient::new(&api_key).build();
 
@@ -375,6 +372,7 @@ mod tests {
         let resp = person
             .bulk_retrieve(bulk_retrieve_person_params)
             .expect("ERROR");
-        assert_eq!(resp.status, 200);
+        assert_eq!(resp[0].status, 200);
+        assert_eq!(resp[1].status, 200);
     }
 }

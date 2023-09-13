@@ -24,6 +24,7 @@ fn main() {
         metadata: None,
     };
     let bulk_enrich_params = BulkEnrichPersonParams {
+        requires: None,
         requests: vec![request],
     };
 

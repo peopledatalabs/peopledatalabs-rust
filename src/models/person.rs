@@ -6,63 +6,64 @@ use crate::{
     PDLError,
 };
 
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PersonParams {
-    #[serde(rename = "pdl_id", serialize_with = "param_serialize", default)]
+    #[serde(rename = "pdl_id", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub pdl_id: Option<Vec<String>>,
 
-    #[serde(rename = "name", serialize_with = "param_serialize", default)]
+    #[serde(rename = "name", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<Vec<String>>,
 
-    #[serde(rename = "first_name", serialize_with = "param_serialize", default)]
+    #[serde(rename = "first_name", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub first_name: Option<Vec<String>>,
 
-    #[serde(rename = "last_name", serialize_with = "param_serialize", default)]
+    #[serde(rename = "last_name", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub last_name: Option<Vec<String>>,
 
-    #[serde(rename = "middle_name", serialize_with = "param_serialize", default)]
+    #[serde(rename = "middle_name", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub middle_name: Option<Vec<String>>,
 
-    #[serde(rename = "location", serialize_with = "param_serialize", default)]
+    #[serde(rename = "location", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub location: Option<Vec<String>>,
 
-    #[serde(rename = "street_address", default)]
+    #[serde(rename = "street_address", skip_serializing_if = "Option::is_none", default)]
     pub street_address: Option<String>,
 
-    #[serde(rename = "locality", default)]
+    #[serde(rename = "locality", skip_serializing_if = "Option::is_none", default)]
     pub locality: Option<String>,
 
-    #[serde(rename = "region", default)]
+    #[serde(rename = "region", skip_serializing_if = "Option::is_none", default)]
     pub region: Option<String>,
 
-    #[serde(rename = "country", default)]
+    #[serde(rename = "country", skip_serializing_if = "Option::is_none", default)]
     pub country: Option<String>,
 
-    #[serde(rename = "postal_code", serialize_with = "param_serialize", default)]
+    #[serde(rename = "postal_code", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub postal_code: Option<Vec<String>>,
 
-    #[serde(rename = "company", serialize_with = "param_serialize", default)]
+    #[serde(rename = "company", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub company: Option<Vec<String>>,
 
-    #[serde(rename = "school", serialize_with = "param_serialize", default)]
+    #[serde(rename = "school", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub school: Option<Vec<String>>,
 
-    #[serde(rename = "phone", serialize_with = "param_serialize", default)]
+    #[serde(rename = "phone", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub phone: Option<Vec<String>>,
 
-    #[serde(rename = "email", serialize_with = "param_serialize", default)]
+    #[serde(rename = "email", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub email: Option<Vec<String>>,
 
-    #[serde(rename = "email_hash", serialize_with = "param_serialize", default)]
+    #[serde(rename = "email_hash", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub email_hash: Option<Vec<String>>,
 
-    #[serde(rename = "profile", serialize_with = "param_serialize", default)]
+    #[serde(rename = "profile", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub profile: Option<Vec<String>>,
 
-    #[serde(rename = "lid", serialize_with = "param_serialize", default)]
+    #[serde(rename = "lid", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub lid: Option<Vec<String>>,
 
-    #[serde(rename = "birth_date", serialize_with = "param_serialize", default)]
+    #[serde(rename = "birth_date", serialize_with = "param_serialize", skip_serializing_if = "Option::is_none", default)]
     pub birth_date: Option<Vec<String>>,
 }
 
@@ -166,6 +167,8 @@ pub struct EnrichPersonResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkEnrichPersonParams {
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub requires: Option<String>,
     pub requests: Vec<BulkEnrichSinglePersonParams>,
 }
 
@@ -183,6 +186,7 @@ impl BulkEnrichPersonParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkEnrichSinglePersonParams {
     pub params: PersonParams,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub metadata: Option<PersonMetadata>,
 }
 
@@ -197,7 +201,7 @@ impl BulkEnrichSinglePersonParams {
 pub struct BulkEnrichPersonResponse {
     #[serde(flatten)]
     pub data: Option<Vec<EnrichPersonResponse>>,
-    pub status: Option<i32>,
+    pub status: i32,
     pub likelihood: Option<i32>,
     pub metadata: Option<PersonMetadata>,
 }
@@ -271,12 +275,12 @@ pub struct RetrievePersonResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkRetrievePersonParams {
-    #[serde(flatten)]
+    #[serde(flatten, skip_serializing_if = "Option::is_none")]
     pub base_params: Option<BaseParams>,
 
     pub requests: Vec<BulkRetrieveSinglePersonParams>,
 
-    #[serde(flatten)]
+    #[serde(flatten, skip_serializing_if = "Option::is_none")]
     pub additional_params: Option<AdditionalParams>,
 }
 
@@ -300,6 +304,7 @@ impl BulkRetrievePersonParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkRetrieveSinglePersonParams {
     pub id: String, // The ID of a person
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<PersonMetadata>,
 }
 
@@ -317,7 +322,7 @@ pub struct BulkRetrievePersonResponse {
     pub status: i32,
     pub data: Person,
     pub billed: bool,
-    pub metadata: PersonMetadata,
+    pub metadata: Option<PersonMetadata>,
 }
 
 pub type PersonMetadata = HashMap<String, String>;

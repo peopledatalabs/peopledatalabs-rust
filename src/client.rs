@@ -1,4 +1,3 @@
-use reqwest::blocking::Body;
 use reqwest::StatusCode;
 use std::error::Error;
 use std::fmt::{self, Display, Formatter};
@@ -138,20 +137,23 @@ impl PDLClient {
 
     /// Sends a POST method through the PeopleDataLabs API. It takes an endpoint &str and params &str.
     /// It returns a generic response or PDLError.
-    pub fn post<T>(&self, endpoint: &str, params: &str, body: Body) -> Result<T, PDLError>
+    pub fn post<T>(&self, endpoint: &str, json: serde_json::Value) -> Result<T, PDLError>
     where
-        T: serde::de::DeserializeOwned,
+        T: serde::de::DeserializeOwned + std::fmt::Debug,
     {
         let uri = format!(
-            "{}{}{}?api_key={}&{}",
-            self.base_url, self.api_version, endpoint, self.api_key, params
+            "{}{}{}?api_key={}",
+            self.base_url, self.api_version, endpoint, self.api_key
         )
         .to_string();
+
+        dbg!(&uri);
+        dbg!(&json);
 
         let resp = self
             .client
             .post(uri)
-            .body(body)
+            .json(&json)
             .send()
             .map_err(PDLError::NetworkError)
             .unwrap();
