@@ -23,10 +23,10 @@
 
 ## 🔧 Installation <a name="installation"></a>
 
-1. To use _peopledatalabs-rs_ SDK in your project initialize your Rust crate then run:
+1. To use peopledatalabs SDK in your project initialize your Rust crate then run:
 
 ```bash
-cargo add peopledatalabs-rs
+cargo add peopledatalabs
 ```
 
 2. Sign up for a [free PDL API key](https://www.peopledatalabs.com/signup).
