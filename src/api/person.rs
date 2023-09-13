@@ -97,9 +97,11 @@ impl Person {
 #[cfg(test)]
 mod tests {
     use crate::{
-        client::{PDLClient, PDLCLientOptions}, BaseParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
-        EnrichPersonParams, IdentifyPersonParams, PersonParams, RetrievePersonParams,
-        SearchBaseParams, SearchParams, models::common::AdditionalParams, BulkEnrichSinglePersonParams, BulkEnrichPersonParams,
+        client::{PDLCLientOptions, PDLClient},
+        models::common::AdditionalParams,
+        BaseParams, BulkEnrichPersonParams, BulkEnrichSinglePersonParams, BulkRetrievePersonParams,
+        BulkRetrieveSinglePersonParams, EnrichPersonParams, IdentifyPersonParams, PersonParams,
+        RetrievePersonParams, SearchBaseParams, SearchParams,
     };
 
     use super::Person;
@@ -178,7 +180,8 @@ mod tests {
         let mut person_params_1 = PersonParams::default();
         person_params_1.profile = Some(vec!["linkedin.com/in/seanthorne".to_string()]);
         let mut person_params_2 = PersonParams::default();
-        person_params_2.profile = Some(vec!["https://www.linkedin.com/in/haydenconrad/".to_string()]);
+        person_params_2.profile =
+            Some(vec!["https://www.linkedin.com/in/haydenconrad/".to_string()]);
 
         let mut additional_params = AdditionalParams::default();
         additional_params.min_likelihood = Some(6);
@@ -195,7 +198,10 @@ mod tests {
 
         let bulk_enrich_params = BulkEnrichPersonParams {
             requires: None,
-            requests: vec![bulk_enrich_single_person_params_1, bulk_enrich_single_person_params_2]
+            requests: vec![
+                bulk_enrich_single_person_params_1,
+                bulk_enrich_single_person_params_2,
+            ],
         };
 
         let resp = person.bulk_enrich(bulk_enrich_params).expect("ERROR");
@@ -298,7 +304,8 @@ mod tests {
         base_params.size = Some(num_results as i32);
 
         let mut search_base_params = SearchBaseParams::default();
-        search_base_params.sql = Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
+        search_base_params.sql =
+            Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
 
         let search_params = SearchParams {
             base_params: Some(base_params),
