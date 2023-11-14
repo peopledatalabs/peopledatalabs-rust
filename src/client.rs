@@ -79,7 +79,7 @@ fn build_client(api_key: &str, timeout: Option<Duration>) -> rq::Client {
 impl PDLClient {
     /// Make a new People Data Labs client with users API Key and API Version.
     pub fn new(api_key: &str) -> Self {
-        let client = build_client(&api_key, None);
+        let client = build_client(api_key, None);
         PDLClient {
             api_key: api_key.to_string(),
             base_url: DEFAULT_API_URL.to_string(),
