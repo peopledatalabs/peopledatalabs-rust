@@ -12,10 +12,8 @@ pub struct Location {
 impl Location {
     pub fn clean(&self, params: CleanLocationParams) -> Result<CleanLocationResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<CleanLocationResponse>(PATH, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<CleanLocationResponse, CleanLocationParams>(PATH, params)
     }
 }
 
