@@ -1,4 +1,8 @@
+use reqwest::blocking as rq;
+use reqwest::header;
 use reqwest::StatusCode;
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::error::Error;
 use std::fmt::{self, Display, Formatter};
 use std::time::Duration;
@@ -14,6 +18,7 @@ static DEFAULT_TIMEOUT: Duration = Duration::from_secs(10);
 pub enum PDLError {
     NetworkError(reqwest::Error),
     HTTPError(StatusCode),
+    SerializationError,
     ValidationError,
 }
 
@@ -22,7 +27,8 @@ impl Display for PDLError {
         match *self {
             PDLError::NetworkError(ref e) => e.fmt(f),
             PDLError::HTTPError(ref s) => write!(f, "Invalid HTTP status code: {}", s),
-            PDLError::ValidationError => f.write_str("Invalid Parameters"),
+            PDLError::SerializationError => f.write_str("Unable to serialize."),
+            PDLError::ValidationError => f.write_str("Unable to validate."),
         }
     }
 }
@@ -51,24 +57,31 @@ pub struct PDLClient {
     api_key: String,
     base_url: String,
     api_version: String,
-    client: reqwest::blocking::Client,
+    client: rq::Client,
+}
+
+/// Builds client based off of API_KEY and Optional Timeout
+fn build_client(api_key: &str, timeout: Option<Duration>) -> rq::Client {
+    let mut headers = header::HeaderMap::new();
+    let api_key = header::HeaderValue::from_str(api_key).unwrap();
+    headers.insert("X-Api-Key", api_key);
+
+    let duration = timeout.unwrap_or(DEFAULT_TIMEOUT);
+
+    rq::Client::builder()
+        .default_headers(headers)
+        .user_agent(APP_USER_AGENT)
+        .timeout(duration)
+        .build()
+        .expect("Failed to build reqwest client")
 }
 
 impl PDLClient {
     /// Make a new People Data Labs client with users API Key and API Version.
-    pub fn new(key: &str) -> PDLClient {
-        // Sets the default PDLClient
-        use reqwest::blocking as rq;
-
-        let builder = rq::ClientBuilder::new();
-        let client = builder
-            .user_agent(APP_USER_AGENT)
-            .timeout(DEFAULT_TIMEOUT)
-            .build()
-            .unwrap();
-
+    pub fn new(api_key: &str) -> Self {
+        let client = build_client(api_key, None);
         PDLClient {
-            api_key: key.to_string(),
+            api_key: api_key.to_string(),
             base_url: DEFAULT_API_URL.to_string(),
             api_version: DEFAULT_API_VERSION.to_string(),
             client,
@@ -76,24 +89,16 @@ impl PDLClient {
     }
 
     /// Adds the ability to update the version from the default through chaining.
-    pub fn version(mut self, version: &str) -> PDLClient {
+    pub fn version(mut self, version: &str) -> Self {
         self.api_version = version.to_string();
         self
     }
 
     /// Adds the ability to update the default timeout or access sandbox mode
     /// through chaining.
-    pub fn options(mut self, options: PDLCLientOptions) -> PDLClient {
+    pub fn options(mut self, options: PDLCLientOptions) -> Self {
         if options.timeout != DEFAULT_TIMEOUT {
-            use reqwest::blocking as rq;
-
-            let builder = rq::ClientBuilder::new();
-            let client = builder
-                .user_agent(APP_USER_AGENT)
-                .timeout(options.timeout)
-                .build()
-                .unwrap();
-            self.client = client
+            self.client = build_client(&self.api_key, Some(options.timeout))
         }
 
         if options.sandbox {
@@ -115,23 +120,24 @@ impl PDLClient {
 
     /// Sends a GET method through the PeopleDataLabs API. It takes an endpoint &str and params &str.
     /// It returns a generic response or PDLError.
-    pub fn get<T>(&self, endpoint: &str, params: &str) -> Result<T, PDLError>
+    pub fn get<T, P>(&self, endpoint: &str, params: P) -> Result<T, PDLError>
     where
-        T: serde::de::DeserializeOwned,
+        T: DeserializeOwned,
+        P: Serialize,
     {
-        let uri = format!(
-            "{}{}{}?api_key={}&{}",
-            self.base_url, self.api_version, endpoint, self.api_key, params
-        );
+        let query_params =
+            serde_urlencoded::to_string(params).map_err(|_| PDLError::SerializationError)?;
 
-        dbg!(&uri);
+        let uri = format!(
+            "{}{}{}?{}",
+            self.base_url, self.api_version, endpoint, query_params
+        );
 
         let resp = self
             .client
             .get(uri)
             .send()
-            .map_err(PDLError::NetworkError)
-            .unwrap();
+            .map_err(PDLError::NetworkError)?;
 
         match resp.status() {
             StatusCode::OK => {}
@@ -139,40 +145,32 @@ impl PDLClient {
             other => return Err(PDLError::HTTPError(other)),
         }
 
-        let r = resp.json::<T>().unwrap();
-
-        Ok(r)
+        resp.json::<T>().map_err(PDLError::NetworkError)
     }
 
     /// Sends a POST method through the PeopleDataLabs API. It takes an endpoint &str and params &str.
     /// It returns a generic response or PDLError.
-    pub fn post<T>(&self, endpoint: &str, json: serde_json::Value) -> Result<T, PDLError>
+    pub fn post<T, P>(&self, endpoint: &str, params: P) -> Result<T, PDLError>
     where
-        T: serde::de::DeserializeOwned + std::fmt::Debug,
+        T: DeserializeOwned,
+        P: Serialize,
     {
-        let uri = format!(
-            "{}{}{}?api_key={}",
-            self.base_url, self.api_version, endpoint, self.api_key
-        );
+        let json = serde_json::to_value(params).map_err(|_| PDLError::ValidationError)?;
 
-        dbg!(&uri);
-        dbg!(&json);
+        let uri = format!("{}{}{}", self.base_url, self.api_version, endpoint);
 
         let resp = self
             .client
             .post(uri)
             .json(&json)
             .send()
-            .map_err(PDLError::NetworkError)
-            .unwrap();
+            .map_err(PDLError::NetworkError)?;
 
         match resp.status() {
             StatusCode::OK => {}
             other => return Err(PDLError::HTTPError(other)),
         }
 
-        let r = resp.json::<T>().unwrap();
-
-        Ok(r)
+        resp.json::<T>().map_err(PDLError::NetworkError)
     }
 }

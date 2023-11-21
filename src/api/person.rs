@@ -25,25 +25,19 @@ pub struct Person {
 impl Person {
     pub fn enrich(&self, params: EnrichPersonParams) -> Result<EnrichPersonResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        dbg!(&qs);
-        let r = self
-            .client
-            .get::<EnrichPersonResponse>(PERSON_ENRICH_PATH, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<EnrichPersonResponse, EnrichPersonParams>(PERSON_ENRICH_PATH, params)
     }
 
     pub fn bulk_enrich(
         &self,
         params: BulkEnrichPersonParams,
     ) -> Result<Vec<BulkEnrichPersonResponse>, PDLError> {
-        let json = serde_json::to_value(params).map_err(|_| PDLError::ValidationError)?;
-        let r = self
-            .client
-            .post::<Vec<BulkEnrichPersonResponse>>(PERSON_BULK_ENRICH_PATH, json)?;
-
-        Ok(r)
+        self.client
+            .post::<Vec<BulkEnrichPersonResponse>, BulkEnrichPersonParams>(
+                PERSON_BULK_ENRICH_PATH,
+                params,
+            )
     }
 
     pub fn identify(
@@ -51,22 +45,14 @@ impl Person {
         params: IdentifyPersonParams,
     ) -> Result<IdentifyPersonResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self
-            .client
-            .get::<IdentifyPersonResponse>(PERSON_IDENTIFY_PATH, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<IdentifyPersonResponse, IdentifyPersonParams>(PERSON_IDENTIFY_PATH, params)
     }
 
     pub fn search(&self, params: SearchParams) -> Result<SearchPersonResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self
-            .client
-            .get::<SearchPersonResponse>(PERSON_SEARCH_PATH, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<SearchPersonResponse, SearchParams>(PERSON_SEARCH_PATH, params)
     }
 
     pub fn retrieve(
@@ -74,23 +60,20 @@ impl Person {
         params: RetrievePersonParams,
     ) -> Result<RetrievePersonResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
         let url = PERSON_RETRIEVE_PATH.to_string() + &params.person_id;
-        let r = self.client.get::<RetrievePersonResponse>(&url, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<RetrievePersonResponse, RetrievePersonParams>(&url, params)
     }
 
     pub fn bulk_retrieve(
         &self,
         params: BulkRetrievePersonParams,
     ) -> Result<Vec<BulkRetrievePersonResponse>, PDLError> {
-        let json = serde_json::to_value(params).map_err(|_| PDLError::ValidationError)?;
-        let r = self
-            .client
-            .post::<Vec<BulkRetrievePersonResponse>>(PERSON_BULK_RETRIEVE_PATH, json)?;
-
-        Ok(r)
+        self.client
+            .post::<Vec<BulkRetrievePersonResponse>, BulkRetrievePersonParams>(
+                PERSON_BULK_RETRIEVE_PATH,
+                params,
+            )
     }
 }
 
