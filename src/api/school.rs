@@ -12,10 +12,8 @@ pub struct School {
 impl School {
     pub fn clean(&self, params: CleanSchoolParams) -> Result<CleanSchoolResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<CleanSchoolResponse>(PATH, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<CleanSchoolResponse, CleanSchoolParams>(PATH, params)
     }
 }
 

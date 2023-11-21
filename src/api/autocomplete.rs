@@ -19,12 +19,8 @@ impl Autocomplete {
         params: AutocompleteParams,
     ) -> Result<AutocompleteResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self
-            .client
-            .get::<AutocompleteResponse>(AUTOCOMPLETE_PATH, &qs)?;
-
-        Ok(r)
+        self.client
+            .get::<AutocompleteResponse, AutocompleteParams>(AUTOCOMPLETE_PATH, params)
     }
 }
 
