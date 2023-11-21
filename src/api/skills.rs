@@ -12,10 +12,7 @@ pub struct Skill {
 impl Skill {
     pub fn get(&self, params: SkillParams) -> Result<SkillResponse, PDLError> {
         params.validate()?;
-        let qs = serde_qs::to_string(&params).map_err(|_| PDLError::ValidationError)?;
-        let r = self.client.get::<SkillResponse>(PATH, &qs)?;
-
-        Ok(r)
+        self.client.get::<SkillResponse, SkillParams>(PATH, params)
     }
 }
 

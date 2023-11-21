@@ -6,130 +6,182 @@ use crate::{
     PDLError,
 };
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
 pub struct PersonParams {
-    #[serde(rename = "pdl_id", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "pdl_id",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub pdl_id: Option<Vec<String>>,
 
-    #[serde(rename = "name", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "name",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub name: Option<Vec<String>>,
 
-    #[serde(rename = "first_name", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "first_name",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub first_name: Option<Vec<String>>,
 
-    #[serde(rename = "last_name", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "last_name",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub last_name: Option<Vec<String>>,
 
-    #[serde(rename = "middle_name", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "middle_name",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub middle_name: Option<Vec<String>>,
 
-    #[serde(rename = "location", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "location",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub location: Option<Vec<String>>,
 
-    #[serde(rename = "street_address", default)]
+    #[serde(
+        rename = "street_address",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub street_address: Option<String>,
 
-    #[serde(rename = "locality", default)]
+    #[serde(rename = "locality", skip_serializing_if = "Option::is_none", default)]
     pub locality: Option<String>,
 
-    #[serde(rename = "region", default)]
+    #[serde(rename = "region", skip_serializing_if = "Option::is_none", default)]
     pub region: Option<String>,
 
-    #[serde(rename = "country", default)]
+    #[serde(rename = "country", skip_serializing_if = "Option::is_none", default)]
     pub country: Option<String>,
 
-    #[serde(rename = "postal_code", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "postal_code",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub postal_code: Option<Vec<String>>,
 
-    #[serde(rename = "company", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "company",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub company: Option<Vec<String>>,
 
-    #[serde(rename = "school", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "school",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub school: Option<Vec<String>>,
 
-    #[serde(rename = "phone", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "phone",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub phone: Option<Vec<String>>,
 
-    #[serde(rename = "email", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "email",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub email: Option<Vec<String>>,
 
-    #[serde(rename = "email_hash", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "email_hash",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub email_hash: Option<Vec<String>>,
 
-    #[serde(rename = "profile", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "profile",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub profile: Option<Vec<String>>,
 
-    #[serde(rename = "lid", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "lid",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub lid: Option<Vec<String>>,
 
-    #[serde(rename = "birth_date", serialize_with = "param_serialize", default)]
+    #[serde(
+        rename = "birth_date",
+        serialize_with = "param_serialize",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub birth_date: Option<Vec<String>>,
-}
-
-impl Default for PersonParams {
-    fn default() -> Self {
-        Self {
-            pdl_id: None,
-            name: None,
-            first_name: None,
-            last_name: None,
-            middle_name: None,
-            location: None,
-            street_address: None,
-            locality: None,
-            region: None,
-            country: None,
-            postal_code: None,
-            company: None,
-            school: None,
-            phone: None,
-            email: None,
-            email_hash: None,
-            profile: None,
-            lid: None,
-            birth_date: None,
-        }
-    }
 }
 
 impl PersonParams {
     fn validate(&self) -> Result<(), PDLError> {
-        if !self.pdl_id.is_none() {
+        if self.pdl_id.is_some() {
             return Ok(());
         }
-        if !self.profile.is_none() {
+        if self.profile.is_some() {
             return Ok(());
         }
-        if !self.email.is_none() {
+        if self.email.is_some() {
             return Ok(());
         }
-        if !self.phone.is_none() {
+        if self.phone.is_some() {
             return Ok(());
         }
-        if !self.email_hash.is_none() {
+        if self.email_hash.is_some() {
             return Ok(());
         }
         if self.lid.is_none() {
             return Ok(());
         }
 
-        if (!self.first_name.is_none() && !self.last_name.is_none()) || !self.name.is_none() {
-            if !self.locality.is_none()
-                || !self.region.is_none()
-                || !self.company.is_none()
+        if ((self.first_name.is_some() && self.last_name.is_some()) || self.name.is_some())
+            && (self.locality.is_some()
+                || self.region.is_some()
+                || self.company.is_some()
                 || self.school.is_none()
                 || self.location.is_none()
-                || self.postal_code.is_none()
-            {
-                return Ok(());
-            }
+                || self.postal_code.is_none())
+        {
+            return Ok(());
         }
 
         Err(PDLError::ValidationError)
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct EnrichPersonParams {
     #[serde(flatten)]
     pub base_params: Option<BaseParams>,
@@ -139,16 +191,6 @@ pub struct EnrichPersonParams {
 
     #[serde(flatten)]
     pub additional_params: Option<AdditionalParams>,
-}
-
-impl Default for EnrichPersonParams {
-    fn default() -> Self {
-        Self {
-            base_params: None,
-            person_params: PersonParams::default(),
-            additional_params: None,
-        }
-    }
 }
 
 impl EnrichPersonParams {
@@ -166,15 +208,15 @@ pub struct EnrichPersonResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkEnrichPersonParams {
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub requires: Option<String>,
     pub requests: Vec<BulkEnrichSinglePersonParams>,
 }
 
 impl BulkEnrichPersonParams {
     pub fn validate(&self) -> Result<(), PDLError> {
         for request in &self.requests {
-            if let Err(err) = request.validate() {
-                return Err(err);
-            }
+            request.validate()?
         }
         Ok(())
     }
@@ -183,6 +225,7 @@ impl BulkEnrichPersonParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkEnrichSinglePersonParams {
     pub params: PersonParams,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub metadata: Option<PersonMetadata>,
 }
 
@@ -196,11 +239,13 @@ impl BulkEnrichSinglePersonParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkEnrichPersonResponse {
     #[serde(flatten)]
-    enrich_person_response: EnrichPersonResponse,
-    metadata: Option<PersonMetadata>,
+    pub data: Option<Vec<EnrichPersonResponse>>,
+    pub status: i32,
+    pub likelihood: Option<i32>,
+    pub metadata: Option<PersonMetadata>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct IdentifyPersonParams {
     #[serde(flatten)]
     pub base_params: Option<BaseParams>,
@@ -210,16 +255,6 @@ pub struct IdentifyPersonParams {
 
     #[serde(flatten)]
     pub additional_params: Option<AdditionalParams>,
-}
-
-impl Default for IdentifyPersonParams {
-    fn default() -> Self {
-        Self {
-            base_params: None,
-            person_params: PersonParams::default(),
-            additional_params: None,
-        }
-    }
 }
 
 impl IdentifyPersonParams {
@@ -269,12 +304,12 @@ pub struct RetrievePersonResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkRetrievePersonParams {
-    #[serde(flatten)]
+    #[serde(flatten, skip_serializing_if = "Option::is_none")]
     pub base_params: Option<BaseParams>,
 
     pub requests: Vec<BulkRetrieveSinglePersonParams>,
 
-    #[serde(flatten)]
+    #[serde(flatten, skip_serializing_if = "Option::is_none")]
     pub additional_params: Option<AdditionalParams>,
 }
 
@@ -287,9 +322,7 @@ impl BulkRetrievePersonParams {
             return Err(PDLError::ValidationError);
         }
         for request in &self.requests {
-            if let Err(err) = request.validate() {
-                return Err(err);
-            }
+            request.validate()?
         }
         Ok(())
     }
@@ -298,6 +331,7 @@ impl BulkRetrievePersonParams {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BulkRetrieveSinglePersonParams {
     pub id: String, // The ID of a person
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<PersonMetadata>,
 }
 
@@ -315,7 +349,7 @@ pub struct BulkRetrievePersonResponse {
     pub status: i32,
     pub data: Person,
     pub billed: bool,
-    pub metadata: PersonMetadata,
+    pub metadata: Option<PersonMetadata>,
 }
 
 pub type PersonMetadata = HashMap<String, String>;

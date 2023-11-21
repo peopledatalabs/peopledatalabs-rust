@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{models::common::BaseParams, PDLError};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct IPBaseParams {
     /// IP that is used as the seed for enrichment
     #[serde(rename = "ip", default)]
@@ -19,18 +19,6 @@ pub struct IPBaseParams {
     /// If true, the response will return metadata/location even if no company is found
     #[serde(rename = "return_if_unmatched", default)]
     pub return_if_unmatched: Option<bool>,
-}
-
-impl Default for IPBaseParams {
-    fn default() -> Self {
-        Self {
-            ip: None,
-            return_ip_location: None,
-            return_ip_metadata: None,
-            return_person: None,
-            return_if_unmatched: None,
-        }
-    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
