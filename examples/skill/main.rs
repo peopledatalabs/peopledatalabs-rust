@@ -4,6 +4,7 @@ fn main() {
     let client = PDL::new();
     let skill_base_params = SkillBaseParams {
         skill: Some("python".to_string()),
+        titlecase: Some(false),
     };
     let params = SkillParams {
         base_params: None,
