@@ -10,6 +10,12 @@ pub struct AutocompleteBaseParams {
     /// Text that is used as the seed for autocompletion
     #[serde(rename = "text", default)]
     pub text: Option<String>,
+    /// Setting titlecase to true will titlecase the data in 200 responses
+    #[serde(rename = "titlecase", skip_serializing_if = "Option::is_none")]
+    pub titlecase: Option<bool>,
+    /// Setting beta to true will enable the beta autocomplete endpoint
+    #[serde(rename = "beta", skip_serializing_if = "Option::is_none")]
+    pub beta: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

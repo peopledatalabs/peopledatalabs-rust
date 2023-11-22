@@ -4,6 +4,7 @@ fn main() {
     let client = PDL::new();
     let job_title_base_params = JobTitleBaseParams {
         job_title: Some("software engineer".to_string()),
+        titlecase: Some(false),
     };
     let params = JobTitleParams {
         base_params: None,

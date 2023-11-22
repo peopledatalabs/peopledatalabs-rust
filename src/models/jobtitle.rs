@@ -7,6 +7,9 @@ pub struct JobTitleBaseParams {
     /// JobTitle that is used as the seed for enrichment
     #[serde(rename = "job_title", default)]
     pub job_title: Option<String>,
+    /// Setting titlecase to true will titlecase the data in 200 responses
+    #[serde(rename = "titlecase", skip_serializing_if = "Option::is_none")]
+    pub titlecase: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
