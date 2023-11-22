@@ -34,6 +34,7 @@ mod tests {
 
         let skill_base_params = SkillBaseParams {
             skill: Some("rust".to_string()),
+            titlecase: Some(false),
         };
 
         let skill_params = SkillParams {

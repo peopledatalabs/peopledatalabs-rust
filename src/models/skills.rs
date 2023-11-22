@@ -7,6 +7,9 @@ pub struct SkillBaseParams {
     /// Skill that is used as the seed for enrichment
     #[serde(rename = "skill", default)]
     pub skill: Option<String>,
+    /// Setting titlecase to true will titlecase the data in 200 responses
+    #[serde(rename = "titlecase", skip_serializing_if = "Option::is_none")]
+    pub titlecase: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

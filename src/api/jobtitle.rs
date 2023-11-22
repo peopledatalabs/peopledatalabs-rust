@@ -35,6 +35,7 @@ mod tests {
 
         let job_title_base_params = JobTitleBaseParams {
             job_title: Some("data scientist".to_string()),
+            titlecase: Some(false),
         };
 
         let job_title_params = JobTitleParams {
