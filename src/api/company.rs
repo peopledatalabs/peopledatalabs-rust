@@ -2,14 +2,15 @@ use crate::{
     models::{
         common::SearchParams,
         company::{
-            CleanCompanyParams, CleanCompanyResponse, CompanyResponse, EnrichCompanyParams,
-            SearchCompanyResponse,
+            BulkCompanyEnrichResponse, BulkEnrichCompanyParams, CleanCompanyParams,
+            CleanCompanyResponse, CompanyResponse, EnrichCompanyParams, SearchCompanyResponse,
         },
     },
     PDLClient, PDLError,
 };
 
 pub(crate) static ENRICH_PATH: &str = "/company/enrich";
+pub(crate) static COMPANY_BULK_ENRICH_PATH: &str = "/company/enrich/bulk";
 pub(crate) static SEARCH_PATH: &str = "/company/search";
 pub(crate) static CLEAN_PATH: &str = "/company/clean";
 
@@ -24,6 +25,19 @@ impl Company {
         params.validate()?;
         self.client
             .get::<CompanyResponse, EnrichCompanyParams>(ENRICH_PATH, params)
+    }
+
+    /// Bulk Enrich for Companies
+    /// docs: https://docs.peopledatalabs.com/docs/bulk-company-enrichment-api
+    pub fn bulk_enrich(
+        &self,
+        params: BulkEnrichCompanyParams,
+    ) -> Result<Vec<BulkCompanyEnrichResponse>, PDLError> {
+        self.client
+            .post::<Vec<BulkCompanyEnrichResponse>, BulkEnrichCompanyParams>(
+                COMPANY_BULK_ENRICH_PATH,
+                params,
+            )
     }
 
     /// Search gives you access to every record in our full Company dataset,
@@ -47,8 +61,10 @@ impl Company {
 #[cfg(test)]
 mod tests {
     use crate::{
-        client::PDLClient, BaseParams, CleanCompanyParams, CompanyParams, EnrichCompanyParams,
-        SearchBaseParams, SearchParams,
+        client::PDLClient,
+        models::company::{BulkEnrichCompanyParams, BulkEnrichSingleCompanyParams},
+        BaseParams, CleanCompanyParams, CompanyParams, EnrichCompanyParams, SearchBaseParams,
+        SearchParams,
     };
 
     use super::Company;
@@ -76,6 +92,42 @@ mod tests {
 
         assert_eq!(resp.status, Some(200));
         assert_eq!(resp.name, Some("google".to_string()));
+    }
+
+    #[test]
+    fn test_bulk_company_enrich() {
+        let api_key = std::env::var("PDL_API_KEY").unwrap();
+        let client = PDLClient::new(&api_key).build();
+
+        let company = Company { client };
+
+        let mut base_params = BaseParams::default();
+        base_params.pretty = Some(true);
+
+        let mut company_params_1 = CompanyParams::default();
+        company_params_1.profile = Some("https://www.linkedin.com/company/walmart".to_string());
+        let mut company_params_2 = CompanyParams::default();
+        company_params_2.website = Some("google.com".to_string());
+
+        let bulk_enrich_single_company_params_1 = BulkEnrichSingleCompanyParams {
+            params: company_params_1,
+        };
+
+        let bulk_enrich_single_company_params_2 = BulkEnrichSingleCompanyParams {
+            params: company_params_2,
+        };
+
+        let bulk_enrich_params = BulkEnrichCompanyParams {
+            requests: vec![
+                bulk_enrich_single_company_params_1,
+                bulk_enrich_single_company_params_2,
+            ],
+        };
+
+        let resp = company.bulk_enrich(bulk_enrich_params).expect("ERROR");
+
+        assert_eq!(resp[0].status, 200);
+        assert_eq!(resp[1].status, 200);
     }
 
     #[test]

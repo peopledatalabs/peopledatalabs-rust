@@ -44,6 +44,29 @@ pub struct CompanyParams {
     pub postal_code: Option<String>,
 }
 
+impl CompanyParams {
+    // Validation function
+    pub fn validate(&self) -> Result<(), PDLError> {
+        // Check if at least one field is present
+        if self.pdl_id.is_some()
+            || self.name.is_some()
+            || self.website.is_some()
+            || self.profile.is_some()
+            || self.ticker.is_some()
+            || self.location.is_some()
+            || self.locality.is_some()
+            || self.region.is_some()
+            || self.country.is_some()
+            || self.street_address.is_some()
+            || self.postal_code.is_some()
+        {
+            return Ok(());
+        }
+
+        Err(PDLError::ValidationError)
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct EnrichCompanyParams {
     #[serde(flatten)]
@@ -66,6 +89,32 @@ impl EnrichCompanyParams {
         {
             return Err(PDLError::ValidationError);
         }
+        Ok(())
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct BulkEnrichCompanyParams {
+    pub requests: Vec<BulkEnrichSingleCompanyParams>,
+}
+
+impl BulkEnrichCompanyParams {
+    pub fn validate(&self) -> Result<(), PDLError> {
+        for request in &self.requests {
+            request.validate()?
+        }
+        Ok(())
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct BulkEnrichSingleCompanyParams {
+    pub params: CompanyParams,
+}
+
+impl BulkEnrichSingleCompanyParams {
+    pub fn validate(&self) -> Result<(), PDLError> {
+        self.params.validate()?;
         Ok(())
     }
 }
@@ -242,6 +291,13 @@ pub struct CompanyResponse {
     pub number_funding_rounds: Option<i32>,
     pub funding_stages: Option<Vec<String>>,
     pub funding_details: Option<Vec<FundingDetails>>,
+    pub likelihood: Option<i32>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct BulkCompanyEnrichResponse {
+    pub data: Option<Vec<CompanyResponse>>,
+    pub status: i32,
     pub likelihood: Option<i32>,
 }
 
