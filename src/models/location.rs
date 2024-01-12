@@ -35,6 +35,7 @@ impl CleanLocationParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanLocationResponse {
+    /// See https://docs.peopledatalabs.com/docs/output-response-cleaner-apis#location-cleaner-api-response for more information
     pub status: i32,
     pub name: Option<String>,
     pub locality: Option<String>,

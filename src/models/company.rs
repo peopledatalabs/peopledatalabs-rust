@@ -192,6 +192,7 @@ pub struct FundingDetails {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CompanyResponse {
+    /// See https://docs.peopledatalabs.com/docs/example-company-record for more information.
     pub status: Option<i32>,
     pub display_name: Option<String>,
     pub name: Option<String>,
@@ -203,6 +204,7 @@ pub struct CompanyResponse {
     pub industry: Option<String>,
     pub linkedin_id: Option<String>,
     pub linkedin_url: Option<String>,
+    pub linkedin_slug: Option<String>,
     pub facebook_url: Option<String>,
     pub twitter_url: Option<String>,
     pub profiles: Option<Vec<String>>,
@@ -246,6 +248,7 @@ pub struct CompanyResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanCompanyResponse {
+    /// See https://docs.peopledatalabs.com/docs/output-response-cleaner-apis#company-cleaner-api-response for more information.
     pub status: i32,
     pub name: Option<String>,
     pub size: Option<String>,
