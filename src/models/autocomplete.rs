@@ -37,6 +37,7 @@ impl AutocompleteParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AutocompleteResponse {
+    /// See https://docs.peopledatalabs.com/docs/output-response-autocomplete-api for more information
     pub status: i32,
     pub data: Option<Vec<AutocompleteResult>>,
     pub fields: Option<Vec<String>>,

@@ -52,6 +52,7 @@ pub struct Location {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CleanSchoolResponse {
+    /// See https://docs.peopledatalabs.com/docs/output-response-cleaner-apis#school-cleaner-api-response for more information
     pub status: i32,
     pub name: Option<String>,
     pub type_: Option<String>,
