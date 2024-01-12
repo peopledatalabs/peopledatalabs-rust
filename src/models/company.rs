@@ -164,7 +164,6 @@ pub struct RecentExecHires {
     pub previous_company_job_title_levels: Option<Vec<String>>,
 }
 
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RecentExecDepartures {
     pub departed_date: Option<String>,
