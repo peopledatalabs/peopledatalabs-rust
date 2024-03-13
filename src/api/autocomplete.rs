@@ -45,7 +45,6 @@ mod tests {
             field: "school".to_string(),
             text: Some("stanf".to_string()),
             titlecase: Some(false),
-            beta: Some(false),
         };
 
         let autocomplete_params = AutocompleteParams {
