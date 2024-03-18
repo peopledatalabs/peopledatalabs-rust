@@ -6,7 +6,6 @@ fn main() {
         field: "text".to_string(),
         text: Some("full".to_string()),
         titlecase: Some(false),
-        beta: Some(false),
     };
     let autocomplete_params = AutocompleteParams {
         base_params: None,

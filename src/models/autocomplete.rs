@@ -13,9 +13,6 @@ pub struct AutocompleteBaseParams {
     /// Setting titlecase to true will titlecase the data in 200 responses
     #[serde(rename = "titlecase", skip_serializing_if = "Option::is_none")]
     pub titlecase: Option<bool>,
-    /// Setting beta to true will enable the beta autocomplete endpoint
-    #[serde(rename = "beta", skip_serializing_if = "Option::is_none")]
-    pub beta: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

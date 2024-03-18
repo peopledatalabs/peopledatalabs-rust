@@ -47,7 +47,7 @@ mod tests {
         assert_eq!(resp.status, 200);
         assert_eq!(
             resp.name,
-            Some("university of california, los angeles".to_string())
+            Some("ucla".to_string())
         );
     }
 }
