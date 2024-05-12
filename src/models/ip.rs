@@ -50,6 +50,7 @@ pub struct IPResult {
     pub ip: IPInfo,
     pub company: Option<IPCompany>,
     pub person: Option<IPPerson>,
+    pub dataset_version: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

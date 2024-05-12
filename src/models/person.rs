@@ -376,6 +376,7 @@ pub struct PersonErrorInfo {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Person {
     pub id: Option<String>,
+    pub dataset_version: Option<String>,
     pub full_name: Option<String>,
     pub first_name: Option<String>,
     pub middle_initial: Option<String>,

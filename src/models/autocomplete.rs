@@ -45,6 +45,15 @@ pub struct Meta {
     pub website: Option<String>,
     pub location_name: Option<String>,
     pub id: Option<String>,
+    pub industry: Option<String>,
+    pub linkedin_slug: Option<String>,
+    pub display_name: Option<String>,
+    pub display_name_history: Option<Vec<String>>,
+    pub alternative_names: Option<Vec<String>>,
+    pub country: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub role: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
