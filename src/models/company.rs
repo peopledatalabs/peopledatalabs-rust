@@ -242,6 +242,7 @@ pub struct FundingDetails {
 pub struct CompanyResponse {
     /// See https://docs.peopledatalabs.com/docs/example-company-record for more information.
     pub status: Option<i32>,
+    pub dataset_version: Option<String>,
     pub display_name: Option<String>,
     pub name: Option<String>,
     pub size: Option<String>,

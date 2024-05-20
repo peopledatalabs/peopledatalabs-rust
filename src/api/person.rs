@@ -130,7 +130,7 @@ mod tests {
         base_params.pretty = Some(true);
 
         let mut person_params = PersonParams::default();
-        person_params.email = Some(vec!["fletcherveronica@example.com".to_string()]);
+        person_params.email = Some(vec!["reneewillis74@aol.com".to_string()]);
 
         let mut additional_params = AdditionalParams::default();
         additional_params.min_likelihood = Some(6);
@@ -146,7 +146,7 @@ mod tests {
         assert_eq!(resp.status, 200);
         assert_eq!(
             resp.data.twitter_url,
-            Some("twitter.com/omarmendez".to_string())
+            Some("twitter.com/rc1994".to_string())
         );
     }
 
@@ -233,7 +233,7 @@ mod tests {
         base_params.pretty = Some(true);
 
         let mut person_params = PersonParams::default();
-        person_params.company = Some(vec!["walmart".to_string()]);
+        person_params.company = Some(vec!["adams group".to_string()]);
 
         let indentify_person_params = IdentifyPersonParams {
             base_params: Some(base_params),
@@ -288,7 +288,7 @@ mod tests {
 
         let mut search_base_params = SearchBaseParams::default();
         search_base_params.sql =
-            Some("SELECT * FROM person WHERE location_country='mexico';".to_string());
+            Some("SELECT * FROM person WHERE location_country='united states';".to_string());
 
         let search_params = SearchParams {
             base_params: Some(base_params),
