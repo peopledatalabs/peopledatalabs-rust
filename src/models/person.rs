@@ -363,7 +363,7 @@ pub struct SearchPersonResponse {
 
     pub data: Option<Vec<Person>>,
     pub total: i32,
-    pub scroll_token: String,
+    pub scroll_token: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
