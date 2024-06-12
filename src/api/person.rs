@@ -301,6 +301,7 @@ mod tests {
         assert_eq!(resp.status, 200);
         assert_eq!(resp.data.unwrap().len(), num_results);
         assert_eq!(resp.scroll_token.is_empty(), false);
+        assert_eq!(resp.scroll_token.is_some() && !resp.scroll_token.as_ref().unwrap().is_empty(), true);
     }
 
     #[test]
