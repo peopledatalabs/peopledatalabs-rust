@@ -2,6 +2,16 @@ use serde::{Deserialize, Serialize};
 
 use crate::{models::common::BaseParams, PDLError};
 
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
+pub enum ConfidenceLevel {
+    VeryHigh,
+    High,
+    Moderate,
+    Low,
+    VeryLow,
+}
+
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct IPBaseParams {
     /// IP that is used as the seed for enrichment
@@ -19,6 +29,12 @@ pub struct IPBaseParams {
     /// If true, the response will return metadata/location even if no company is found
     #[serde(rename = "return_if_unmatched", default)]
     pub return_if_unmatched: Option<bool>,
+    /// If true, the response will return updated title tags
+    #[serde(rename = "updated_title_roles", default)]
+    pub updated_title_roles: Option<bool>,
+    /// Minimum confidence level required for returning data
+    #[serde(rename = "min_confidence", default)]
+    pub min_confidence: Option<ConfidenceLevel>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
