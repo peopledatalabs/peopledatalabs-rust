@@ -31,6 +31,9 @@ pub struct AdditionalParams {
     /// includes a value for each queried field parameter that was "matched-on" during our internal query.
     #[serde(rename = "include_if_matched", default)]
     pub include_if_matched: Option<bool>,
+    /// If true, the response will return updated title tags
+    #[serde(rename = "updated_title_roles", default)]
+    pub updated_title_roles: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Default)]
