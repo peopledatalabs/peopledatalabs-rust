@@ -155,6 +155,7 @@ mod tests {
 
         let mut base_params = BaseParams::default();
         base_params.pretty = Some(true);
+        base_params.size = Some(1);
 
         let mut search_base_params = SearchBaseParams::default();
         search_base_params.sql =
