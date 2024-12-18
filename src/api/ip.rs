@@ -33,7 +33,7 @@ mod tests {
         base_params.pretty = Some(true);
 
         let mut ip_base_params = IPBaseParams::default();
-        ip_base_params.ip = Some("72.212.42.169".to_string());
+        ip_base_params.ip = Some("72.212.42.228".to_string());
 
         let ip_params = IPParams {
             base_params: Some(base_params),
@@ -43,6 +43,6 @@ mod tests {
         let resp = ip.get(ip_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.data.ip.address, "72.212.42.169");
+        assert_eq!(resp.data.ip.address, "72.212.42.228");
     }
 }
