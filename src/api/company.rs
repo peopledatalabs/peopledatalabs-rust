@@ -155,7 +155,6 @@ mod tests {
 
         let mut base_params = BaseParams::default();
         base_params.pretty = Some(true);
-        base_params.size = Some(1);
 
         let mut search_base_params = SearchBaseParams::default();
         search_base_params.sql =
@@ -170,6 +169,6 @@ mod tests {
         let resp = company.search(search_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.total, Some(1));
+        assert_eq!(resp.total, Some(2));
     }
 }
