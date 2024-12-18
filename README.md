@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.imgur.com/S7DkZtr.png" width="250" alt="People Data Labs Logo">
+<img src="https://www.peopledatalabs.com/images/company-logo.png" style="background-color: white; padding: 5px 10px;" width="250" alt="People Data Labs Logo">
 </p>
 <h1 align="center">People Data Labs Rust Client</h1>
 <p align="center">Official Rust client for the People Data Labs API.</p>
@@ -285,7 +285,7 @@ let results = client.skill.get(params);
 
 ```rust
 let mut ip_base_params = IPBaseParams::default();
-ip_base_params.ip = Some("72.212.42.169".to_string());
+ip_base_params.ip = Some("72.212.42.228".to_string());
 let params = IPParams {
     base_params: None,
     ip_base_params,

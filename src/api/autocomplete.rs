@@ -45,6 +45,7 @@ mod tests {
             field: "school".to_string(),
             text: Some("stanf".to_string()),
             titlecase: Some(false),
+            updated_title_roles: Some(false),
         };
 
         let autocomplete_params = AutocompleteParams {

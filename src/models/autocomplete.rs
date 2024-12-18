@@ -13,6 +13,9 @@ pub struct AutocompleteBaseParams {
     /// Setting titlecase to true will titlecase the data in 200 responses
     #[serde(rename = "titlecase", skip_serializing_if = "Option::is_none")]
     pub titlecase: Option<bool>,
+    /// If true, the response will return updated title tags
+    #[serde(rename = "updated_title_roles", default)]
+    pub updated_title_roles: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
