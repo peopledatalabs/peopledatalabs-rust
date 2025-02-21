@@ -10,37 +10,37 @@ use crate::{
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct CompanyParams {
     /// The PDL ID of the company
-    #[serde(rename = "pdl_id", default)]
+    #[serde(rename = "pdl_id", skip_serializing_if = "Option::is_none", default)]
     pub pdl_id: Option<String>,
     /// The name of the company
-    #[serde(rename = "name", default)]
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none", default)]
     pub name: Option<String>,
     /// A website the company uses
-    #[serde(rename = "website", default)]
+    #[serde(rename = "website", skip_serializing_if = "Option::is_none", default)]
     pub website: Option<String>,
     /// A social profile of the company (linkedin/facebook/twitter/crunchbase)
-    #[serde(rename = "profile", default)]
+    #[serde(rename = "profile", skip_serializing_if = "Option::is_none", default)]
     pub profile: Option<String>,
     /// Company stock ticker
-    #[serde(rename = "ticker", default)]
+    #[serde(rename = "ticker", skip_serializing_if = "Option::is_none", default)]
     pub ticker: Option<String>,
     /// Complete or partial company location
-    #[serde(rename = "location", default)]
+    #[serde(rename = "location", skip_serializing_if = "Option::is_none", default)]
     pub location: Option<Vec<String>>,
     /// Company locality
-    #[serde(rename = "locality", default)]
+    #[serde(rename = "locality", skip_serializing_if = "Option::is_none", default)]
     pub locality: Option<String>,
     /// Company region
-    #[serde(rename = "region", default)]
+    #[serde(rename = "region", skip_serializing_if = "Option::is_none", default)]
     pub region: Option<String>,
     /// Company country
-    #[serde(rename = "country", default)]
+    #[serde(rename = "country", skip_serializing_if = "Option::is_none", default)]
     pub country: Option<String>,
     /// Company address
-    #[serde(rename = "street_address", default)]
+    #[serde(rename = "street_address", skip_serializing_if = "Option::is_none", default)]
     pub street_address: Option<String>,
     /// Company postal code
-    #[serde(rename = "postal_code", default)]
+    #[serde(rename = "postal_code", skip_serializing_if = "Option::is_none", default)]
     pub postal_code: Option<String>,
 }
 

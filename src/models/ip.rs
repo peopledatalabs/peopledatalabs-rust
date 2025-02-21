@@ -29,9 +29,6 @@ pub struct IPBaseParams {
     /// If true, the response will return metadata/location even if no company is found
     #[serde(rename = "return_if_unmatched", default)]
     pub return_if_unmatched: Option<bool>,
-    /// If true, the response will return updated title tags
-    #[serde(rename = "updated_title_roles", default)]
-    pub updated_title_roles: Option<bool>,
     /// Minimum confidence level required for returning data
     #[serde(rename = "min_confidence", default)]
     pub min_confidence: Option<ConfidenceLevel>,
