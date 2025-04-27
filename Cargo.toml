@@ -1,6 +1,6 @@
 [package]
 name = "peopledatalabs"
-version = "3.0.0"
+version = "4.0.0"
 edition = "2021"
 description = "A Rust client for the People Data Labs API"
 documentation = "https://docs.peopledatalabs.com/docs/rust-sdk"

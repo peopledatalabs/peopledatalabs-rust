@@ -6,7 +6,6 @@ pub mod jobtitle;
 pub mod location;
 pub mod person;
 pub mod school;
-pub mod skills;
 
 pub use autocomplete::{AutocompleteBaseParams, AutocompleteParams};
 pub use common::{BaseParams, SearchBaseParams, SearchParams};
@@ -20,4 +19,3 @@ pub use person::{
     PersonParams, RetrievePersonParams,
 };
 pub use school::{CleanSchoolParams, SchoolParams};
-pub use skills::{SkillBaseParams, SkillParams};
