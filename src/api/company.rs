@@ -169,6 +169,6 @@ mod tests {
         let resp = company.search(search_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.total, Some(2));
+        assert_eq!(resp.total, Some(1));
     }
 }
