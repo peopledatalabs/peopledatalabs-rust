@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://www.peopledatalabs.com/images/company-logo.png" style="background-color: white; padding: 5px 10px;" width="250" alt="People Data Labs Logo">
+<img src="https://www.peopledatalabs.com/images/logos/company-logo.png" style="background-color: white; padding: 5px 10px;" width="250" alt="People Data Labs Logo">
 </p>
 <h1 align="center">People Data Labs Rust Client</h1>
 <p align="center">Official Rust client for the People Data Labs API.</p>
@@ -267,20 +267,6 @@ let params = JobTitleParams {
 let results = client.job_title.get(params);
 ```
 
-#### Enrich Skill
-
-```rust
-let skill_base_params = SkillBaseParams {
-    skill: Some("python".to_string()),
-};
-let params = SkillParams {
-    base_params: None,
-    skill_base_params,
-};
-
-let results = client.skill.get(params);
-```
-
 #### Enrich IP
 
 ```rust
@@ -332,7 +318,6 @@ let client = PDLClient::new(&api_key).options(client_options).build();
 | [Location Cleaner API](https://docs.peopledatalabs.com/docs/cleaner-apis#locationclean) | `client.location.clean(params)` |
 | [School Cleaner API](https://docs.peopledatalabs.com/docs/cleaner-apis#schoolclean)     | `client.school.clean(params)`   |
 | [Job Title Enrichment API](https://docs.peopledatalabs.com/docs/job-title-enrichment-api) | `client.job_title.enrich(params)` |
-| [Skill Enrichment API](https://docs.peopledatalabs.com/docs/skill-enrichment-api) | `client.skill.enrich(params)` |
 | [IP Enrichment API](https://docs.peopledatalabs.com/docs/ip-enrichment-api) | `client.ip.enrich(params)` |
 
 ## 📘 Documentation <a name="documentation"></a>
