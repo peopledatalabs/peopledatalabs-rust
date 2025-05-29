@@ -54,6 +54,7 @@ pub struct Meta {
     pub locality: Option<String>,
     pub region: Option<String>,
     pub role: Option<String>,
+    pub fields: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
