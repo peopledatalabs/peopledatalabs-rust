@@ -157,9 +157,6 @@ mod tests {
 
         let person = Person { client };
 
-        let mut base_params = BaseParams::default();
-        base_params.pretty = Some(true);
-
         let mut person_params_1 = PersonParams::default();
         person_params_1.profile = Some(vec!["linkedin.com/in/seanthorne".to_string()]);
         let mut person_params_2 = PersonParams::default();
