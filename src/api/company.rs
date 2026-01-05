@@ -101,9 +101,6 @@ mod tests {
 
         let company = Company { client };
 
-        let mut base_params = BaseParams::default();
-        base_params.pretty = Some(true);
-
         let mut company_params_1 = CompanyParams::default();
         company_params_1.profile = Some("https://www.linkedin.com/company/walmart".to_string());
         let mut company_params_2 = CompanyParams::default();
