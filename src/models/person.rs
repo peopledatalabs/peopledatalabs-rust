@@ -404,6 +404,7 @@ pub struct Person {
     pub job_title: Option<String>,
     pub job_title_role: Option<String>,
     pub job_title_sub_role: Option<String>,
+    pub job_title_class: Option<String>,
     pub job_title_levels: Option<Vec<String>>,
     pub job_company_id: Option<String>,
     pub job_company_name: Option<String>,
@@ -411,6 +412,7 @@ pub struct Person {
     pub job_company_size: Option<String>,
     pub job_company_founded: Option<i32>,
     pub job_company_industry: Option<String>,
+    pub job_company_industry_v2: Option<String>,
     pub job_company_linkedin_url: Option<String>,
     pub job_company_linkedin_id: Option<String>,
     pub job_company_facebook_url: Option<String>,
@@ -425,10 +427,24 @@ pub struct Person {
     pub job_company_location_postal_code: Option<String>,
     pub job_company_location_country: Option<String>,
     pub job_company_location_continent: Option<String>,
-    pub job_last_updated: Option<String>,
+    pub job_company_employee_count: Option<i32>,
+    pub job_company_inferred_revenue: Option<String>,
+    #[serde(rename = "job_company_12mo_employee_growth_rate")]
+    pub job_company_12mo_employee_growth_rate: Option<f64>,
+    pub job_company_total_funding_raised: Option<f64>,
+    pub job_company_ticker: Option<String>,
+    pub job_company_type: Option<String>,
     pub job_last_changed: Option<String>,
     pub job_last_verified: Option<String>,
     pub job_start_date: Option<String>,
+    pub job_onet_code: Option<String>,
+    pub job_onet_major_group: Option<String>,
+    pub job_onet_minor_group: Option<String>,
+    pub job_onet_broad_occupation: Option<String>,
+    pub job_onet_specific_occupation: Option<String>,
+    pub job_onet_specific_occupation_detail: Option<String>,
+    pub job_onet_title: Option<String>,
+    pub job_summary: Option<String>,
     pub location_name: Option<String>,
     pub location_locality: Option<String>,
     pub location_metro: Option<String>,
@@ -441,6 +457,7 @@ pub struct Person {
     pub location_geo: Option<String>,
     pub location_last_updated: Option<String>,
     pub phone_numbers: Option<Vec<String>>,
+    pub phones: Option<Vec<Phone>>,
     pub emails: Option<Vec<Email>>,
     pub interests: Option<Vec<String>>,
     pub skills: Option<Vec<String>>,
@@ -452,12 +469,45 @@ pub struct Person {
     pub education: Option<Vec<Education>>,
     pub profiles: Option<Vec<Profile>>,
     pub version_status: Option<VersionStatus>,
+    pub linkedin_connections: Option<i32>,
+    pub facebook_friends: Option<i32>,
+    pub name_aliases: Option<Vec<String>>,
+    pub possible_emails: Option<Vec<Email>>,
+    pub possible_phones: Option<Vec<Phone>>,
+    pub possible_profiles: Option<Vec<Profile>>,
+    pub possible_street_addresses: Option<Vec<StreetAddress>>,
+    pub possible_birth_dates: Option<Vec<String>>,
+    pub possible_location_names: Option<Vec<String>>,
+    pub job_history: Option<Vec<JobHistory>>,
+    pub num_records: Option<i32>,
+    pub num_sources: Option<i32>,
+    pub first_seen: Option<String>,
+    pub certifications: Option<Vec<Certification>>,
+    pub inferred_salary: Option<String>,
+    pub inferred_years_experience: Option<i32>,
+    pub languages: Option<Vec<Language>>,
+    pub summary: Option<String>,
+    pub headline: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Email {
     pub address: Option<String>,
+    #[serde(rename = "type")]
     pub type_: Option<String>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+    pub num_sources: Option<i32>,
+    pub md5_hash: Option<String>,
+    pub sha_256_hash: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Phone {
+    pub number: Option<String>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+    pub num_sources: Option<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -470,22 +520,30 @@ pub struct StreetAddress {
     pub continent: Option<String>,
     pub street_address: Option<String>,
     pub address_line_2: Option<String>,
+    pub full_address: Option<String>,
     pub postal_code: Option<String>,
     pub geo: Option<String>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+    pub num_sources: Option<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Experience {
-    pub company: Option<Company>,
+    pub company: Option<ExperienceCompany>,
     pub location_names: Option<Vec<String>>,
     pub end_date: Option<String>,
     pub start_date: Option<String>,
     pub title: Option<Title>,
     pub is_primary: Option<bool>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+    pub num_sources: Option<i32>,
+    pub summary: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Company {
+pub struct ExperienceCompany {
     pub name: Option<String>,
     pub size: Option<String>,
     pub id: Option<String>,
@@ -497,6 +555,10 @@ pub struct Company {
     pub facebook_url: Option<String>,
     pub twitter_url: Option<String>,
     pub website: Option<String>,
+    pub raw: Option<Vec<String>>,
+    pub ticker: Option<String>,
+    #[serde(rename = "type")]
+    pub type_: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -518,31 +580,38 @@ pub struct Title {
     pub name: Option<String>,
     pub role: Option<String>,
     pub sub_role: Option<String>,
+    pub class: Option<String>,
     pub levels: Option<Vec<String>>,
+    pub raw: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Education {
-    pub school: Option<School>,
+    pub school: Option<EducationSchool>,
     pub end_date: Option<String>,
     pub start_date: Option<String>,
     pub gpa: Option<f32>,
     pub degrees: Option<Vec<String>>,
     pub majors: Option<Vec<String>>,
     pub minors: Option<Vec<String>>,
+    pub raw: Option<Vec<String>>,
+    pub summary: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct School {
+pub struct EducationSchool {
     pub name: Option<String>,
+    #[serde(rename = "type")]
     pub type_: Option<String>,
     pub id: Option<String>,
     pub location: Option<Location>,
     pub linkedin_url: Option<String>,
+    pub linkedin_id: Option<String>,
     pub facebook_url: Option<String>,
     pub twitter_url: Option<String>,
     pub website: Option<String>,
     pub domain: Option<String>,
+    pub raw: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -551,6 +620,9 @@ pub struct Profile {
     pub id: Option<String>,
     pub url: Option<String>,
     pub username: Option<String>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+    pub num_sources: Option<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -559,4 +631,28 @@ pub struct VersionStatus {
     pub contains: Option<Vec<String>>,
     pub previous_version: Option<String>,
     pub current_version: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct JobHistory {
+    pub company_id: Option<String>,
+    pub company_name: Option<String>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+    pub num_sources: Option<i32>,
+    pub title: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Certification {
+    pub end_date: Option<String>,
+    pub name: Option<String>,
+    pub organization: Option<String>,
+    pub start_date: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Language {
+    pub name: Option<String>,
+    pub proficiency: Option<i32>,
 }
