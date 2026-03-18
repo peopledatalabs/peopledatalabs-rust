@@ -16,7 +16,7 @@ impl Changelog {
     ) -> Result<ChangelogPersonResponse, PDLError> {
         params.validate()?;
         self.client
-            .get::<ChangelogPersonResponse, ChangelogPersonParams>(
+            .post::<ChangelogPersonResponse, ChangelogPersonParams>(
                 PERSON_CHANGELOG_PATH,
                 params,
             )
@@ -40,8 +40,8 @@ mod tests {
         let changelog = Changelog { client };
 
         let params = ChangelogPersonParams {
-            origin_version: Some("28.0".to_string()),
-            current_version: Some("29.0".to_string()),
+            origin_version: Some("33.1".to_string()),
+            current_version: Some("33.2".to_string()),
             type_: Some("updated".to_string()),
             ..Default::default()
         };
@@ -61,8 +61,8 @@ mod tests {
         let changelog = Changelog { client };
 
         let params = ChangelogPersonParams {
-            origin_version: Some("28.0".to_string()),
-            current_version: Some("29.0".to_string()),
+            origin_version: Some("33.1".to_string()),
+            current_version: Some("33.2".to_string()),
             type_: Some("updated".to_string()),
             ..Default::default()
         };
