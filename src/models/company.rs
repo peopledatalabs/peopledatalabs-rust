@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 use crate::{
     models::common::{AdditionalParams, BaseParams},
@@ -341,7 +342,7 @@ pub struct CompanyResponse {
     pub employee_growth_rate: Option<HashMap<String, f32>>,
     pub employee_churn_rate: Option<HashMap<String, f32>>,
     pub employee_turnover_rate: Option<HashMap<String, f32>>,
-    pub annualized_employee_turnover_rate: Option<f64>,
+    pub annualized_employee_turnover_rate: Option<Value>,
     pub average_employee_tenure: Option<f32>,
     pub median_employee_tenure: Option<f32>,
     pub average_tenure_by_role: Option<HashMap<String, f32>>,
@@ -358,14 +359,14 @@ pub struct CompanyResponse {
     pub gross_departures_by_month: Option<HashMap<String, i32>>,
     pub employee_count_by_month_by_role: Option<HashMap<String, HashMap<String, i32>>>,
     pub employee_count_by_month_by_level: Option<HashMap<String, HashMap<String, i32>>>,
-    pub active_job_postings: Option<f64>,
+    pub active_job_postings: Option<Value>,
     pub active_job_postings_by_role: Option<HashMap<String, i32>>,
     pub active_job_postings_by_class: Option<HashMap<String, i32>>,
     pub active_job_postings_by_sub_role: Option<HashMap<String, i32>>,
     pub active_job_postings_by_country: Option<HashMap<String, i32>>,
     pub active_job_postings_by_metro: Option<HashMap<String, i32>>,
     pub active_job_postings_by_month: Option<HashMap<String, i32>>,
-    pub deactivated_job_postings: Option<f64>,
+    pub deactivated_job_postings: Option<Value>,
     pub deactivated_job_postings_by_role: Option<HashMap<String, i32>>,
     pub deactivated_job_postings_by_class: Option<HashMap<String, i32>>,
     pub deactivated_job_postings_by_sub_role: Option<HashMap<String, i32>>,

@@ -49,7 +49,7 @@ impl ChangelogPersonParams {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ChangelogPersonResponse {
-    pub status: i32,
+    pub status: Option<i32>,
     pub error: Option<ChangelogError>,
     pub data: Option<ChangelogData>,
 }
