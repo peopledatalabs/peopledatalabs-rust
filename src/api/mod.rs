@@ -1,4 +1,5 @@
 pub mod autocomplete;
+pub mod changelog;
 pub mod company;
 pub mod ip;
 pub mod jobtitle;
@@ -7,6 +8,7 @@ pub mod person;
 pub mod school;
 
 pub(crate) use autocomplete::Autocomplete;
+pub(crate) use changelog::Changelog;
 pub(crate) use company::Company;
 pub(crate) use ip::IP;
 pub(crate) use jobtitle::JobTitle;

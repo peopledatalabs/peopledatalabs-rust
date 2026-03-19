@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 use crate::{
     models::common::{AdditionalParams, BaseParams},
@@ -193,9 +194,35 @@ pub struct Location {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct CompanyLocation {
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub street_address: Option<String>,
+    pub address_line_2: Option<String>,
+    pub postal_code: Option<String>,
+    pub geo: Option<String>,
+    pub is_primary: Option<bool>,
+    pub is_active: Option<bool>,
+    pub first_seen: Option<String>,
+    pub last_seen: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TopUsEmployeeMetros {
-    pub current_head_count: Option<i32>,
-    pub twelve_moth_growth_rate: Option<f32>,
+    pub current_headcount: Option<i32>,
+    #[serde(rename = "12_month_growth_rate")]
+    pub twelve_month_growth_rate: Option<f32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TopEmployerEntry {
+    pub id: Option<String>,
+    pub display_name: Option<String>,
+    pub count: Option<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -205,11 +232,13 @@ pub struct RecentExecHires {
     pub job_title: Option<String>,
     pub job_title_role: Option<String>,
     pub job_title_sub_role: Option<String>,
+    pub job_title_class: Option<String>,
     pub job_title_levels: Option<Vec<String>>,
     pub previous_company_id: Option<String>,
     pub previous_company_job_title: Option<String>,
     pub previous_company_job_title_role: Option<String>,
     pub previous_company_job_title_sub_role: Option<String>,
+    pub previous_company_job_title_class: Option<String>,
     pub previous_company_job_title_levels: Option<Vec<String>>,
 }
 
@@ -220,11 +249,13 @@ pub struct RecentExecDepartures {
     pub job_title: Option<String>,
     pub job_title_role: Option<String>,
     pub job_title_sub_role: Option<String>,
+    pub job_title_class: Option<String>,
     pub job_title_levels: Option<Vec<String>>,
     pub new_company_id: Option<String>,
     pub new_company_job_title: Option<String>,
     pub new_company_job_title_role: Option<String>,
     pub new_company_job_title_sub_role: Option<String>,
+    pub new_company_job_title_class: Option<String>,
     pub new_company_job_title_levels: Option<Vec<String>>,
 }
 
@@ -239,6 +270,28 @@ pub struct FundingDetails {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct AffiliatedEntity {
+    pub affiliated_id: Option<String>,
+    pub relationship: Option<String>,
+    pub display_name: Option<String>,
+    pub relationship_catalyst: Option<String>,
+    pub relationship_status: Option<String>,
+    pub start_date: Option<String>,
+    pub end_date: Option<String>,
+    pub relationship_citations: Option<Vec<String>>,
+    pub employee_count: Option<i32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct EmployeeGrowthRate12MonthByCountry {
+    pub current_headcount: Option<i32>,
+    #[serde(rename = "12_month_headcount")]
+    pub twelve_month_headcount: Option<i32>,
+    #[serde(rename = "12_month_growth_rate")]
+    pub twelve_month_growth_rate: Option<f64>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CompanyResponse {
     /// See https://docs.peopledatalabs.com/docs/example-company-record for more information.
     pub status: Option<i32>,
@@ -248,9 +301,13 @@ pub struct CompanyResponse {
     pub size: Option<String>,
     pub employee_count: Option<i32>,
     pub linkedin_employee_count: Option<i32>,
+    pub linkedin_follower_count: Option<i32>,
     pub id: Option<String>,
     pub founded: Option<i32>,
     pub industry: Option<String>,
+    pub industry_v2: Option<String>,
+    pub gics_sector: Option<String>,
+    pub inferred_revenue: Option<String>,
     pub linkedin_id: Option<String>,
     pub linkedin_url: Option<String>,
     pub linkedin_slug: Option<String>,
@@ -259,6 +316,12 @@ pub struct CompanyResponse {
     pub profiles: Option<Vec<String>>,
     pub website: Option<String>,
     pub ticker: Option<String>,
+    pub mic_exchange: Option<String>,
+    pub ultimate_parent: Option<String>,
+    pub immediate_parent: Option<String>,
+    pub ultimate_parent_ticker: Option<String>,
+    pub ultimate_parent_mic_exchange: Option<String>,
+    #[serde(rename = "type")]
     pub type_: Option<String>,
     pub summary: Option<String>,
     pub tags: Option<Vec<String>>,
@@ -267,28 +330,54 @@ pub struct CompanyResponse {
     pub alternative_names: Option<Vec<String>>,
     pub alternative_domains: Option<Vec<String>>,
     pub affiliated_profiles: Option<Vec<String>>,
+    pub all_subsidiaries: Option<Vec<String>>,
+    pub direct_subsidiaries: Option<Vec<String>>,
+    pub affiliated_entities: Option<Vec<AffiliatedEntity>>,
     pub location: Option<Location>,
+    pub locations: Option<Vec<CompanyLocation>>,
+    pub num_total_locations: Option<i32>,
+    pub num_active_locations: Option<i32>,
     pub naics: Option<Vec<Naics>>,
     pub sic: Option<Vec<Sic>>,
     pub employee_growth_rate: Option<HashMap<String, f32>>,
     pub employee_churn_rate: Option<HashMap<String, f32>>,
+    pub employee_turnover_rate: Option<HashMap<String, f32>>,
+    pub annualized_employee_turnover_rate: Option<Value>,
     pub average_employee_tenure: Option<f32>,
+    pub median_employee_tenure: Option<f32>,
     pub average_tenure_by_role: Option<HashMap<String, f32>>,
+    pub median_tenure_by_role: Option<HashMap<String, f32>>,
     pub average_tenure_by_level: Option<HashMap<String, f32>>,
+    pub median_tenure_by_level: Option<HashMap<String, f32>>,
     pub employee_count_by_country: Option<HashMap<String, i32>>,
-    pub top_us_employee_metro: Option<Vec<TopUsEmployeeMetros>>,
+    pub employee_count_by_role: Option<HashMap<String, i32>>,
+    pub employee_growth_rate_12_month_by_role: Option<HashMap<String, f32>>,
+    pub employee_growth_rate_12_month_by_country: Option<HashMap<String, EmployeeGrowthRate12MonthByCountry>>,
+    pub top_us_employee_metros: Option<HashMap<String, TopUsEmployeeMetros>>,
     pub employee_count_by_month: Option<HashMap<String, i32>>,
     pub gross_additions_by_month: Option<HashMap<String, i32>>,
     pub gross_departures_by_month: Option<HashMap<String, i32>>,
     pub employee_count_by_month_by_role: Option<HashMap<String, HashMap<String, i32>>>,
     pub employee_count_by_month_by_level: Option<HashMap<String, HashMap<String, i32>>>,
+    pub active_job_postings: Option<Value>,
+    pub active_job_postings_by_role: Option<HashMap<String, i32>>,
+    pub active_job_postings_by_class: Option<HashMap<String, i32>>,
+    pub active_job_postings_by_sub_role: Option<HashMap<String, i32>>,
+    pub active_job_postings_by_country: Option<HashMap<String, i32>>,
+    pub active_job_postings_by_metro: Option<HashMap<String, i32>>,
+    pub active_job_postings_by_month: Option<HashMap<String, i32>>,
+    pub deactivated_job_postings: Option<Value>,
+    pub deactivated_job_postings_by_role: Option<HashMap<String, i32>>,
+    pub deactivated_job_postings_by_class: Option<HashMap<String, i32>>,
+    pub deactivated_job_postings_by_sub_role: Option<HashMap<String, i32>>,
+    pub deactivated_job_postings_by_month: Option<HashMap<String, i32>>,
     pub recent_exec_hires: Option<Vec<RecentExecHires>>,
     pub recent_exec_departures: Option<Vec<RecentExecDepartures>>,
-    pub top_previous_employers_by_role: Option<HashMap<String, HashMap<String, i32>>>,
-    pub top_next_employers_by_role: Option<HashMap<String, HashMap<String, i32>>>,
+    pub top_previous_employers: Option<HashMap<String, Vec<TopEmployerEntry>>>,
+    pub top_next_employers: Option<HashMap<String, Vec<TopEmployerEntry>>>,
     pub total_funding_raised: Option<f32>,
     pub latest_funding_stage: Option<String>,
-    pub latest_funding_date: Option<String>,
+    pub last_funding_date: Option<String>,
     pub number_funding_rounds: Option<i32>,
     pub funding_stages: Option<Vec<String>>,
     pub funding_details: Option<Vec<FundingDetails>>,
@@ -318,6 +407,7 @@ pub struct CleanCompanyResponse {
     pub twitter_url: Option<String>,
     pub website: Option<String>,
     pub ticker: Option<String>,
+    #[serde(rename = "type")]
     pub type_: Option<String>,
     pub raw: Option<Vec<String>>,
     pub score: f32,

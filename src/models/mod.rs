@@ -1,4 +1,5 @@
 pub mod autocomplete;
+pub mod changelog;
 pub mod common;
 pub mod company;
 pub mod ip;
