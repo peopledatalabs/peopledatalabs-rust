@@ -2,16 +2,17 @@ mod api;
 mod client;
 mod models;
 
-use api::{Autocomplete, Changelog, Company, JobTitle, Location, Person, School, IP};
+use api::{Autocomplete, Changelog, Company, JobPosting, JobTitle, Location, Person, School, IP};
 use client::{PDLClient, PDLError};
 
 pub use models::{
     AutocompleteBaseParams, AutocompleteParams, BaseParams, BulkEnrichPersonParams,
     BulkEnrichSinglePersonParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
     CleanCompanyParams, CleanLocationParams, CleanSchoolParams, CompanyParams, EnrichCompanyParams,
-    EnrichPersonParams, IPBaseParams, IPParams, IdentifyPersonParams, JobTitleBaseParams,
-    JobTitleParams, LocationParams, PersonMetadata, PersonParams, RetrievePersonParams,
-    SchoolParams, SearchBaseParams, SearchParams,
+    EnrichPersonParams, IPBaseParams, IPParams, IdentifyPersonParams, JobPostingSearchBaseParams,
+    JobPostingSearchParams, JobTitleBaseParams, JobTitleParams, LocationParams, PersonMetadata,
+    PersonParams, RemoteWorkPolicy, RetrievePersonParams, SalaryPeriod, SchoolParams,
+    SearchBaseParams, SearchParams,
 };
 pub use models::changelog::ChangelogPersonParams;
 
@@ -20,6 +21,7 @@ pub struct PDL {
     pub changelog: Changelog,
     pub company: Company,
     pub ip: IP,
+    pub job_posting: JobPosting,
     pub job_title: JobTitle,
     pub location: Location,
     pub person: Person,
@@ -48,6 +50,9 @@ impl PDL {
                 client: client.clone(),
             },
             ip: IP {
+                client: client.clone(),
+            },
+            job_posting: JobPosting {
                 client: client.clone(),
             },
             job_title: JobTitle {

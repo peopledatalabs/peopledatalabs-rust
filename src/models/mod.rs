@@ -3,6 +3,7 @@ pub mod changelog;
 pub mod common;
 pub mod company;
 pub mod ip;
+pub mod jobposting;
 pub mod jobtitle;
 pub mod location;
 pub mod person;
@@ -12,6 +13,9 @@ pub use autocomplete::{AutocompleteBaseParams, AutocompleteParams};
 pub use common::{BaseParams, SearchBaseParams, SearchParams};
 pub use company::{CleanCompanyParams, CompanyParams, EnrichCompanyParams};
 pub use ip::{IPBaseParams, IPParams};
+pub use jobposting::{
+    JobPostingSearchBaseParams, JobPostingSearchParams, RemoteWorkPolicy, SalaryPeriod,
+};
 pub use jobtitle::{JobTitleBaseParams, JobTitleParams};
 pub use location::{CleanLocationParams, LocationParams};
 pub use person::{
