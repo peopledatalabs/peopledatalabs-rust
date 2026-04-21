@@ -280,6 +280,59 @@ let params = IPParams {
 let results = client.ip.get(params);
 ```
 
+### Job Posting Search
+
+#### Search (Elasticsearch)
+
+```rust
+let query = serde_json::json!({
+    "query": {
+        "bool": {
+            "must": [
+                { "term": { "title_role": "engineering" } },
+                { "term": { "remote_work_policy": "remote" } },
+            ]
+        }
+    }
+});
+
+let mut base_params = BaseParams::default();
+base_params.size = Some(10);
+
+let search_base_params = JobPostingSearchBaseParams {
+    query: Some(query),
+    ..JobPostingSearchBaseParams::default()
+};
+
+let params = JobPostingSearchParams {
+    base_params: Some(base_params),
+    search_base_params,
+};
+
+let results = client.job_posting.search(params);
+```
+
+#### Search (Field Parameters)
+
+```rust
+let mut base_params = BaseParams::default();
+base_params.size = Some(10);
+
+let search_base_params = JobPostingSearchBaseParams {
+    title_role: Some("engineering".to_string()),
+    remote_work_policy: Some(RemoteWorkPolicy::Remote),
+    is_active: Some(true),
+    ..JobPostingSearchBaseParams::default()
+};
+
+let params = JobPostingSearchParams {
+    base_params: Some(base_params),
+    search_base_params,
+};
+
+let results = client.job_posting.search(params);
+```
+
 ## 🏝 Sandbox Usage <a name="sandbox"></a>
 ```rust
 // To enable sandbox usage, pass in the following options to the PDLClient before building
@@ -308,6 +361,12 @@ let client = PDLClient::new(&api_key).options(client_options).build();
 | ------------------------------------------------------------------------------------- |---------------------------------|
 | [Company Enrichment API](https://docs.peopledatalabs.com/docs/company-enrichment-api) | `client.company.enrich(params)` |
 | [Company Search API](https://docs.peopledatalabs.com/docs/company-search-api)         | `client.company.search(params)` |
+
+**Job Posting Endpoints**
+
+| API Endpoint                                                                          | SDK Function                          |
+| ------------------------------------------------------------------------------------- |---------------------------------------|
+| [Job Posting Search API](https://docs.peopledatalabs.com/docs/job-posting-search-api) | `client.job_posting.search(params)`   |
 
 **Supporting Endpoints**
 
