@@ -498,7 +498,7 @@ pub struct Person {
 pub struct ProfileScoreFactor {
     pub attribute_fill_rate: Option<f64>,
     pub profile_age_months: Option<i32>,
-    pub has_valid_url: Option<i32>,
+    pub has_valid_url: Option<f32>,
     pub linkedin_connections: Option<i32>,
 }
 
