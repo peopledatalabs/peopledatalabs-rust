@@ -489,9 +489,9 @@ pub struct Person {
     pub summary: Option<String>,
     pub headline: Option<String>,
     pub profile_score: Option<String>,
-    pub profile_score_factors: Option<Vec<ProfileScoreFactor>>,
+    pub profile_score_factors: Option<ProfileScoreFactor>,
     pub activity_score: Option<String>,
-    pub activity_score_factors: Option<Vec<ActivityScoreFactor>>,
+    pub activity_score_factors: Option<ActivityScoreFactor>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -499,7 +499,7 @@ pub struct ProfileScoreFactor {
     pub attribute_fill_rate: Option<f64>,
     pub profile_age_months: Option<i32>,
     pub has_valid_url: Option<i32>,
-    pub meets_connection_threshold: Option<i32>,
+    pub linkedin_connections: Option<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
