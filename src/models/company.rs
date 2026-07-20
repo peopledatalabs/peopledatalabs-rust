@@ -382,6 +382,11 @@ pub struct CompanyResponse {
     pub funding_stages: Option<Vec<String>>,
     pub funding_details: Option<Vec<FundingDetails>>,
     pub likelihood: Option<i32>,
+    pub technologies_used: Option<Vec<String>>,
+    pub product_id: Option<String>,
+    pub product_name: Option<String>,
+    pub num_job_posting_mentions: Option<i32>,
+    pub num_resume_mentions: Option<i32>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
