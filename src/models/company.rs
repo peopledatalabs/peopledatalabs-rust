@@ -294,7 +294,7 @@ pub struct EmployeeGrowthRate12MonthByCountry {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TechnologiesUsed {
     pub product_id: Option<String>,
-    pub product_name: Option<String>,
+    pub name: Option<String>,
     pub num_job_posting_mentions: Option<i32>,
     pub num_resume_mentions: Option<i32>,
 }
