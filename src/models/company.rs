@@ -292,6 +292,14 @@ pub struct EmployeeGrowthRate12MonthByCountry {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct TechnologiesUsed {
+    pub product_id: Option<String>,
+    pub product_name: Option<String>,
+    pub num_job_posting_mentions: Option<i32>,
+    pub num_resume_mentions: Option<i32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CompanyResponse {
     /// See https://docs.peopledatalabs.com/docs/example-company-record for more information.
     pub status: Option<i32>,
@@ -382,11 +390,7 @@ pub struct CompanyResponse {
     pub funding_stages: Option<Vec<String>>,
     pub funding_details: Option<Vec<FundingDetails>>,
     pub likelihood: Option<i32>,
-    pub technologies_used: Option<Vec<String>>,
-    pub product_id: Option<String>,
-    pub product_name: Option<String>,
-    pub num_job_posting_mentions: Option<i32>,
-    pub num_resume_mentions: Option<i32>,
+    pub technologies_used: Option<Vec<TechnologiesUsed>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
