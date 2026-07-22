@@ -43,6 +43,9 @@ mod tests {
         let resp = ip.get(ip_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(resp.data.ip.address, "72.212.42.228");
+        assert_eq!(
+            resp.data.ip.and_then(|ip| ip.address),
+            Some("72.212.42.228".to_string())
+        );
     }
 }
