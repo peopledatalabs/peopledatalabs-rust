@@ -60,7 +60,7 @@ pub struct IPResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPResult {
-    pub ip: IPInfo,
+    pub ip: Option<IPInfo>,
     pub company: Option<IPCompany>,
     pub person: Option<IPPerson>,
     pub dataset_version: Option<String>,
@@ -68,69 +68,72 @@ pub struct IPResult {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPInfo {
-    pub address: String,
+    pub address: Option<String>,
     pub metadata: Option<IPMetadata>,
     pub location: Option<IPLocation>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPMetadata {
-    pub version: i32,
-    pub mobile: bool,
-    pub hosting: bool,
-    pub proxy: bool,
-    pub tor: bool,
-    pub vpn: bool,
-    pub relay: bool,
-    pub service: String,
-    pub asn_domain: String,
+    pub version: Option<i32>,
+    pub mobile: Option<bool>,
+    pub hosting: Option<bool>,
+    pub proxy: Option<bool>,
+    pub tor: Option<bool>,
+    pub vpn: Option<bool>,
+    pub relay: Option<bool>,
+    pub service: Option<String>,
+    pub asn_domain: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPLocation {
-    pub name: String,
-    pub locality: String,
-    pub region: String,
-    pub metro: String,
-    pub country: String,
-    pub continent: String,
-    pub postal_code: String,
-    pub geo: String,
-    pub timezone: String,
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub postal_code: Option<String>,
+    pub geo: Option<String>,
+    pub timezone: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPCompany {
-    pub confidence: String,
-    pub id: String,
-    pub website: String,
-    pub name: String,
-    pub location: IPCompanyLocation,
-    pub size: String,
-    pub industry: String,
-    pub inferred_revenue: String,
-    pub employee_count: i32,
-    pub tags: Vec<String>,
+    pub confidence: Option<String>,
+    pub id: Option<String>,
+    pub website: Option<String>,
+    pub name: Option<String>,
+    pub display_name: Option<String>,
+    pub location: Option<IPCompanyLocation>,
+    pub size: Option<String>,
+    pub industry: Option<String>,
+    pub inferred_revenue: Option<String>,
+    pub employee_count: Option<i32>,
+    pub tags: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPCompanyLocation {
-    pub name: String,
-    pub locality: String,
-    pub region: String,
-    pub metro: String,
-    pub country: String,
-    pub continent: String,
-    pub street_address: String,
-    pub address_line_2: String,
-    pub postal_code: String,
-    pub geo: String,
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub street_address: Option<String>,
+    pub address_line_2: Option<String>,
+    pub postal_code: Option<String>,
+    pub geo: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IPPerson {
-    pub confidence: String,
-    pub job_title_subrole: String,
-    pub job_title_role: String,
-    pub job_title_levels: Vec<String>,
+    pub confidence: Option<String>,
+    pub job_title_class: Option<String>,
+    #[serde(rename = "job_title_sub_role")]
+    pub job_title_subrole: Option<String>,
+    pub job_title_role: Option<String>,
+    pub job_title_levels: Option<Vec<String>>,
 }
