@@ -303,7 +303,13 @@ pub struct TechnologiesUsed {
     pub product_id: Option<String>,
     pub name: Option<String>,
     pub num_job_posting_mentions: Option<i32>,
+    pub job_posting_first_observed: Option<String>,
+    pub job_posting_last_observed: Option<String>,
     pub num_resume_mentions: Option<i32>,
+    pub resume_first_observed: Option<String>,
+    pub resume_last_observed: Option<String>,
+    pub inferred_first_used: Option<String>,
+    pub inferred_last_used: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
