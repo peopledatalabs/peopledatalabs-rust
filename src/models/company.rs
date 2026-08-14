@@ -260,12 +260,19 @@ pub struct RecentExecDepartures {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct InvestingCompaniesDetail {
+    pub investing_company_id: Option<String>,
+    pub investing_company_display_name: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct FundingDetails {
     pub funding_round_date: Option<String>,
     pub funding_raised: Option<f64>,
     pub funding_currency: Option<String>,
     pub funding_type: Option<String>,
     pub investing_companies: Option<Vec<String>>,
+    pub investing_companies_details: Option<Vec<InvestingCompaniesDetail>>,
     pub investing_individuals: Option<Vec<String>>,
 }
 
