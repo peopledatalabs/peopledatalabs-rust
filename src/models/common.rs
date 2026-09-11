@@ -1,6 +1,41 @@
-use serde::{Deserialize, Serialize, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use crate::PDLError;
+
+/// The PDL API is inconsistent about whether `error.type` is a single string
+/// or an array of strings, depending on the endpoint. This lets either shape
+/// deserialize into a `Vec<String>`.
+#[derive(Deserialize)]
+#[serde(untagged)]
+enum StringOrVec {
+    Single(String),
+    Multiple(Vec<String>),
+}
+
+impl From<StringOrVec> for Vec<String> {
+    fn from(value: StringOrVec) -> Self {
+        match value {
+            StringOrVec::Single(s) => vec![s],
+            StringOrVec::Multiple(v) => v,
+        }
+    }
+}
+
+pub fn deserialize_string_or_vec<'de, D>(deserializer: D) -> Result<Vec<String>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    StringOrVec::deserialize(deserializer).map(Into::into)
+}
+
+pub fn deserialize_opt_string_or_vec<'de, D>(
+    deserializer: D,
+) -> Result<Option<Vec<String>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    Option::<StringOrVec>::deserialize(deserializer).map(|opt| opt.map(Into::into))
+}
 
 #[derive(Clone, Debug, Serialize, Deserialize, Default)]
 pub struct BaseParams {

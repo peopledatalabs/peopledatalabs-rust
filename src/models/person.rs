@@ -368,7 +368,7 @@ pub struct SearchPersonResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PersonErrorInfo {
-    #[serde(rename = "type")]
+    #[serde(rename = "type", deserialize_with = "crate::models::common::deserialize_string_or_vec")]
     pub error_type: Vec<String>,
     pub message: String,
 }

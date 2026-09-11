@@ -56,7 +56,11 @@ pub struct ChangelogPersonResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ChangelogError {
-    #[serde(rename = "type")]
+    #[serde(
+        rename = "type",
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_string_or_vec"
+    )]
     pub type_: Option<Vec<String>>,
     pub message: Option<String>,
     pub valid_versions: Option<Vec<String>>,

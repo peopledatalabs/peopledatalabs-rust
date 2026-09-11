@@ -122,29 +122,52 @@ impl JobPostingSearchParams {
 pub struct JobPosting {
     pub id: Option<String>,
     pub title: Option<String>,
+    pub title_raw: Option<String>,
     pub title_class: Option<String>,
     pub title_role: Option<String>,
     pub title_sub_role: Option<String>,
     pub title_levels: Option<Vec<String>>,
     pub company_id: Option<String>,
     pub company_name: Option<String>,
+    pub company_display_name: Option<String>,
     pub company_industry: Option<String>,
     pub company_industry_v2: Option<String>,
     pub company_website: Option<String>,
+    pub company_linkedin_url: Option<String>,
     pub company_profile: Option<String>,
-    pub location: Option<String>,
+    pub locations: Option<Vec<JobPostingLocation>>,
     pub description: Option<String>,
+    pub description_raw: Option<String>,
     pub urls: Option<Vec<String>>,
     pub first_seen: Option<String>,
     pub last_verified: Option<String>,
     pub deactivated_date: Option<String>,
     pub is_active: Option<bool>,
     pub remote_work_policy: Option<String>,
-    pub salary_range_min: Option<i32>,
-    pub salary_range_max: Option<i32>,
+    #[serde(rename = "salary_min")]
+    pub salary_range_min: Option<f64>,
+    #[serde(rename = "salary_max")]
+    pub salary_range_max: Option<f64>,
     pub salary_currency: Option<String>,
     pub salary_period: Option<String>,
-    pub inferred_skills: Option<Vec<String>>,
+    pub inferred_skills: Option<Vec<JobPostingSkill>>,
+    pub posting_url: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct JobPostingLocation {
+    pub name: Option<String>,
+    pub locality: Option<String>,
+    pub region: Option<String>,
+    pub metro: Option<String>,
+    pub country: Option<String>,
+    pub continent: Option<String>,
+    pub geo: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct JobPostingSkill {
+    pub name: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
