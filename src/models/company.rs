@@ -240,12 +240,15 @@ pub struct TopEmployerEntry {
 pub struct RecentExecHires {
     pub joined_date: Option<String>,
     pub pdl_id: Option<String>,
+    pub name: Option<String>,
+    pub linkedin_url: Option<String>,
     pub job_title: Option<String>,
     pub job_title_role: Option<String>,
     pub job_title_sub_role: Option<String>,
     pub job_title_class: Option<String>,
     pub job_title_levels: Option<Vec<String>>,
     pub previous_company_id: Option<String>,
+    pub previous_company_display_name: Option<String>,
     pub previous_company_job_title: Option<String>,
     pub previous_company_job_title_role: Option<String>,
     pub previous_company_job_title_sub_role: Option<String>,
@@ -257,17 +260,38 @@ pub struct RecentExecHires {
 pub struct RecentExecDepartures {
     pub departed_date: Option<String>,
     pub pdl_id: Option<String>,
+    pub name: Option<String>,
+    pub linkedin_url: Option<String>,
     pub job_title: Option<String>,
     pub job_title_role: Option<String>,
     pub job_title_sub_role: Option<String>,
     pub job_title_class: Option<String>,
     pub job_title_levels: Option<Vec<String>>,
     pub new_company_id: Option<String>,
+    pub new_company_display_name: Option<String>,
     pub new_company_job_title: Option<String>,
     pub new_company_job_title_role: Option<String>,
     pub new_company_job_title_sub_role: Option<String>,
     pub new_company_job_title_class: Option<String>,
     pub new_company_job_title_levels: Option<Vec<String>>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct RecentExecInternalChanges {
+    pub new_role_date: Option<String>,
+    pub pdl_id: Option<String>,
+    pub name: Option<String>,
+    pub linkedin_url: Option<String>,
+    pub job_title: Option<String>,
+    pub job_title_role: Option<String>,
+    pub job_title_sub_role: Option<String>,
+    pub job_title_class: Option<String>,
+    pub job_title_levels: Option<Vec<String>>,
+    pub previous_job_title: Option<String>,
+    pub previous_job_title_role: Option<String>,
+    pub previous_job_title_sub_role: Option<String>,
+    pub previous_job_title_class: Option<String>,
+    pub previous_job_title_levels: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -282,6 +306,10 @@ pub struct FundingDetails {
     pub funding_raised: Option<f64>,
     pub funding_currency: Option<String>,
     pub funding_type: Option<String>,
+    #[deprecated(
+        since = "5.3.0",
+        note = "removal on 2027-02-16 (PDL API v37.1); use `investing_companies_details` instead"
+    )]
     pub investing_companies: Option<Vec<String>>,
     pub investing_companies_details: Option<Vec<InvestingCompaniesDetail>>,
     pub investing_individuals: Option<Vec<String>>,
@@ -340,6 +368,7 @@ pub struct CompanyResponse {
     pub industry_v2: Option<String>,
     pub gics_sector: Option<String>,
     pub inferred_revenue: Option<String>,
+    pub inferred_revenue_integer: Option<i64>,
     pub linkedin_id: Option<String>,
     pub linkedin_url: Option<String>,
     pub linkedin_slug: Option<String>,
@@ -361,6 +390,10 @@ pub struct CompanyResponse {
     pub display_name_history: Option<Vec<String>>,
     pub alternative_names: Option<Vec<String>>,
     pub alternative_domains: Option<Vec<String>>,
+    #[deprecated(
+        since = "5.3.0",
+        note = "removal on 2027-02-16 (PDL API v37.1); use `affiliated_entities[].affiliated_id` instead"
+    )]
     pub affiliated_profiles: Option<Vec<String>>,
     pub all_subsidiaries: Option<Vec<String>>,
     pub direct_subsidiaries: Option<Vec<String>>,
@@ -406,6 +439,7 @@ pub struct CompanyResponse {
     pub deactivated_job_postings_by_month: Option<HashMap<String, i32>>,
     pub recent_exec_hires: Option<Vec<RecentExecHires>>,
     pub recent_exec_departures: Option<Vec<RecentExecDepartures>>,
+    pub recent_exec_internal_changes: Option<Vec<RecentExecInternalChanges>>,
     pub top_previous_employers: Option<HashMap<String, Vec<TopEmployerEntry>>>,
     pub top_next_employers: Option<HashMap<String, Vec<TopEmployerEntry>>>,
     pub total_funding_raised: Option<f32>,
