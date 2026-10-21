@@ -404,38 +404,138 @@ pub struct CompanyResponse {
     pub num_active_locations: Option<i32>,
     pub naics: Option<Vec<Naics>>,
     pub sic: Option<Vec<Sic>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_growth_rate: Option<HashMap<String, f32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_churn_rate: Option<HashMap<String, f32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_turnover_rate: Option<HashMap<String, f32>>,
     pub annualized_employee_turnover_rate: Option<Value>,
     pub average_employee_tenure: Option<f32>,
     pub median_employee_tenure: Option<f32>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub average_tenure_by_role: Option<HashMap<String, f32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub median_tenure_by_role: Option<HashMap<String, f32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub average_tenure_by_level: Option<HashMap<String, f32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub median_tenure_by_level: Option<HashMap<String, f32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_count_by_country: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_count_by_role: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_growth_rate_12_month_by_role: Option<HashMap<String, f32>>,
     pub employee_growth_rate_12_month_by_country:
         Option<HashMap<String, EmployeeGrowthRate12MonthByCountry>>,
     pub top_us_employee_metros: Option<HashMap<String, TopUsEmployeeMetros>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_count_by_month: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub gross_additions_by_month: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub gross_departures_by_month: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_nested_map_skip_nulls"
+    )]
     pub employee_count_by_month_by_role: Option<HashMap<String, HashMap<String, i32>>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_nested_map_skip_nulls"
+    )]
     pub employee_count_by_month_by_level: Option<HashMap<String, HashMap<String, i32>>>,
     pub active_job_postings: Option<Value>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub active_job_postings_by_role: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub active_job_postings_by_class: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub active_job_postings_by_sub_role: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub active_job_postings_by_country: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub active_job_postings_by_metro: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub active_job_postings_by_month: Option<HashMap<String, i32>>,
     pub deactivated_job_postings: Option<Value>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub deactivated_job_postings_by_role: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub deactivated_job_postings_by_class: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub deactivated_job_postings_by_sub_role: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub deactivated_job_postings_by_month: Option<HashMap<String, i32>>,
     pub recent_exec_hires: Option<Vec<RecentExecHires>>,
     pub recent_exec_departures: Option<Vec<RecentExecDepartures>>,
@@ -480,4 +580,36 @@ pub struct CleanCompanyResponse {
     pub raw: Option<Vec<String>>,
     pub score: f32,
     pub fuzzy_match: bool,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::CompanyResponse;
+
+    #[test]
+    fn test_company_response_skips_null_map_entries() {
+        let resp: CompanyResponse = serde_json::from_value(serde_json::json!({
+            "employee_growth_rate_12_month_by_role": {"engineering": 0.12, "trade": null},
+            "employee_count_by_role": {"sales": 10, "legal": null},
+            "employee_count_by_month_by_role": {"2026-09": {"sales": 3, "legal": null}, "2026-10": null},
+            "recent_exec_internal_changes": [{
+                "new_role_date": "2026-08",
+                "name": "gail cohen",
+                "job_title_levels": ["vp"],
+                "previous_job_title_levels": ["director"]
+            }]
+        }))
+        .unwrap();
+
+        let by_role = resp.employee_growth_rate_12_month_by_role.unwrap();
+        assert_eq!(by_role.len(), 1);
+        assert_eq!(by_role["engineering"], 0.12);
+        assert_eq!(resp.employee_count_by_role.unwrap().len(), 1);
+        let by_month = resp.employee_count_by_month_by_role.unwrap();
+        assert_eq!(by_month.len(), 1);
+        assert_eq!(by_month["2026-09"].len(), 1);
+        assert!(resp.employee_growth_rate.is_none());
+        let internal = resp.recent_exec_internal_changes.unwrap();
+        assert_eq!(internal[0].name.as_deref(), Some("gail cohen"));
+    }
 }

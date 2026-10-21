@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `name`, `linkedin_url`, and `previous_company_display_name` to `RecentExecHires` (PDL API v36.0)
 - Added `name`, `linkedin_url`, and `new_company_display_name` to `RecentExecDepartures` (PDL API v36.0)
 - Deprecated `affiliated_profiles` on Company response and `investing_companies` on `FundingDetails`, scheduled for removal in PDL API v37.1 (2027-02-16)
+- Fixed Company responses failing to deserialize when a numeric breakdown map (e.g. `employee_growth_rate_12_month_by_role`) contains `null` entries; those entries are now skipped
 
 ## [5.2.0] - 2026-09-16
 
