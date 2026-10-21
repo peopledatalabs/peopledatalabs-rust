@@ -16,10 +16,7 @@ impl Changelog {
     ) -> Result<ChangelogPersonResponse, PDLError> {
         params.validate()?;
         self.client
-            .post::<ChangelogPersonResponse, ChangelogPersonParams>(
-                PERSON_CHANGELOG_PATH,
-                params,
-            )
+            .post::<ChangelogPersonResponse, ChangelogPersonParams>(PERSON_CHANGELOG_PATH, params)
     }
 }
 

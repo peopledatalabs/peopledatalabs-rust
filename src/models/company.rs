@@ -38,10 +38,18 @@ pub struct CompanyParams {
     #[serde(rename = "country", skip_serializing_if = "Option::is_none", default)]
     pub country: Option<String>,
     /// Company address
-    #[serde(rename = "street_address", skip_serializing_if = "Option::is_none", default)]
+    #[serde(
+        rename = "street_address",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub street_address: Option<String>,
     /// Company postal code
-    #[serde(rename = "postal_code", skip_serializing_if = "Option::is_none", default)]
+    #[serde(
+        rename = "postal_code",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub postal_code: Option<String>,
 }
 
@@ -156,7 +164,10 @@ pub struct SearchCompanyResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CompanyError {
-    #[serde(rename = "type", deserialize_with = "crate::models::common::deserialize_string_or_vec")]
+    #[serde(
+        rename = "type",
+        deserialize_with = "crate::models::common::deserialize_string_or_vec"
+    )]
     pub error_type: Vec<String>,
     pub message: String,
 }
@@ -373,7 +384,8 @@ pub struct CompanyResponse {
     pub employee_count_by_country: Option<HashMap<String, i32>>,
     pub employee_count_by_role: Option<HashMap<String, i32>>,
     pub employee_growth_rate_12_month_by_role: Option<HashMap<String, f32>>,
-    pub employee_growth_rate_12_month_by_country: Option<HashMap<String, EmployeeGrowthRate12MonthByCountry>>,
+    pub employee_growth_rate_12_month_by_country:
+        Option<HashMap<String, EmployeeGrowthRate12MonthByCountry>>,
     pub top_us_employee_metros: Option<HashMap<String, TopUsEmployeeMetros>>,
     pub employee_count_by_month: Option<HashMap<String, i32>>,
     pub gross_additions_by_month: Option<HashMap<String, i32>>,
