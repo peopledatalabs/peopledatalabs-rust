@@ -37,8 +37,8 @@ mod tests {
         let changelog = Changelog { client };
 
         let params = ChangelogPersonParams {
-            origin_version: Some("34.2".to_string()),
-            current_version: Some("35.0".to_string()),
+            origin_version: Some("35.2".to_string()),
+            current_version: Some("36.0".to_string()),
             type_: Some("updated".to_string()),
             ..Default::default()
         };
@@ -59,8 +59,8 @@ mod tests {
         let changelog = Changelog { client };
 
         let params = ChangelogPersonParams {
-            origin_version: Some("34.2".to_string()),
-            current_version: Some("35.0".to_string()),
+            origin_version: Some("35.2".to_string()),
+            current_version: Some("36.0".to_string()),
             type_: Some("updated".to_string()),
             ..Default::default()
         };
