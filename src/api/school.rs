@@ -45,9 +45,6 @@ mod tests {
         let resp = school.clean(clean_school_params).expect("ERROR");
 
         assert_eq!(resp.status, 200);
-        assert_eq!(
-            resp.name,
-            Some("ucla".to_string())
-        );
+        assert_eq!(resp.name, Some("ucla".to_string()));
     }
 }

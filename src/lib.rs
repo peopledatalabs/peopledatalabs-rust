@@ -5,6 +5,7 @@ mod models;
 use api::{Autocomplete, Changelog, Company, JobPosting, JobTitle, Location, Person, School, IP};
 use client::{PDLClient, PDLError};
 
+pub use models::changelog::ChangelogPersonParams;
 pub use models::{
     AutocompleteBaseParams, AutocompleteParams, BaseParams, BulkEnrichPersonParams,
     BulkEnrichSinglePersonParams, BulkRetrievePersonParams, BulkRetrieveSinglePersonParams,
@@ -14,7 +15,6 @@ pub use models::{
     PersonParams, RemoteWorkPolicy, RetrievePersonParams, SalaryPeriod, SchoolParams,
     SearchBaseParams, SearchParams,
 };
-pub use models::changelog::ChangelogPersonParams;
 
 pub struct PDL {
     pub autocomplete: Autocomplete,

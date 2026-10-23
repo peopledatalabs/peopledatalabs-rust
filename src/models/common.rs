@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use crate::PDLError;
@@ -35,6 +37,43 @@ where
     D: Deserializer<'de>,
 {
     Option::<StringOrVec>::deserialize(deserializer).map(|opt| opt.map(Into::into))
+}
+
+type NullableMap<V> = HashMap<String, Option<V>>;
+type NestedMap<V> = HashMap<String, HashMap<String, V>>;
+
+fn skip_nulls<V>(map: NullableMap<V>) -> HashMap<String, V> {
+    map.into_iter().filter_map(|(k, v)| Some((k, v?))).collect()
+}
+
+/// The PDL API can return `null` for individual entries of numeric breakdown
+/// maps (e.g. a growth rate for a role with no prior headcount). Those entries
+/// carry no data, so they are dropped instead of failing the whole response.
+pub fn deserialize_opt_map_skip_nulls<'de, D, V>(
+    deserializer: D,
+) -> Result<Option<HashMap<String, V>>, D::Error>
+where
+    D: Deserializer<'de>,
+    V: Deserialize<'de>,
+{
+    Option::<NullableMap<V>>::deserialize(deserializer).map(|map| map.map(skip_nulls))
+}
+
+pub fn deserialize_opt_nested_map_skip_nulls<'de, D, V>(
+    deserializer: D,
+) -> Result<Option<NestedMap<V>>, D::Error>
+where
+    D: Deserializer<'de>,
+    V: Deserialize<'de>,
+{
+    Option::<NullableMap<NullableMap<V>>>::deserialize(deserializer).map(|map| {
+        map.map(|outer| {
+            skip_nulls(outer)
+                .into_iter()
+                .map(|(k, inner)| (k, skip_nulls(inner)))
+                .collect()
+        })
+    })
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, Default)]

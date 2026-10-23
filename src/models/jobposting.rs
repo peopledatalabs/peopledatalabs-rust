@@ -41,9 +41,15 @@ pub struct JobPostingSearchBaseParams {
     pub first_seen_min: Option<String>,
     #[serde(rename = "first_seen_max", skip_serializing_if = "Option::is_none")]
     pub first_seen_max: Option<String>,
-    #[serde(rename = "deactivated_date_min", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "deactivated_date_min",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub deactivated_date_min: Option<String>,
-    #[serde(rename = "deactivated_date_max", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "deactivated_date_max",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub deactivated_date_max: Option<String>,
 
     #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
@@ -63,7 +69,10 @@ pub struct JobPostingSearchBaseParams {
     pub company_name: Option<String>,
     #[serde(rename = "company_industry", skip_serializing_if = "Option::is_none")]
     pub company_industry: Option<String>,
-    #[serde(rename = "company_industry_v2", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "company_industry_v2",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub company_industry_v2: Option<String>,
     #[serde(rename = "company_website", skip_serializing_if = "Option::is_none")]
     pub company_website: Option<String>,

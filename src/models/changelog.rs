@@ -1,9 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    models::common::BaseParams,
-    PDLError,
-};
+use crate::{models::common::BaseParams, PDLError};
 
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct ChangelogPersonParams {
