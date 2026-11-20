@@ -338,6 +338,15 @@ pub struct EmployeeGrowthRate12MonthByCountry {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct EmployeeGrowthRate12MonthByUsState {
+    pub current_headcount: Option<i32>,
+    #[serde(rename = "12_month_headcount")]
+    pub twelve_month_headcount: Option<i32>,
+    #[serde(rename = "12_month_growth_rate")]
+    pub twelve_month_growth_rate: Option<f64>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TechnologiesUsed {
     pub product_id: Option<String>,
     pub name: Option<String>,
@@ -362,6 +371,11 @@ pub struct CompanyResponse {
     pub employee_count: Option<i32>,
     pub linkedin_employee_count: Option<i32>,
     pub linkedin_follower_count: Option<i32>,
+    /// One of "positive signals", "neutral signals", or "negative signals".
+    pub profile_score: Option<String>,
+    pub linkedin_is_active: Option<bool>,
+    /// Date (YYYY-MM-DD) the LinkedIn profile was last verified.
+    pub linkedin_last_verified: Option<String>,
     pub id: Option<String>,
     pub founded: Option<i32>,
     pub industry: Option<String>,
@@ -451,6 +465,11 @@ pub struct CompanyResponse {
         default,
         deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
     )]
+    pub employee_count_by_us_state: Option<HashMap<String, i32>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
     pub employee_count_by_role: Option<HashMap<String, i32>>,
     #[serde(
         default,
@@ -459,6 +478,12 @@ pub struct CompanyResponse {
     pub employee_growth_rate_12_month_by_role: Option<HashMap<String, f32>>,
     pub employee_growth_rate_12_month_by_country:
         Option<HashMap<String, EmployeeGrowthRate12MonthByCountry>>,
+    #[serde(
+        default,
+        deserialize_with = "crate::models::common::deserialize_opt_map_skip_nulls"
+    )]
+    pub employee_growth_rate_12_month_by_us_state:
+        Option<HashMap<String, EmployeeGrowthRate12MonthByUsState>>,
     pub top_us_employee_metros: Option<HashMap<String, TopUsEmployeeMetros>>,
     #[serde(
         default,
